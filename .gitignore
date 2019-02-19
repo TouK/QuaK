@@ -24,7 +24,6 @@ www-test/
 /android/libs/x86/
 /android/libs/x86_64/
 /android/gen/
-.idea/
 *.ipr
 *.iws
 *.iml
@@ -109,6 +108,8 @@ gradle-app.setting
 /ios/build/
 /ios-moe/build/
 
+out/
+
 ## OS Specific
 .DS_Store
 Thumbs.db
@@ -123,3 +124,16 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+
+## texture atlas
+core/assets/game.atlas
+core/assets/game.png
+core/assets/menu.atlas
+core/assets/menu.png
+
+## Intellij, except run configurations
+.idea/modules/*
+.idea/libraries/*
+.idea/*.xml
+.idea/.name
+!.idea/runConfigurations/*
