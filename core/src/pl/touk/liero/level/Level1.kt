@@ -2,7 +2,7 @@ package pl.touk.liero.level
 
 import com.badlogic.gdx.graphics.Color
 import pl.touk.liero.Ctx
-import pl.touk.liero.game.createPlayer
+import pl.touk.liero.game.player.createPlayer
 import pl.touk.liero.utils.overwrite
 
 class Level1 : Level {
@@ -14,7 +14,8 @@ class Level1 : Level {
             it.playerColor = Color.BLACK
         })
         createBounds(ctx, width, height)
-        createPlayer(ctx, 20f, 20f)
+        createPlayer(ctx, 10f, 2f, ctx.redPlayerControl)
+        createPlayer(ctx, 20f, 2f, ctx.bluePlayerControl)
     }
 
     override fun dispose() {

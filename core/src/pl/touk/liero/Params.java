@@ -2,13 +2,15 @@ package pl.touk.liero;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import org.jetbrains.annotations.NotNull;
 import pl.touk.liero.level.LevelParams;
 
 import static pl.touk.liero.gdx.Scene2dKt.screenWidth;
 import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 
 public class Params extends LevelParams {
-    public float playerScale = 1f;
+    public float playerSize = 1f;
+    public float playerSpeed = 10f;
 
     public Color colorHud = new Color(1f, 1f, 1f, 0.4f);
     public Color colorLevelOverlay = new Color(0f, 0f, 0f, 0.9f);

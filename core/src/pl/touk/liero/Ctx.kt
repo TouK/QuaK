@@ -1,6 +1,7 @@
 package pl.touk.liero
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -45,6 +47,7 @@ open class Ctx(val prefs: GamePreferences) {
 
     // rendering
     val batch = SpriteBatch()
+    val debugRenderer = Box2DDebugRenderer()
 
     // hud
     val stage = Stage(viewport, batch)
@@ -76,10 +79,8 @@ open class Ctx(val prefs: GamePreferences) {
 
     lateinit var level: Level
     var cameraScript = CameraScript(worldCamera, 9f, 16f)
-    val playerControl = PlayerButtonControl()
-
-    // game state
-    var playerLives = 3
+    val redPlayerControl = PlayerButtonControl()
+    val bluePlayerControl = PlayerButtonControl()
 
     init {
         val resolver = InternalFileHandleResolver()
@@ -109,9 +110,12 @@ open class Ctx(val prefs: GamePreferences) {
 
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
+                InputSystem(redPlayerControl, left = Input.Keys.A, right = Input.Keys.D, jump = Input.Keys.W, fire = Input.Keys.CONTROL_LEFT),
+                InputSystem(bluePlayerControl, left = Input.Keys.LEFT, right = Input.Keys.RIGHT, jump = Input.Keys.UP, fire = Input.Keys.NUMPAD_0),
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
                 SpriteRenderSystem(engine, batch, worldCamera),
+                WorldRenderSystem(debugRenderer, world, worldCamera),
                 TextSystem(engine, batch, worldCamera, hudCamera),
                 ScriptBeforeDestroySystem(engine),
                 ParentChildSystem(engine),

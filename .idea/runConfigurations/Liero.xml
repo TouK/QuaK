@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Liero" type="JetRunConfigurationType" factoryName="Kotlin" singleton="false">
+  <configuration default="false" name="Liero" type="JetRunConfigurationType" factoryName="Kotlin">
     <module name="touk-liero.desktop.main" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PROGRAM_PARAMETERS" value="" />

@@ -8,10 +8,10 @@ import pl.touk.liero.ecs.System
 import pl.touk.liero.gdx.justPressed
 
 class WorldRenderSystem(val renderer: Box2DDebugRenderer, val world: World, val worldCamera: Camera) : System {
-    var render = false
+    var render = true
 
     override fun update(timeStepSec: Float) {
-        if (Keys.D.justPressed()) {
+        if (Keys.F12.justPressed()) {
             render = !render
         }
         if (render) {
