@@ -13,13 +13,14 @@ import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
 
-fun fireBazooka(ctx: Ctx, position: Vector2, direction: Vector2) {
+fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
-            position.set(1f, 1f)
             gravityScale = 0f
             linearDamping = 0f
             linearVelocity.set(direction.scl(ctx.params.bazookasSpeed))
+            var vec = Vector2(direction).scl(1.5f)
+            position.set(pos.add(vec))
             circle(ctx.params.bazookasSize) {
                 filter {
                     categoryBits = cat_bulletRed

@@ -15,10 +15,10 @@ public class Params extends LevelParams {
 
 
     //kaczkozooka
-    public final float bazookasSize = 0.5f;
+    public final float bazookasSize = 0.1f;
     public final float bazookaDamage = 10;
     public final float bazookaRadius = 1f;
-    public final float bazookasSpeed = 5f;
+    public final float bazookasSpeed = 1f;
     public final float bazookaCooldown = 2f;
     public final int bazookaAmmo = 5;
 

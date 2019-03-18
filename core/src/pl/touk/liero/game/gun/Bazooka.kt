@@ -1,7 +1,7 @@
-package pl.touk.liero.game.player
+package pl.touk.liero.game.gun
 
 import pl.touk.liero.Ctx
-import pl.touk.liero.Gun
+import pl.touk.liero.game.gun.Gun
 
 class Bazooka(val ctx: Ctx) : Gun {
 

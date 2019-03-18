@@ -8,6 +8,7 @@ import pl.touk.liero.PlayerScript
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
+import pl.touk.liero.game.gun.Bazooka
 import pl.touk.liero.game.mask_red
 
 fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {

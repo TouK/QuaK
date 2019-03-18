@@ -8,6 +8,7 @@ import pl.touk.liero.ecs.body
 import pl.touk.liero.entity.entity
 import pl.touk.liero.script.Script
 import pl.touk.liero.game.PlayerControl
+import pl.touk.liero.game.gun.Gun
 import pl.touk.liero.game.projectile.fireBazooka
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.system.SoundSystem

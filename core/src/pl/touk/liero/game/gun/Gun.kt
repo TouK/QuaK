@@ -1,4 +1,4 @@
-package pl.touk.liero
+package pl.touk.liero.game.gun
 
 interface Gun {
     fun update(timeStepSec: Float)

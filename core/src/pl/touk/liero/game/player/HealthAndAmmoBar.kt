@@ -6,6 +6,7 @@ import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.SpriteRenderScript
 import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
+import pl.touk.liero.game.gun.Bazooka
 
 class HealthAndAmmoBar(ctx: Ctx, private val currentGun: Bazooka) : SpriteRenderScript {
 
