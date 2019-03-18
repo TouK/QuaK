@@ -108,7 +108,7 @@ class PlayerScript(val ctx: Ctx,
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {
 
-        if(me[body].linearVelocity.x != 0f) {
+        if(kotlin.math.abs(me[body].linearVelocity.x) > ctx.params.idleVelocityLimit) {
             movingAnimationTime += timeStepSec
             idleAnimationTime = 0f
             val textureRegion = animation.getKeyFrame(movingAnimationTime)

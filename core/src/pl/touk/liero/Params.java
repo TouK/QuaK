@@ -16,6 +16,7 @@ public class Params extends LevelParams {
     public float playerJumpSpeed = 10f;
     public float playerTotalHealth = 100f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
+    public float idleVelocityLimit = 5f;
 
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
     public float weaponLowerAngle = -MathUtils.PI * 0.25f;
