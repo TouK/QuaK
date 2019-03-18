@@ -27,8 +27,8 @@ class LevelMapLoader(val ctx: Ctx) {
         val bgTex = Texture(bgPath)
         val texture = Texture(texPath)
         val map = loadPixmapRgba8888(mapPath) ?: throw IllegalArgumentException("File not found: $mapPath")
-        val gridSizePx = 32
-        val tileSizeMeters = 1f
+        val gridSizePx = 8
+        val tileSizeMeters = 0.25f
 
         val worldWidth = map.width / gridSizePx
         val worldHeight = map.height / gridSizePx
@@ -64,7 +64,7 @@ class LevelMapLoader(val ctx: Ctx) {
                     // static
                     ctx.engine.entity {
                         body(ctx.world.body {
-                            position.set(wx + tileSizeMeters / 2f, wy + tileSizeMeters / 2f)
+                            position.set((wx + 0.5f) * tileSizeMeters, (wy + 0.5f) * tileSizeMeters)
                             box(width = tileSizeMeters, height = tileSizeMeters) {
                                 density = 1f
                                 filter {
@@ -73,7 +73,7 @@ class LevelMapLoader(val ctx: Ctx) {
                                 }
                             }
                         })
-                        texture(TextureRegion(texture, tx, ty, gridSizePx, gridSizePx), 1f, 1f)
+                        texture(TextureRegion(texture, tx, ty, gridSizePx, gridSizePx), tileSizeMeters, tileSizeMeters)
                         if (color.r > 0.5f) {
                             energy(10f)
                         }

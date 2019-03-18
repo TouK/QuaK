@@ -22,7 +22,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, wea
         position.set(x, y)
         linearDamping = 0f
         fixedRotation = true
-        gravityScale = 2f
+        gravityScale = 6f
         circle(radius = ctx.params.playerSize / 2f) {
             density = 1f
             restitution = 0.1f

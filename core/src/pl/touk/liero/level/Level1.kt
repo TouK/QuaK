@@ -17,9 +17,8 @@ class Level1 : Level {
         val weapon1 = createWeapon(ctx, 0f, 0f)
         val weapon2 = createWeapon(ctx, 0f, 0f)
 
-
         val loader = LevelMapLoader(ctx).also {
-            it.loadMap("city")
+            it.loadMap("forest")
         }
         width = loader.width
         height = loader.height

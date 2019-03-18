@@ -17,6 +17,12 @@ class Level2 : Level {
         val weapon1 = createWeapon(ctx, 0f, 0f)
         val weapon2 = createWeapon(ctx, 0f, 0f)
 
+        val loader = LevelMapLoader(ctx).also {
+            it.loadMap("forest")
+        }
+        width = loader.width
+        height = loader.height
+
         createBounds(ctx, width, height)
         createPlayer(ctx, width * 0.2f, 2f, ctx.keyboardPlayerControl, weapon1)
         createPlayer(ctx, width * 0.8f, 2f, ctx.joystickPlayerControl, weapon2)
