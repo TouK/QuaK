@@ -2,6 +2,7 @@ package pl.touk.liero.system
 
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import pl.touk.liero.ecs.*
@@ -36,7 +37,11 @@ class SpriteRenderSystem(engine: Engine<Entity>,
 
     fun draw(pos: Vector2, texture: Texture) {
         batch.setColor(texture.color)
-        batch.draw(texture.texture,
+        val region = TextureRegion(texture.texture)
+        if(texture.flipY) {
+            region.flip(false, true)
+        }
+        batch.draw(region,
                 pos.x - texture.width / 2, pos.y - texture.height / 2,
                 texture.width / 2, texture.height / 2,
                 texture.width, texture.height,
@@ -48,7 +53,11 @@ class SpriteRenderSystem(engine: Engine<Entity>,
         batch.setColor(texture.color)
         val pos = body.position.add(texture.pos)
         val angle = body.angle.rad_deg()
-        batch.draw(texture.texture,
+        val region = TextureRegion(texture.texture)
+        if(texture.flipY) {
+            region.flip(false, true)
+        }
+        batch.draw(region,
                 pos.x - texture.width / 2, pos.y - texture.height / 2,
                 texture.width / 2, texture.height / 2,
                 texture.width, texture.height,
