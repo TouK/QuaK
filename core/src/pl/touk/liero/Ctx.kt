@@ -118,6 +118,8 @@ open class Ctx(val prefs: GamePreferences) {
                 SpriteRenderSystem(engine, batch, worldCamera),
                 WorldRenderSystem(debugRenderer, world, worldCamera),
                 TextSystem(engine, batch, worldCamera, hudCamera),
+                EnergySystem(engine),
+                LifeSpanSystem(engine, worldEngine),
                 ScriptBeforeDestroySystem(engine),
                 ParentChildSystem(engine),
                 BodyDisposeSystem(engine))

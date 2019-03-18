@@ -43,6 +43,9 @@ class Text(var text: String,
     val color = Color(color)
 }
 
+class LifeSpan(var lifeSpan: Float,
+               var begin: Int)
+
 interface SpriteRenderScript {
     fun render(self: Entity, batch: SpriteBatch, timeStepSec: Float)
 }
@@ -56,3 +59,4 @@ val parent = ComponentTag<Parent>(i++)
 val children = ComponentTag<Children>(i++)
 val spriteRender = ComponentTag<SpriteRenderScript>(i++)
 val text = ComponentTag<Text>(i++)
+val lifespan = ComponentTag<LifeSpan>(i++)

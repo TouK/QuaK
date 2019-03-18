@@ -38,6 +38,5 @@ class KaczkosznikovScript(val damage: Float) : Script {
         if (other.contains(energy)) {
             other[energy].energy -= damage
         }
-
     }
 }
