@@ -6,12 +6,15 @@ import pl.touk.liero.ecs.System
 import pl.touk.liero.game.PlayerControl
 
 class JoystickInputSystem(private val playerControl: PlayerControl,
+                          private val jump: Int,
                           private val fire: Int,
                           private val controller: Controller) : System {
 
     override fun update(timeStepSec: Float) {
         playerControl.fireJustPressed = !playerControl.fire && controller.getButton(fire)
         playerControl.fire = controller.getButton(fire)
+        playerControl.jumpJustPressed = !playerControl.jump && controller.getButton(jump)
+        playerControl.jump = controller.getButton(jump)
         playerControl.xAxis = controller.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
         playerControl.yAxis = controller.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
     }

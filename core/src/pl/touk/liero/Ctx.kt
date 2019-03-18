@@ -105,7 +105,7 @@ open class Ctx(val prefs: GamePreferences) {
 
         font = assetManager.get("font.ttf")
         smallFont = assetManager.get("small-font.ttf")
-        gameAtlas = assetManager.get("game.atlas")
+        gameAtlas = TextureAtlasWrapper("game.atlas")
         menuAtlas = assetManager.get("menu.atlas")
         skin = createSkin(smallFont, font, gameAtlas, menuAtlas)
 
@@ -116,8 +116,10 @@ open class Ctx(val prefs: GamePreferences) {
                         right = Input.Keys.D,
                         up = Input.Keys.W,
                         down = Input.Keys.S,
-                        fire = Input.Keys.SPACE),
+                        jump = Input.Keys.SPACE,
+                        fire = Input.Keys.ENTER),
                 JoystickInputSystem(joystickPlayerControl,
+                        jump = Xbox.A,
                         fire = Xbox.X,
                         controller = Controllers.getControllers().first()),
                 ScriptUpdateSystem(engine),
@@ -125,6 +127,8 @@ open class Ctx(val prefs: GamePreferences) {
                 SpriteRenderSystem(engine, batch, worldCamera),
                 WorldRenderSystem(debugRenderer, world, worldCamera),
                 TextSystem(engine, batch, worldCamera, hudCamera),
+                EnergySystem(engine),
+                LifeSpanSystem(engine, worldEngine),
                 ScriptBeforeDestroySystem(engine),
                 ParentChildSystem(engine),
                 BodyDisposeSystem(engine))
@@ -146,5 +150,11 @@ open class Ctx(val prefs: GamePreferences) {
     fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
         cameraScript.resize(width.toFloat(), height.toFloat())
+    }
+}
+
+class TextureAtlasWrapper(s: String) : TextureAtlas(s) {
+    override fun findRegion(name: String?): AtlasRegion {
+        return super.findRegion(name) ?: super.findRegion("default_error")
     }
 }

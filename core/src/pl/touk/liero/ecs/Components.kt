@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.Joint
 import ktx.collections.GdxArray
 
 class Energy(var total: Float,
@@ -28,11 +29,12 @@ class Children {
     }
 }
 
-class Texture(val texture: TextureRegion,
+class Texture(var texture: TextureRegion,
               val width: Float, val height: Float,
               val pos: Vector2, var angleDeg: Float = 0f,
               var scaleX: Float = 1f, var scaleY: Float = 1f,
-              color: Color = Color.WHITE) {
+              color: Color = Color.WHITE,
+              var flipY: Boolean = false) {
     val color = Color(color)
 }
 
@@ -42,6 +44,9 @@ class Text(var text: String,
            color: Color) {
     val color = Color(color)
 }
+
+class LifeSpan(var lifeSpan: Float,
+               var begin: Int)
 
 interface SpriteRenderScript {
     fun render(self: Entity, batch: SpriteBatch, timeStepSec: Float)
@@ -56,3 +61,5 @@ val parent = ComponentTag<Parent>(i++)
 val children = ComponentTag<Children>(i++)
 val spriteRender = ComponentTag<SpriteRenderScript>(i++)
 val text = ComponentTag<Text>(i++)
+val lifespan = ComponentTag<LifeSpan>(i++)
+val joint = ComponentTag<Joint>(i++)
