@@ -15,6 +15,7 @@ import pl.touk.liero.game.gun.Bazooka
 import pl.touk.liero.game.mask_red
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
+import pl.touk.liero.ecs.body
 
 
 fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, weapon: Entity) {
@@ -22,11 +23,11 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, wea
         position.set(x, y)
         linearDamping = 0f
         fixedRotation = true
-        gravityScale = 6f
+        gravityScale = ctx.params.playerGravityScale
         circle(radius = ctx.params.playerSize / 2f) {
             density = 1f
             restitution = 0.1f
-            friction = 2f
+            friction = 0.1f
             filter {
                 categoryBits = cat_red
                 maskBits = mask_red
@@ -34,11 +35,13 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, wea
         }
     }
 
+    val weaponBody = weapon[body]
+
     ctx.engine.entity {
         body(playerBody)
         child(weapon)
-        joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weapon[pl.touk.liero.ecs.body])))
-        texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize)
+        joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
+        texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.4f)
         energy(ctx.params.playerTotalHealth)
         val bazooka = Bazooka(ctx)
         val movementAnimation = createMovementAnimation(ctx)
@@ -77,5 +80,5 @@ private fun createStandAnimation(ctx: Ctx): Animation<TextureRegion> {
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle3"))
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle4"))
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle5"))
-    return Animation(0.025f, walkFrames, Animation.PlayMode.LOOP)
+    return Animation(0.05f, walkFrames, Animation.PlayMode.LOOP)
 }

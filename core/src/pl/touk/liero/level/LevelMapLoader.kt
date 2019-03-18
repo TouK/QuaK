@@ -62,7 +62,7 @@ class LevelMapLoader(val ctx: Ctx) {
                 }
                 val fillRatio = count.toFloat() / (gridSizePx * gridSizePx)
 
-                if (fillRatio > 0.2f) {
+                if (fillRatio > 0.7f) {
                     // static
                     ctx.engine.entity {
                         body(ctx.world.body {

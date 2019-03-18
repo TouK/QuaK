@@ -1,6 +1,5 @@
 package pl.touk.liero
 
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -17,7 +16,6 @@ import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_ground
 import pl.touk.liero.game.gun.Gun
 import pl.touk.liero.game.projectile.fireBazooka
-import pl.touk.liero.gdx.ifJustPressed
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
@@ -30,8 +28,7 @@ class PlayerScript(val ctx: Ctx,
                    val animation: Animation<TextureRegion>,
                    val idleAnimation: Animation<TextureRegion>) : Script {
 
-    val pidProportional = 10f
-    val maxForce = 80f
+
     var movingAnimationTime: Float = 0f
     var idleAnimationTime: Float = 0f
 
@@ -62,9 +59,10 @@ class PlayerScript(val ctx: Ctx,
             }
         }
 
+
         val v = MathUtils.clamp(control.xAxis, -1f, 1f) * ctx.params.playerSpeed
-        val f = (v - myBody.linearVelocity.x) * pidProportional * myBody.mass
-        MathUtils.clamp(f, -maxForce, maxForce)
+        val f = (v - myBody.linearVelocity.x) * ctx.params.playerPidProportional * myBody.mass
+        MathUtils.clamp(f, -ctx.params.playerMaxForce, ctx.params.playerMaxForce)
         myBody.applyForceToCenter(f, 0f, true)
 
         control.left.then {
@@ -74,7 +72,6 @@ class PlayerScript(val ctx: Ctx,
                 val newWeaponAngle = Vector2(-weapon.transform.orientation.x, weapon.transform.orientation.y).angleRad()
                 weapon.setTransform(weapon.position, newWeaponAngle)
             }
-            myBody.setLinearVelocity(-ctx.params.playerSpeed, myBody.linearVelocity.y)
         }
         control.right.then {
             myTexture.flipY = false
@@ -83,7 +80,6 @@ class PlayerScript(val ctx: Ctx,
                 val newWeaponAngle = Vector2(-weapon.transform.orientation.x, weapon.transform.orientation.y).angleRad()
                 weapon.setTransform(weapon.position, newWeaponAngle)
             }
-            myBody.setLinearVelocity(ctx.params.playerSpeed, myBody.linearVelocity.y)
         }
         control.up then {
             if(myBody.angle == -MathUtils.PI) {
@@ -103,7 +99,11 @@ class PlayerScript(val ctx: Ctx,
             val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
             if(ground != null) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
+                myBody.gravityScale = ctx.params.playerGravityScaleInAir
             }
+        }
+        if (!control.jump || myBody.linearVelocity.y <= 0f) {
+            myBody.gravityScale = ctx.params.playerGravityScale
         }
 
         renderMovement(me, timeStepSec)

@@ -13,8 +13,12 @@ import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 public class Params extends LevelParams {
     public float playerSize = 0.95f;
     public float playerSpeed = 10f;
-    public float playerJumpSpeed = 20f;
+    public float playerJumpSpeed = 22f;
     public float playerTotalHealth = 100f;
+    public float playerGravityScale = 10f;
+    public float playerGravityScaleInAir = 3f;
+    public float playerPidProportional = 10f;
+    public float playerMaxForce = 120f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
     public float idleVelocityLimit = 5f;
 
