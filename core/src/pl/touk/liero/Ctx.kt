@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
+import com.badlogic.gdx.controllers.Controllers
+import com.badlogic.gdx.controllers.mappings.Xbox
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -17,20 +19,18 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ScreenViewport
-import pl.touk.liero.system.*
-import pl.touk.liero.game.PlayerButtonControl
-import pl.touk.liero.game.WorldEngine
-import pl.touk.liero.system.MusicSystem
-import pl.touk.liero.system.TextSystem
 import pl.touk.liero.ecs.Actions
-import pl.touk.liero.system.ActionsSystem
 import pl.touk.liero.ecs.Engine
 import pl.touk.liero.ecs.Entity
+import pl.touk.liero.game.PlayerButtonControl
+import pl.touk.liero.game.PlayerControlSmooth
+import pl.touk.liero.game.WorldEngine
 import pl.touk.liero.gdx.shorter
 import pl.touk.liero.level.Level
 import pl.touk.liero.level.LevelLoader
 import pl.touk.liero.screen.UiEvent
 import pl.touk.liero.script.CameraScript
+import pl.touk.liero.system.*
 
 open class Ctx(val prefs: GamePreferences) {
 
@@ -80,8 +80,8 @@ open class Ctx(val prefs: GamePreferences) {
 
     lateinit var level: Level
     var cameraScript = CameraScript(worldCamera, 9f, 16f)
-    val redPlayerControl = PlayerButtonControl()
-    val bluePlayerControl = PlayerButtonControl()
+    val keyboardPlayerControl = PlayerButtonControl()
+    val joystickPlayerControl = PlayerControlSmooth()
 
     init {
         val resolver = InternalFileHandleResolver()
@@ -111,8 +111,15 @@ open class Ctx(val prefs: GamePreferences) {
 
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
-                InputSystem(redPlayerControl, left = Input.Keys.A, right = Input.Keys.D, jump = Input.Keys.W, fire = Input.Keys.CONTROL_LEFT),
-                InputSystem(bluePlayerControl, left = Input.Keys.LEFT, right = Input.Keys.RIGHT, jump = Input.Keys.UP, fire = Input.Keys.NUMPAD_0),
+                InputSystem(keyboardPlayerControl,
+                        left = Input.Keys.A,
+                        right = Input.Keys.D,
+                        up = Input.Keys.W,
+                        down = Input.Keys.S,
+                        fire = Input.Keys.SPACE),
+                JoystickInputSystem(joystickPlayerControl,
+                        fire = Xbox.X,
+                        controller = Controllers.getControllers().first()),
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
                 SpriteRenderSystem(engine, batch, worldCamera),

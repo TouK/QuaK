@@ -8,7 +8,8 @@ import pl.touk.liero.gdx.pressed
 class InputSystem(private val playerControl: PlayerControl,
                   private val left: Int,
                   private val right: Int,
-                  private val jump: Int,
+                  private val up: Int,
+                  private val down: Int,
                   private val fire: Int) : System {
 
     override fun update(timeStepSec: Float) {
@@ -16,5 +17,7 @@ class InputSystem(private val playerControl: PlayerControl,
         playerControl.fireJustPressed = fire.justPressed()
         playerControl.left = left.pressed()
         playerControl.right = right.pressed()
+        playerControl.up = up.pressed()
+        playerControl.down = down.pressed()
     }
 }

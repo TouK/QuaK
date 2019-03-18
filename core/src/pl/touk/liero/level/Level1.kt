@@ -14,8 +14,8 @@ class Level1 : Level {
             it.playerColor = Color.BLACK
         })
         createBounds(ctx, width, height)
-        createPlayer(ctx, 10f, 2f, ctx.redPlayerControl)
-        createPlayer(ctx, 20f, 2f, ctx.bluePlayerControl)
+        createPlayer(ctx, 10f, 2f, ctx.keyboardPlayerControl)
+        createPlayer(ctx, 20f, 2f, ctx.joystickPlayerControl)
     }
 
     override fun dispose() {
