@@ -7,6 +7,7 @@ import pl.touk.liero.Ctx
 import ktx.scene2d.button
 import ktx.scene2d.label
 import ktx.scene2d.table
+import pl.touk.liero.system.SoundSystem
 
 class GameScreen(ctx: Ctx) : UiScreen(ctx) {
     private lateinit var pause: Button
@@ -20,6 +21,7 @@ class GameScreen(ctx: Ctx) : UiScreen(ctx) {
                 cell.size(ctx.params.smallButtonSize)
                         .expandX().fillX().align(Align.right)
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                     ctx.uiEvents += UiEvent.Pause
                 }
             }

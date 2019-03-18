@@ -2,11 +2,12 @@ package pl.touk.liero.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Scaling
-import pl.touk.liero.gdx.onClicked
-import pl.touk.liero.Ctx
 import ktx.scene2d.button
 import ktx.scene2d.image
 import ktx.scene2d.table
+import pl.touk.liero.Ctx
+import pl.touk.liero.gdx.onClicked
+import pl.touk.liero.system.SoundSystem
 
 class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
     override val root = table{
@@ -22,6 +23,7 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
         table {
             button("play") { cell ->
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                     ctx.uiEvents += UiEvent.Play
                 }
                 cell.size(ctx.params.buttonSize)
@@ -31,6 +33,7 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
         table {
             button("back") { cell ->
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Back)
                     Gdx.app.exit()
                 }
                 cell.size(ctx.params.buttonSize)
@@ -40,6 +43,7 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
                 isChecked = ctx.prefs.music
                 cell.size(ctx.params.buttonSize)
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                     ctx.prefs.music = isChecked
                     ctx.music.enable(isChecked)
                 }
@@ -48,13 +52,16 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
                 isChecked = ctx.prefs.sound
                 cell.size(ctx.params.buttonSize)
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                     ctx.prefs.sound = isChecked
+                    ctx.sound.enable(isChecked)
                 }
             }
         }
     }
 
     override fun onEnter() {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
         ctx.uiEvents += UiEvent.Play
     }
 }
