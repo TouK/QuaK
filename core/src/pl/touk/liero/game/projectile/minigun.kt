@@ -16,10 +16,12 @@ import pl.touk.liero.script.Script
 fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
-            position.set(pos)
             gravityScale = 0f
             linearDamping = 0f
+            bullet = true
             linearVelocity.set(direction.scl(ctx.params.miniGunSpeed))
+            val vec = Vector2(direction.nor()).scl(1.5f)
+            position.set(pos.add(vec))
             circle(ctx.params.miniGunSize) {
                 filter {
                     categoryBits = cat_bulletRed
@@ -28,7 +30,7 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
             }
         })
         texture(ctx.gameAtlas.findRegion("minigun"), ctx.params.miniGunSize, ctx.params.miniGunSize)
-        script(BazookaScript(ctx.params.miniGunDamage))
+        script(MiniGunScript(ctx.params.miniGunDamage))
     }
 }
 

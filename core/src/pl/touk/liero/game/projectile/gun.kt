@@ -13,13 +13,15 @@ import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
 
-fun fireGun(ctx: Ctx, position: Vector2, direction: Vector2) {
+fun fireGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
-            position.set(1f, 1f)
             gravityScale = 0f
             linearDamping = 0f
+            bullet = true
             linearVelocity.set(direction.scl(ctx.params.gunSpeed))
+            val vec = Vector2(direction.nor()).scl(1.5f)
+            position.set(pos.add(vec))
             circle(ctx.params.gunSize) {
                 filter {
                     categoryBits = cat_bulletRed
@@ -28,7 +30,7 @@ fun fireGun(ctx: Ctx, position: Vector2, direction: Vector2) {
             }
         })
         texture(ctx.gameAtlas.findRegion("kaczkospluwa"), ctx.params.gunSize, ctx.params.gunSize)
-        script(BazookaScript(ctx.params.gunDamage))
+        script(GunScript(ctx.params.gunDamage))
     }
 }
 

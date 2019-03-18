@@ -16,10 +16,10 @@ val cat_cos = next()
 
 val mask_all = 0xffff.toShort()
 
-//                            red blu  rb  bb gnd cos
-val mask_red             = 0b0__1___1___0___1___1___1.toShort()
-val mask_blue            = 0b0__1___1___1___0___1___1.toShort()
-val mask_bulletRed       = 0b0__0___1___0___1___1___1.toShort()
-val mask_bulletBlue      = 0b0__1___0___1___0___1___1.toShort()
+//                            cos grnd  bb  rb blue red
+val mask_red             = 0b0__1___1___1___1___1___1.toShort()
+val mask_blue            = 0b0__1___1___1___1___1___1.toShort()
+val mask_bulletRed       = 0b0__1___1___0___0___1___1.toShort()
+val mask_bulletBlue      = 0b0__1___1___0___0___1___1.toShort()
 val mask_ground          = 0b0__1___1___1___1___1___1.toShort()
 val mask_cos             = 0b0__1___1___1___1___1___1.toShort()

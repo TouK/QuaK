@@ -41,14 +41,18 @@ class PlayerScript(val ctx: Ctx,
         val myTexture = me[texture]
 
         gun.update(timeStepSec)
+
         control.fireJustPressed.then {
+
             ctx.engine.entity {
                 text("kwa", myBody.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
             }
             if(gun.shoot(1)) {
                 val quack1Or2 = random.nextInt(2)
+
                 fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
+
                 when(quack1Or2) {
                     0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
                     1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
