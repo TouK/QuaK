@@ -39,6 +39,10 @@ class Texture(var texture: TextureRegion,
         scaleX = -scaleX
     }
 
+    fun flipY() {
+        scaleY = -scaleY
+    }
+
     val color = Color(color)
 }
 

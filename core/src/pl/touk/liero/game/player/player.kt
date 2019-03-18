@@ -15,10 +15,10 @@ import pl.touk.liero.game.gun.Bazooka
 import pl.touk.liero.game.mask_red
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
-import pl.touk.liero.ecs.body
+import ktx.math.vec2
 
 
-fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, weapon: Entity) {
+fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     val playerBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
         position.set(x, y)
         linearDamping = 0f
@@ -35,21 +35,39 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, wea
         }
     }
 
-    val weaponBody = weapon[body]
+    val weaponBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
+        position.set(x, y)
+        angularDamping = ctx.params.weaponAngularDamping
+        fixedRotation = true
+        box(ctx.params.weaponBodyWidth, ctx.params.weaponBodyHeight) {
+            density = 1f
+            restitution = 0.1f
+            friction = 2f
+            isSensor = true
+            filter {
+                categoryBits = cat_red
+                maskBits = mask_red
+            }
+        }
+    }
 
     ctx.engine.entity {
         body(playerBody)
-        child(weapon)
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.4f)
         energy(ctx.params.playerTotalHealth)
         val bazooka = Bazooka(ctx)
         val movementAnimation = createMovementAnimation(ctx)
         val idleAnimation = createStandAnimation(ctx)
-        script(PlayerScript(ctx, playerControl, bazooka, movementAnimation, idleAnimation))
+        script(PlayerScript(ctx, playerControl, bazooka, weaponBody, movementAnimation, idleAnimation))
 
         // can be only one render script per Entity
         renderScript(HealthAndAmmoBar(ctx, bazooka))
+    }
+
+    ctx.engine.entity {
+        body(weaponBody)
+        texture(ctx.gameAtlas.findRegion("kaczkozooka"), 2.6f, 1f, vec2(0f, -0.3f))
     }
 }
 

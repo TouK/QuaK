@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.physics.box2d.Body
 import ktx.math.vec2
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
-import pl.touk.liero.ecs.joint
 import pl.touk.liero.ecs.texture
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
@@ -25,6 +25,7 @@ import pl.touk.liero.utils.then
 class PlayerScript(val ctx: Ctx,
                    val control: PlayerControl,
                    val gun: Gun,
+                   val weapon: Body,
                    val animation: Animation<TextureRegion>,
                    val idleAnimation: Animation<TextureRegion>) : Script {
 
@@ -35,7 +36,6 @@ class PlayerScript(val ctx: Ctx,
 
     override fun update(me: Entity, timeStepSec: Float) {
         val myBody = me[body]
-        val weapon = me[joint].bodyB
         val myTexture = me[texture]
 
         gun.update(timeStepSec)
@@ -68,6 +68,8 @@ class PlayerScript(val ctx: Ctx,
 
         if ((control.left && isRight) || (control.right && !isRight)) {
             myTexture.flipX()
+            val weaponEntity = weapon.userData as Entity
+            weaponEntity[texture].flipY()
             isRight = !isRight
             weapon.setTransform(weapon.position, PI - weapon.angle)
         }
@@ -101,5 +103,9 @@ class PlayerScript(val ctx: Ctx,
         idleAnimationTime += timeStepSec
         val textureRegion = idleAnimation.getKeyFrame(idleAnimationTime)
         me[texture].texture = textureRegion
+    }
+
+    override fun beforeDestroy(me: Entity) {
+        weapon.fixtureList.forEach { it.isSensor = false }
     }
 }

@@ -25,7 +25,7 @@ public class Params extends LevelParams {
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
     public float weaponLowerAngle = -MathUtils.PI * 0.25f;
     public float weaponUpperAngle = MathUtils.PI * 0.25f;
-    public float weaponRotationSpeed = 2f;
+    public float weaponRotationSpeed = 4f;
     public float weaponAngularDamping = 10f;
     public float weaponBodyWidth = playerSize * 1f;
     public float weaponBodyHeight = playerSize * 0.5f;

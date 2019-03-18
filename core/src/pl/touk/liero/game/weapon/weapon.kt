@@ -3,6 +3,7 @@ package pl.touk.liero.game.weapon
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.box2d.body
 import ktx.box2d.filter
+import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.entity.entity
@@ -28,5 +29,6 @@ fun createWeapon(ctx: Ctx, x: Float, y: Float): Entity {
 
     return ctx.engine.entity {
         body(weaponBody)
+        texture(ctx.gameAtlas.findRegion("kaczkozooka"), 2.6f, 1f, vec2(0f, -0.3f))
     }
 }
