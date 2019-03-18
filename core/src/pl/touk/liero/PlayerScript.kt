@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.MathUtils.random
-import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
@@ -31,6 +31,7 @@ class PlayerScript(val ctx: Ctx,
 
     var movingAnimationTime: Float = 0f
     var idleAnimationTime: Float = 0f
+    var isRight = true
 
     override fun update(me: Entity, timeStepSec: Float) {
         val myBody = me[body]
@@ -45,12 +46,12 @@ class PlayerScript(val ctx: Ctx,
                 text("kwa", myBody.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
             }
-            if(gun.shoot(1)) {
+            if (gun.shoot(1)) {
                 val quack1Or2 = random.nextInt(2)
 
                 fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
 
-                when(quack1Or2) {
+                when (quack1Or2) {
                     0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
                     1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
                 }
@@ -59,45 +60,23 @@ class PlayerScript(val ctx: Ctx,
             }
         }
 
-
+        // regulator proporcjonalny (PID bez ID) do prędkości x
         val v = MathUtils.clamp(control.xAxis, -1f, 1f) * ctx.params.playerSpeed
         val f = (v - myBody.linearVelocity.x) * ctx.params.playerPidProportional * myBody.mass
         MathUtils.clamp(f, -ctx.params.playerMaxForce, ctx.params.playerMaxForce)
         myBody.applyForceToCenter(f, 0f, true)
 
-        control.left.then {
-            myTexture.flipY = true
-            if(myBody.angle == 0f) {
-                myBody.setTransform(myBody.position, -MathUtils.PI)
-                val newWeaponAngle = Vector2(-weapon.transform.orientation.x, weapon.transform.orientation.y).angleRad()
-                weapon.setTransform(weapon.position, newWeaponAngle)
-            }
+        if ((control.left && isRight) || (control.right && !isRight)) {
+            myTexture.flipX()
+            isRight = !isRight
+            weapon.setTransform(weapon.position, PI - weapon.angle)
         }
-        control.right.then {
-            myTexture.flipY = false
-            if(myBody.angle == -MathUtils.PI) {
-                myBody.setTransform(myBody.position, 0f)
-                val newWeaponAngle = Vector2(-weapon.transform.orientation.x, weapon.transform.orientation.y).angleRad()
-                weapon.setTransform(weapon.position, newWeaponAngle)
-            }
-        }
-        control.up then {
-            if(myBody.angle == -MathUtils.PI) {
-                weapon.angularVelocity = -ctx.params.weaponRotationSpeed
-            } else {
-                weapon.angularVelocity = ctx.params.weaponRotationSpeed
-            }
-        }
-        control.down then {
-            if(myBody.angle == -MathUtils.PI) {
-                weapon.angularVelocity = ctx.params.weaponRotationSpeed
-            } else {
-                weapon.angularVelocity = -ctx.params.weaponRotationSpeed
-            }
-        }
+        val direction = if (isRight) -1 else 1
+        weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
+
         control.jumpJustPressed.then {
             val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
-            if(ground != null) {
+            if (ground != null) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
                 myBody.gravityScale = ctx.params.playerGravityScaleInAir
             }
@@ -111,7 +90,7 @@ class PlayerScript(val ctx: Ctx,
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {
 
-        if(kotlin.math.abs(me[body].linearVelocity.x) > ctx.params.idleVelocityLimit) {
+        if (kotlin.math.abs(me[body].linearVelocity.x) > ctx.params.idleVelocityLimit) {
             movingAnimationTime += timeStepSec
             idleAnimationTime = 0f
             val textureRegion = animation.getKeyFrame(movingAnimationTime)
