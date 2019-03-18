@@ -63,6 +63,7 @@ open class Ctx(val prefs: GamePreferences) {
 
     // music, sounds
     val music = MusicSystem(prefs.music)
+    val sound = SoundSystem(prefs.sound)
 
     // app state
     var currentLevel = 1
@@ -127,6 +128,7 @@ open class Ctx(val prefs: GamePreferences) {
         skin.dispose()
         stage.dispose()
         music.dispose()
+        sound.dispose()
         worldEngine.dispose()
     }
 

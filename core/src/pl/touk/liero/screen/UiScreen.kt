@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import pl.touk.liero.gdx.invalidateAll
 import pl.touk.liero.Ctx
 import ktx.scene2d.KTableWidget
+import pl.touk.liero.system.SoundSystem
 
 abstract class UiScreen(internal val ctx: Ctx) : ScreenAdapter(), EventListener {
     abstract val root: KTableWidget
@@ -48,6 +49,7 @@ abstract class UiScreen(internal val ctx: Ctx) : ScreenAdapter(), EventListener 
                 return true
             }
             Input.Keys.ESCAPE -> {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.Back)
                 ctx.uiEvents += UiEvent.Back
                 return true
             }

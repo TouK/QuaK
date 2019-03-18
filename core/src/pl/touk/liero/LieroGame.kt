@@ -3,30 +3,29 @@ package pl.touk.liero
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import pl.touk.liero.gdx.glClear
 import pl.touk.liero.scene.EmptyScene
 import pl.touk.liero.scene.WorldScene
-import pl.touk.liero.gdx.glClear
-import pl.touk.liero.scene.GameScene
-import pl.touk.liero.screen.*
+import pl.touk.liero.screen.UiEvent
+import pl.touk.liero.state.State
+import pl.touk.liero.state.GameState
+import pl.touk.liero.state.LevelSelectionState
+import pl.touk.liero.state.MenuState
 
 open class LieroGame constructor(val ctx: Ctx): Game() {
 
-    private val menuScreen = MenuScreen(ctx)
-    private val levelScreen = LevelScreen(ctx)
-    private val gameScreen = GameScreen(ctx)
-    private val pauseScreen = PauseScreen(ctx)
+    private val menuState: State = MenuState(ctx)
+    private val levelSelectionState: State = LevelSelectionState(ctx)
+    private val gameState: GameState = GameState(ctx)
 
-    private val emptyScene = EmptyScene()
-    private val gameScene = GameScene(ctx)
-
-    private var scene: WorldScene = emptyScene
+    private var scene: WorldScene = EmptyScene()
 
     override fun create() {
         ctx.mux.addProcessor(ctx.stage)
         Gdx.input.inputProcessor = ctx.mux
         ctx.music.fadeIn()
 
-        setScreen(menuScreen)
+        setState(menuState)
     }
 
     override fun render() {
@@ -41,43 +40,41 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
 
     internal open fun handleUiEvent(event: UiEvent) {
         when (screen) {
-            menuScreen -> when (event) {
+            menuState.screen -> when (event) {
                 UiEvent.Play -> {
-                    setScreen(levelScreen)
-                    ctx.music.fadeOut()
+                    setState(levelSelectionState)
                 }
                 UiEvent.Back -> {
                     Gdx.app.exit()
                 }
                 else -> {}
             }
-            levelScreen -> when(event) {
+            levelSelectionState.screen -> when(event) {
                 UiEvent.Back -> {
-                    setScreen(menuScreen)
+                    setState(menuState)
                 }
                 UiEvent.Play -> {
-                    setScene(gameScene)
-                    setScreen(gameScreen)
+                    setState(gameState)
                 }
                 else -> {}
             }
-            gameScreen -> when(event) {
+            gameState.screen -> when(event) {
                 UiEvent.Back -> {
-                    setScene(emptyScene)
-                    setScreen(levelScreen)
+                    setState(levelSelectionState)
                 }
                 UiEvent.Pause -> {
-                    setScreen(pauseScreen)
+                    setScreen(gameState.pauseScreen)
+                    ctx.music.fadeOut()
                 }
                 else -> {}
             }
-            pauseScreen -> when(event) {
+            gameState.pauseScreen -> when(event) {
                 UiEvent.Back -> {
-                    setScreen(levelScreen)
-                    ctx.music.fadeIn()
+                    setState(menuState)
                 }
                 UiEvent.Play -> {
-                    setScreen(gameScreen)
+                    setScreen(gameState.screen)
+                    ctx.music.fadeIn()
                 }
                 else -> {}
             }
@@ -97,5 +94,11 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
         this.scene.destroy()
         this.scene = scene
         this.scene.create()
+    }
+
+    private fun setState(state: State) {
+        setScene(state.scene)
+        setScreen(state.screen)
+        ctx.music.playTrack(state.musicTrack)
     }
 }

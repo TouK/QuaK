@@ -4,6 +4,7 @@ import pl.touk.liero.gdx.onClicked
 import pl.touk.liero.Ctx
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.button
+import pl.touk.liero.system.SoundSystem
 
 class PauseScreen(ctx: Ctx) : GameOverlayScreen(ctx) {
     override fun getText() = "Pause"
@@ -12,12 +13,14 @@ class PauseScreen(ctx: Ctx) : GameOverlayScreen(ctx) {
             button("back") { cell ->
                 cell.size(ctx.params.buttonSize)
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Back)
                     ctx.uiEvents += UiEvent.Back
                 }
             }
             button("play") { cell ->
                 cell.size(ctx.params.buttonSize)
                 onClicked {
+                    ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                     ctx.uiEvents += UiEvent.Play
                 }
             }

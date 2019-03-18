@@ -8,6 +8,7 @@ import pl.touk.liero.Ctx
 import ktx.scene2d.label
 import ktx.scene2d.table
 import ktx.scene2d.textButton
+import pl.touk.liero.system.SoundSystem
 
 class LevelScreen(ctx: Ctx) : UiScreen(ctx) {
     override val root = table {
@@ -18,6 +19,7 @@ class LevelScreen(ctx: Ctx) : UiScreen(ctx) {
         row()
         textButton("Level 1") {
             onClicked {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                 ctx.currentLevel = 1
                 ctx.uiEvents += UiEvent.Play
             }
@@ -25,6 +27,7 @@ class LevelScreen(ctx: Ctx) : UiScreen(ctx) {
         row()
         textButton("Level 2") {
             onClicked {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.Select)
                 ctx.currentLevel = 2
                 ctx.uiEvents += UiEvent.Play
             }
