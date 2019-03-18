@@ -95,8 +95,7 @@ class PlayerScript(val ctx: Ctx,
                 weapon.angularVelocity = -ctx.params.weaponRotationSpeed
             }
         }
-        // todo: podpiąć do control.jumpJustPressed, jak będzie gotowe
-        Input.Keys.ENTER.ifJustPressed {
+        control.jumpJustPressed.then {
             val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
             if(ground != null) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
