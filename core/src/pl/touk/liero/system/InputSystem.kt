@@ -17,7 +17,7 @@ class InputSystem(private val playerControl: PlayerControl,
         playerControl.fire = fire.pressed()
         playerControl.jump = jump.pressed()
         playerControl.jumpJustPressed = jump.justPressed()
-        playerControl.fireJustPressed = fire.pressed()
+        playerControl.fireJustPressed = fire.justPressed()
         playerControl.left = left.pressed()
         playerControl.right = right.pressed()
         playerControl.up = up.pressed()
