@@ -13,22 +13,28 @@ import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.then
 
-class PlayerScript(val ctx: Ctx, val control: PlayerControl) : Script {
+class PlayerScript(val ctx: Ctx, val control: PlayerControl, var gun: Gun) : Script {
 
     var gunAngleDeg = 0f
 
     override fun update(me: Entity, timeStepSec: Float) {
         val b = me[body]
+        gun.update(timeStepSec)
         control.fireJustPressed.then {
-            val quack1Or2 = random.nextInt(2)
-            when(quack1Or2) {
-                0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
-                1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
-            }
+
 
             ctx.engine.entity {
                 text("kwa", b.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
+            }
+            if(gun.shoot(1)) {
+                val quack1Or2 = random.nextInt(2)
+                when(quack1Or2) {
+                    0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
+                    1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
+                }
+            } else {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.Hurt)
             }
         }
         control.left.then {
