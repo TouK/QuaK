@@ -13,9 +13,16 @@ class Level1 : Level {
         ctx.params.overwrite(LevelParams().also {
             it.playerColor = Color.BLACK
         })
+
+        val loader = LevelMapLoader(ctx).also {
+            it.loadMap("city")
+        }
+        width = loader.width
+        height = loader.height
+
         createBounds(ctx, width, height)
-        createPlayer(ctx, 10f, 2f, ctx.redPlayerControl)
-        createPlayer(ctx, 20f, 2f, ctx.bluePlayerControl)
+        createPlayer(ctx, width * 0.2f, 2f, ctx.redPlayerControl)
+        createPlayer(ctx, width * 0.8f, 2f, ctx.bluePlayerControl)
     }
 
     override fun dispose() {
