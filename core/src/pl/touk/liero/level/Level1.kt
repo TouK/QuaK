@@ -3,6 +3,7 @@ package pl.touk.liero.level
 import com.badlogic.gdx.graphics.Color
 import pl.touk.liero.Ctx
 import pl.touk.liero.game.player.createPlayer
+import pl.touk.liero.game.weapon.createWeapon
 import pl.touk.liero.utils.overwrite
 
 class Level1 : Level {
@@ -13,6 +14,9 @@ class Level1 : Level {
         ctx.params.overwrite(LevelParams().also {
             it.playerColor = Color.BLACK
         })
+        val weapon1 = createWeapon(ctx, 0f, 0f)
+        val weapon2 = createWeapon(ctx, 0f, 0f)
+
 
         val loader = LevelMapLoader(ctx).also {
             it.loadMap("city")
@@ -21,8 +25,8 @@ class Level1 : Level {
         height = loader.height
 
         createBounds(ctx, width, height)
-        createPlayer(ctx, width * 0.2f, 2f, ctx.redPlayerControl)
-        createPlayer(ctx, width * 0.8f, 2f, ctx.bluePlayerControl)
+        createPlayer(ctx, width * 0.2f, 2f, ctx.redPlayerControl, weapon1)
+        createPlayer(ctx, width * 0.8f, 2f, ctx.bluePlayerControl, weapon2)
     }
 
     override fun dispose() {
