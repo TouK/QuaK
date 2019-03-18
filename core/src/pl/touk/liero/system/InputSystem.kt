@@ -16,6 +16,8 @@ class InputSystem(private val playerControl: PlayerControl,
     override fun update(timeStepSec: Float) {
         playerControl.fire = fire.pressed()
         playerControl.fireJustPressed = fire.justPressed()
+        playerControl.jump = jump.pressed()
+        playerControl.jumpJustPressed = jump.justPressed()
         playerControl.left = left.pressed()
         playerControl.right = right.pressed()
         playerControl.up = up.pressed()

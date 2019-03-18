@@ -25,8 +25,8 @@ class Level1 : Level {
         height = loader.height
 
         createBounds(ctx, width, height)
-        createPlayer(ctx, width * 0.2f, 2f, ctx.redPlayerControl, weapon1)
-        createPlayer(ctx, width * 0.8f, 2f, ctx.bluePlayerControl, weapon2)
+        createPlayer(ctx, width * 0.2f, 2f, ctx.keyboardPlayerControl, weapon1)
+        createPlayer(ctx, width * 0.8f, 2f, ctx.joystickPlayerControl, weapon2)
     }
 
     override fun dispose() {

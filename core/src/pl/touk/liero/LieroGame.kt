@@ -7,10 +7,10 @@ import pl.touk.liero.gdx.glClear
 import pl.touk.liero.scene.EmptyScene
 import pl.touk.liero.scene.WorldScene
 import pl.touk.liero.screen.UiEvent
-import pl.touk.liero.state.State
 import pl.touk.liero.state.GameState
 import pl.touk.liero.state.LevelSelectionState
 import pl.touk.liero.state.MenuState
+import pl.touk.liero.state.State
 
 open class LieroGame constructor(val ctx: Ctx): Game() {
 

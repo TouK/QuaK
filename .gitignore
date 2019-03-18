@@ -132,8 +132,4 @@ core/assets/menu.atlas
 core/assets/menu.png
 
 ## Intellij, except run configurations
-.idea/modules/*
-.idea/libraries/*
-.idea/*.xml
-.idea/.name
-!.idea/runConfigurations/*
+.idea
