@@ -1,17 +1,21 @@
 package pl.touk.liero
 
 import com.badlogic.gdx.graphics.Color
+import ktx.math.vec2
 import com.badlogic.gdx.math.MathUtils.random
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
 import pl.touk.liero.entity.entity
 import pl.touk.liero.script.Script
 import pl.touk.liero.game.PlayerControl
+import pl.touk.liero.game.projectile.fireBazooka
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.then
 
 class PlayerScript(val ctx: Ctx, val control: PlayerControl) : Script {
+
+    var gunAngleDeg = 0f
 
     override fun update(me: Entity, timeStepSec: Float) {
         val b = me[body]
@@ -32,6 +36,9 @@ class PlayerScript(val ctx: Ctx, val control: PlayerControl) : Script {
         }
         control.right.then {
             b.setLinearVelocity(ctx.params.playerSpeed, b.linearVelocity.y)
+        }
+        control.fireJustPressed.then {
+            fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotate(gunAngleDeg))
         }
     }
 }
