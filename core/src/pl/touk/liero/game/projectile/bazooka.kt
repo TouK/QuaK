@@ -38,6 +38,7 @@ class BazookaScript(val hitPoints: Float) : Script {
         if (other.contains(energy)) {
             other[energy].energy -= hitPoints
         }
-        // bum!!
+
+        //todo: bum!!
     }
 }

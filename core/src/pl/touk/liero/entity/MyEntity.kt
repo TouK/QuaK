@@ -39,6 +39,10 @@ class EntityBuilder {
         entity.get(children).add(e)
     }
 
+    fun lifeSpan(lifeSpan: Float, begin: Int){
+        e.add(lifespan, LifeSpan(lifeSpan, begin))
+    }
+
     fun text(txt: String, pos: Vector2, color: Color, font: BitmapFont) {
         e.add(text, Text(txt, Vector2(pos), font, color))
     }

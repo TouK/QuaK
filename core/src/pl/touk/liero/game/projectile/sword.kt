@@ -13,8 +13,6 @@ import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
 
-// todo: lifetime, bez tego nie uzywalny
-
 fun swingSword(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
@@ -30,6 +28,7 @@ fun swingSword(ctx: Ctx, pos: Vector2, direction: Vector2) {
         })
         texture(ctx.gameAtlas.findRegion("sword"), ctx.params.swordRange, ctx.params.swordRange)
         script(BazookaScript(ctx.params.swordDamage))
+        lifeSpan(ctx.params.swordLifeSpan, ctx.worldEngine.timeMs)
     }
 }
 
@@ -39,6 +38,5 @@ class Swordcript(val damage: Float) : Script {
         if (other.contains(energy)) {
             other[energy].energy -= damage
         }
-        // bum!!
     }
 }

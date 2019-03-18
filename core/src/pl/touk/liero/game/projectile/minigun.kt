@@ -38,6 +38,5 @@ class MiniGunScript(val damage: Float) : Script {
         if (other.contains(energy)) {
             other[energy].energy -= damage
         }
-        // bum!!
     }
 }
