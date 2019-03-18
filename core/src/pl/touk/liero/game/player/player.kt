@@ -5,7 +5,6 @@ import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
-import pl.touk.liero.ecs.body
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
@@ -27,7 +26,12 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
                 }
             }
         })
-        script(PlayerScript(ctx, playerControl))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize)
+        energy(ctx.params.playerTotalHealth)
+        val bazooka = Bazooka(ctx)
+        script(PlayerScript(ctx, playerControl, bazooka))
+
+        // can be only one render script per Entity
+        renderScript(HealthAndAmmoBar(ctx, bazooka))
     }
 }

@@ -11,6 +11,8 @@ import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 public class Params extends LevelParams {
     public float playerSize = 1f;
     public float playerSpeed = 10f;
+    public float playerTotalHealth = 100f;
+
 
     //kaczkozooka
     public final float bazookasSize = 0.5f;
