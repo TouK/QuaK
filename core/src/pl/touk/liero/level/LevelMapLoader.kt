@@ -30,10 +30,12 @@ class LevelMapLoader(val ctx: Ctx) {
         val gridSizePx = 8
         val tileSizeMeters = 0.25f
 
-        val worldWidth = map.width / gridSizePx
-        val worldHeight = map.height / gridSizePx
-        width = worldWidth.toFloat()
-        height = worldHeight.toFloat()
+        val tilesX = map.width / gridSizePx
+        val tilesY = map.height / gridSizePx
+        /*val worldWidth = (map.width / gridSizePx * tileSizeMeters).toInt()
+        val worldHeight = (map.height / gridSizePx * tileSizeMeters).toInt()*/
+        width = tilesX * tileSizeMeters
+        height = tilesY * tileSizeMeters
 
         ctx.engine.entity {
             body(ctx.worldEngine.baseBody)
@@ -42,11 +44,11 @@ class LevelMapLoader(val ctx: Ctx) {
 
         val color = Color()
 
-        for (wx in 0 until worldWidth) {
-            for (wy in 0 until worldHeight) {
+        for (wx in 0 until tilesX) {
+            for (wy in 0 until tilesY) {
 
                 val tx = wx * gridSizePx
-                val ty = (worldHeight - wy) * gridSizePx
+                val ty = (tilesY - wy) * gridSizePx
 
                 Color.rgba8888ToColor(color, map[tx, ty])
 

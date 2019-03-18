@@ -126,7 +126,7 @@ open class Ctx(val prefs: GamePreferences) {
                     up = Input.Keys.UP,
                     down = Input.Keys.DOWN,
                     jump = Input.Keys.CONTROL_RIGHT,
-                    fire = Input.Keys.SHIFT_RIGHT)
+                    fire = Input.Keys.ALT_RIGHT)
         }
 
         engine.add(
@@ -137,7 +137,7 @@ open class Ctx(val prefs: GamePreferences) {
                         up = Input.Keys.W,
                         down = Input.Keys.S,
                         jump = Input.Keys.CONTROL_LEFT,
-                        fire = Input.Keys.SHIFT_LEFT),
+                        fire = Input.Keys.ALT_LEFT),
                 rightController,
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
