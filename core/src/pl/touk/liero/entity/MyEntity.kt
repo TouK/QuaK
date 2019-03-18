@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.Joint
 import pl.touk.liero.ecs.*
 import pl.touk.liero.script.Script
 
@@ -39,6 +40,14 @@ class EntityBuilder {
         entity.get(children).add(e)
     }
 
+    fun child(entity: Entity) {
+        entity.add(parent, Parent(e))
+        if (!e.contains(children)) {
+            e.add(children, Children())
+        }
+        e.get(children).add(entity)
+    }
+
     fun lifeSpan(lifeSpan: Float, begin: Int){
         e.add(lifespan, LifeSpan(lifeSpan, begin))
     }
@@ -52,6 +61,10 @@ class EntityBuilder {
     }
     fun position(vec: Vector2) {
         e.add(pos, Vector2(vec))
+    }
+
+    fun joint(jnt: Joint) {
+        e.add(joint, jnt)
     }
 }
 

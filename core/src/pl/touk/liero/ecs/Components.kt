@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.Joint
 import ktx.collections.GdxArray
 
 class Energy(var total: Float,
@@ -60,3 +61,4 @@ val children = ComponentTag<Children>(i++)
 val spriteRender = ComponentTag<SpriteRenderScript>(i++)
 val text = ComponentTag<Text>(i++)
 val lifespan = ComponentTag<LifeSpan>(i++)
+val joint = ComponentTag<Joint>(i++)

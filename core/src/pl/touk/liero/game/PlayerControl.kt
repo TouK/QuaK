@@ -8,12 +8,16 @@ interface PlayerControl {
     var left: Boolean
     var right: Boolean
     var fireJustPressed: Boolean
+    var up: Boolean
+    var down: Boolean
+    var yAxis: Float
 
     fun clear()
 }
 
 open class PlayerControlSmooth: PlayerControl {
     override var xAxis: Float = 0f
+    override var yAxis: Float = 0f
     override var fire: Boolean = false
     override var fireJustPressed: Boolean = false
 
@@ -25,8 +29,17 @@ open class PlayerControlSmooth: PlayerControl {
         get() = xAxis > 0.5f
         set(_) {}
 
+    override var up: Boolean
+        get() = yAxis > 0.5f
+        set(_) {}
+
+    override var down: Boolean
+        get() = yAxis < 0.5f
+        set(_) {}
+
     override fun clear() {
         xAxis = 0f
+        yAxis = 0f
         fire = false
         fireJustPressed = false
     }
@@ -36,15 +49,23 @@ class PlayerButtonControl : PlayerControl {
     override var fire = false
     override var left = false
     override var right = false
+    override var up = false
+    override var down = false
     override var fireJustPressed = false
 
     override var xAxis: Float
       get() = if (left) -1f else 0f + if (right) 1f else 0f
-      set(_) { throw OperationNotSupportedException("Can only change throught left, right properties") }
+      set(_) { throw OperationNotSupportedException("Can only change through left, right properties") }
+
+    override var yAxis: Float
+        get() = if (down) -1f else 0f + if (up) 1f else 0f
+        set(_) { throw OperationNotSupportedException("Can only change through up, down properties") }
 
     override fun clear() {
         left = false
         right = false
+        up = false
+        down = false
         fire = false
         fireJustPressed = false
     }

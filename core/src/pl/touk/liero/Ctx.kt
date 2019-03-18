@@ -111,8 +111,8 @@ open class Ctx(val prefs: GamePreferences) {
 
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
-                InputSystem(redPlayerControl, left = Input.Keys.A, right = Input.Keys.D, jump = Input.Keys.W, fire = Input.Keys.CONTROL_LEFT),
-                InputSystem(bluePlayerControl, left = Input.Keys.LEFT, right = Input.Keys.RIGHT, jump = Input.Keys.UP, fire = Input.Keys.NUMPAD_0),
+                InputSystem(redPlayerControl, left = Input.Keys.A, right = Input.Keys.D, up = Input.Keys.W, down = Input.Keys.S, jump = Input.Keys.SPACE, fire = Input.Keys.CONTROL_LEFT),
+                InputSystem(bluePlayerControl, left = Input.Keys.LEFT, right = Input.Keys.RIGHT, up = Input.Keys.UP, down = Input.Keys.DOWN, jump = Input.Keys.CONTROL_RIGHT, fire = Input.Keys.NUMPAD_0),
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
                 SpriteRenderSystem(engine, batch, worldCamera),

@@ -5,6 +5,7 @@ import ktx.math.vec2
 import com.badlogic.gdx.math.MathUtils.random
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
+import pl.touk.liero.ecs.joint
 import pl.touk.liero.entity.entity
 import pl.touk.liero.script.Script
 import pl.touk.liero.game.PlayerControl
@@ -20,9 +21,10 @@ class PlayerScript(val ctx: Ctx, val control: PlayerControl, var gun: Gun) : Scr
 
     override fun update(me: Entity, timeStepSec: Float) {
         val b = me[body]
+        val weapon = me[joint].bodyB
         gun.update(timeStepSec)
         control.fireJustPressed.then {
-
+            fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
 
             ctx.engine.entity {
                 text("kwa", b.position, Color.WHITE, ctx.smallFont)
@@ -44,8 +46,11 @@ class PlayerScript(val ctx: Ctx, val control: PlayerControl, var gun: Gun) : Scr
         control.right.then {
             b.setLinearVelocity(ctx.params.playerSpeed, b.linearVelocity.y)
         }
-        control.fireJustPressed.then {
-            fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotate(gunAngleDeg))
+        control.up then {
+            weapon.angularVelocity = ctx.params.weaponRotationSpeed
+        }
+        control.down then {
+            weapon.angularVelocity = -ctx.params.weaponRotationSpeed
         }
     }
 }
