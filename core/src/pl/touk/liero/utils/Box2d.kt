@@ -8,11 +8,11 @@ import kotlin.experimental.and
 
 private object categoryCheck : QueryCallback {
     var categoryMask: Short = 0
-    var result: Boolean = false
+    var result: Fixture? = null
 
     override fun reportFixture(fixture: Fixture): Boolean {
         if (fixture.filterData.categoryBits and categoryMask != 0.toShort()) {
-            result = true
+            result = fixture
             return false    // terminate
         }
         return true
@@ -34,12 +34,23 @@ private object myQueryCallback : QueryCallback {
 
 /**
  * Szukaj obiektu w danym kwadracie, którego kategoria (categoryBits) pokrywa się z maską.
+ * Zwraca pierwszy fixture który znajdzie
+ */
+fun World.querySquare(pos: Vector2, size: Float, categotyMask: Short): Fixture? {
+    categoryCheck.categoryMask = categotyMask
+    categoryCheck.result = null
+    this.QueryAABB(categoryCheck, pos.x - size / 2, pos.y - size / 2, pos.x + size / 2, pos.y + size / 2)
+    return categoryCheck.result
+}
+
+/**
+ * Szukaj obiektu w danym prostokącie, którego kategoria (categoryBits) pokrywa się z maską.
  * Zwraca pierwszy obiekt który znajdzie
  */
-fun World.querySquare(pos: Vector2, size: Float, categotyMask: Short): Boolean {
+fun World.queryRectangle(pos: Vector2, width: Float, height: Float, categotyMask: Short): Fixture? {
     categoryCheck.categoryMask = categotyMask
-    categoryCheck.result = false
-    this.QueryAABB(categoryCheck, pos.x - size / 2, pos.y - size / 2, pos.x + size / 2, pos.y + size / 2)
+    categoryCheck.result = null
+    this.QueryAABB(categoryCheck, pos.x - width / 2, pos.y - height / 2, pos.x + width / 2, pos.y + height / 2)
     return categoryCheck.result
 }
 

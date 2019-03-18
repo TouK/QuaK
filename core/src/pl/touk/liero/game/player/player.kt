@@ -16,8 +16,9 @@ import pl.touk.liero.game.mask_red
 fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, weapon: Entity) {
     val playerBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
         position.set(x, y)
-        linearDamping = 0.9f
+        linearDamping = 0f
         fixedRotation = true
+        gravityScale = 2f
         circle(radius = ctx.params.playerSize / 2f) {
             density = 1f
             restitution = 0.1f

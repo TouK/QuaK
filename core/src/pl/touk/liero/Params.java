@@ -11,8 +11,9 @@ import static pl.touk.liero.gdx.Scene2dKt.screenWidth;
 import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 
 public class Params extends LevelParams {
-    public float playerSize = 1f;
+    public float playerSize = 0.95f;
     public float playerSpeed = 10f;
+    public float playerJumpSpeed = 10f;
     public float playerTotalHealth = 100f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
 
@@ -23,6 +24,7 @@ public class Params extends LevelParams {
     public float weaponAngularDamping = 10f;
     public float weaponBodyWidth = playerSize * 1f;
     public float weaponBodyHeight = playerSize * 0.5f;
+
 
     //kaczkozooka
     public final float bazookasSize = 0.1f;
@@ -66,5 +68,4 @@ public class Params extends LevelParams {
     public Value buttonSize = shorterPercent(0.25f);
     public Value smallButtonSize = shorterPercent(0.2f);
     public Value logoWidth = shorterPercent(0.8f);
-
 }
