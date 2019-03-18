@@ -16,7 +16,8 @@ import pl.touk.liero.script.Script
 fun swingSword(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
-            position.set(pos)
+            val vec = Vector2(direction.nor()).scl(1.5f)
+            position.set(pos.add(vec))
             gravityScale = 0f
             linearDamping = 0f
             circle(ctx.params.swordRange) {
@@ -27,12 +28,12 @@ fun swingSword(ctx: Ctx, pos: Vector2, direction: Vector2) {
             }
         })
         texture(ctx.gameAtlas.findRegion("sword"), ctx.params.swordRange, ctx.params.swordRange)
-        script(BazookaScript(ctx.params.swordDamage))
+        script(SwordScript(ctx.params.swordDamage))
         lifeSpan(ctx.params.swordLifeSpan, ctx.worldEngine.timeMs)
     }
 }
 
-class Swordcript(val damage: Float) : Script {
+class SwordScript(val damage: Float) : Script {
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
         me.dead = true
         if (other.contains(energy)) {

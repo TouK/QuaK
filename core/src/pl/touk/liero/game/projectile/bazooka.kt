@@ -7,6 +7,7 @@ import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Entity
+import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
@@ -18,8 +19,9 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
             gravityScale = 0f
             linearDamping = 0f
+            bullet = true
             linearVelocity.set(direction.scl(ctx.params.bazookasSpeed))
-            var vec = Vector2(direction).scl(1.5f)
+            val vec = Vector2(direction.nor()).scl(1.5f)
             position.set(pos.add(vec))
             circle(ctx.params.bazookasSize) {
                 filter {
@@ -29,17 +31,44 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
             }
         })
         texture(ctx.gameAtlas.findRegion("bazooka"), ctx.params.bazookasSize, ctx.params.bazookasSize)
-        script(BazookaScript(ctx.params.bazookaDamage))
+        script(BazookaScript(ctx.params.bazookaDirectDamage, ctx))
     }
 }
 
-class BazookaScript(val hitPoints: Float) : Script {
+class BazookaScript(val hitPoints: Float, val ctx: Ctx) : Script {
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
         me.dead = true
         if (other.contains(energy)) {
             other[energy].energy -= hitPoints
         }
+        ctx.actions.schedule(0) { explosion(ctx, me[body].position) }
+    }
+}
 
-        //todo: bum!!
+fun explosion(ctx: Ctx, pos:Vector2) {
+    ctx.engine.entity {
+        body(ctx.world.body(BodyDef.BodyType.StaticBody) {
+            gravityScale = 0f
+            linearDamping = 0f
+            position.set(pos)
+            circle(ctx.params.bazookaRadius) {
+                isSensor = true
+                filter {
+                    categoryBits = cat_bulletRed
+                    maskBits = mask_bulletRed
+                }
+            }
+        })
+        lifeSpan(0.5f, ctx.worldEngine.timeMs)
+        texture(ctx.gameAtlas.findRegion("explosion"), ctx.params.bazookaRadius, ctx.params.bazookaRadius)
+        script(ExplosionScript(ctx.params.bazookaExplosionDamage))
+    }
+}
+
+class ExplosionScript(val damage: Float) : Script {
+    override fun beginContact(me: Entity, other: Entity, contact: Contact) {
+        if (other.contains(energy)) {
+            other[energy].energy -= damage
+        }
     }
 }
