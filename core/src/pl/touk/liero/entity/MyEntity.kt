@@ -29,8 +29,9 @@ class EntityBuilder {
     fun texture(tex: TextureRegion,
                 width: Float, height: Float,
                 pos: Vector2 = Vector2(), angle: Float = 0f,
-                scale: Float = 1f, color: Color = Color.WHITE) {
-        e.add(texture, Texture(tex, width, height, pos, angle, scale, scale, color))
+                scale: Float = 1f,
+                color: Color = Color.WHITE) {
+        e.add(texture, Texture(TextureRegion(tex), width, height, pos, angle, scale, scale, color))
     }
     fun parent(entity: Entity) {
         e.add(parent, Parent(entity))
