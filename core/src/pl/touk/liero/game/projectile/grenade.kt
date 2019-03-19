@@ -41,17 +41,13 @@ fun fireGrenade(ctx: Ctx, pos: Vector2, direction: Vector2) {
                 }
             }
         })
-        texture(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"), ctx.params.grenadeSize, ctx.params.grenadeSize)
+        texture(ctx.gameAtlas.findRegion("kaczkogranat2"), ctx.params.grenadeSize, ctx.params.grenadeSize)
         lifeSpan(3000f, ctx.worldEngine.timeMs)
-        val projectileAnimation = createProjectileAnimation(ctx)
-        script(GrenadeScript(projectileAnimation, ctx))
+        script(GrenadeScript(ctx))
     }
 }
 
-class GrenadeScript(val projectileAnimation: Animation<TextureRegion>,
-                    val ctx: Ctx) : Script {
-
-    var liveTime: Float = 0f
+class GrenadeScript(val ctx: Ctx) : Script {
 
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
         ctx.actions.schedule(0) { playBounceSound() }
@@ -83,9 +79,6 @@ class GrenadeScript(val projectileAnimation: Animation<TextureRegion>,
     }
 
     override fun update(me: Entity, timeStepSec: Float) {
-        liveTime += timeStepSec
-        val textureRegion = projectileAnimation.getKeyFrame(liveTime)
-        me[texture].texture = textureRegion
         me[texture].angleDeg = me[body].linearVelocity.angle()
         return
     }
@@ -99,17 +92,4 @@ class GrenadeScript(val projectileAnimation: Animation<TextureRegion>,
         }
         ctx.sound.playSoundSample(SoundSystem.SoundSample.Explode)
     }
-}
-
-private fun createProjectileAnimation(ctx: Ctx): Animation<TextureRegion> {
-    val walkFrames: Array<TextureRegion> = Array()
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-02"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-03"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-04"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-05"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-06"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-07"))
-    walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-08"))
-    return Animation(0.025f, walkFrames, Animation.PlayMode.LOOP)
 }

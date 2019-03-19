@@ -49,7 +49,7 @@ public class Params extends LevelParams {
     public final float bazookaDirectDamage = 5;
     public final float bazookaExplosionDamage = 20;
     public final float bazookaRadius = 1f;
-    public final float bazookasSpeed = 12f;
+    public final float bazookasSpeed = 24f;
     public final float bazookaCooldown = 2f;
     public final int bazookaAmmo = 5;
 
