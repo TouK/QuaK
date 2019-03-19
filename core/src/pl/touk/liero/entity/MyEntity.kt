@@ -33,6 +33,11 @@ class EntityBuilder {
                 color: Color = Color.WHITE) {
         e.add(texture, Texture(TextureRegion(tex), width, height, pos, angle, scale, scale, color))
     }
+
+    fun texture(tex: Texture) {
+        e.add(texture, tex)
+    }
+
     fun parent(entity: Entity) {
         e.add(parent, Parent(entity))
         if (!entity.contains(children)) {

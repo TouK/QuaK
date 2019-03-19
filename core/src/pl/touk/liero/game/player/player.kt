@@ -12,7 +12,7 @@ import pl.touk.liero.PlayerScript
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
-import pl.touk.liero.game.gun.Bazooka
+import pl.touk.liero.game.weapon.Bazooka
 import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
 import pl.touk.liero.system.BloodScript
@@ -36,6 +36,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     }
 
     val weaponBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
+
         position.set(x, y)
         angularDamping = ctx.params.weaponAngularDamping
         fixedRotation = true
@@ -51,24 +52,26 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
         }
     }
 
+    val bazooka = Bazooka(ctx)
+    val movementAnimation = createMovementAnimation(ctx)
+    val idleAnimation = createStandAnimation(ctx)
+    val state = PlayerState(bazooka, mutableListOf(bazooka))
+
     ctx.engine.entity {
         body(playerBody)
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.4f)
         energy(ctx.params.playerTotalHealth)
-        val bazooka = Bazooka(ctx)
-        val movementAnimation = createMovementAnimation(ctx)
-        val idleAnimation = createStandAnimation(ctx)
-        script(PlayerScript(ctx, playerControl, bazooka, weaponBody, movementAnimation, idleAnimation))
+        script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation))
         script(BloodScript(ctx))
 
         // can be only one render script per Entity
-        renderScript(HealthAndAmmoBar(ctx, bazooka))
+        renderScript(HealthAndAmmoBar(ctx, state))
     }
 
     ctx.engine.entity {
         body(weaponBody)
-        texture(ctx.gameAtlas.findRegion("kaczkozooka"), 2.6f, 1f, vec2(0f, -0.3f))
+        texture(bazooka.texture)
     }
 }
 

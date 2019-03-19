@@ -6,16 +6,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.MathUtils.random
-import com.badlogic.gdx.physics.box2d.Body
 import ktx.math.vec2
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
+import pl.touk.liero.ecs.joint
 import pl.touk.liero.ecs.texture
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_ground
-import pl.touk.liero.game.gun.Gun
-import pl.touk.liero.game.projectile.fireBazooka
+import pl.touk.liero.game.player.PlayerState
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
@@ -24,8 +23,7 @@ import pl.touk.liero.utils.then
 
 class PlayerScript(val ctx: Ctx,
                    val control: PlayerControl,
-                   val gun: Gun,
-                   val weapon: Body,
+                   val playerState: PlayerState,
                    val animation: Animation<TextureRegion>,
                    val idleAnimation: Animation<TextureRegion>) : Script {
 
@@ -33,12 +31,14 @@ class PlayerScript(val ctx: Ctx,
     var movingAnimationTime: Float = 0f
     var idleAnimationTime: Float = 0f
     var isRight = true
+    fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
         val myBody = me[body]
         val myTexture = me[texture]
+        val weapon = weaponBody(me)
 
-        gun.update(timeStepSec)
+        playerState.currentWeapon.update(timeStepSec)
 
         control.fireJustPressed.then {
 
@@ -46,10 +46,10 @@ class PlayerScript(val ctx: Ctx,
                 text("kwa", myBody.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
             }
-            if (gun.shoot(1)) {
+            if (playerState.currentWeapon.preAttack(1)) {
                 val quack1Or2 = random.nextInt(2)
 
-                fireBazooka(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
+                playerState.currentWeapon.attack(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
 
                 when (quack1Or2) {
                     0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
@@ -101,6 +101,14 @@ class PlayerScript(val ctx: Ctx,
         renderMovement(me, timeStepSec)
     }
 
+    private fun switchWeapon(me: Entity) {
+        val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
+        val nextWeaponIndex = (currWeaponIndex + 1) % playerState.weapons.size
+        playerState.currentWeapon = playerState.weapons[nextWeaponIndex]
+        val weaponEntity = weaponBody(me).userData as Entity
+        weaponEntity[texture] = playerState.currentWeapon.texture
+    }
+
     private fun renderMovement(me: Entity, timeStepSec: Float) {
 
         if (kotlin.math.abs(me[body].linearVelocity.x) > ctx.params.idleVelocityLimit) {
@@ -117,6 +125,6 @@ class PlayerScript(val ctx: Ctx,
     }
 
     override fun beforeDestroy(me: Entity) {
-        weapon.fixtureList.forEach { it.isSensor = false }
+        weaponBody(me).fixtureList.forEach { it.isSensor = false }
     }
 }
