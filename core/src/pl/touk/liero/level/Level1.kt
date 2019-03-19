@@ -15,7 +15,7 @@ class Level1 : Level {
             it.playerColor = Color.BLACK
         })
         val loader = LevelMapLoader(ctx).also {
-            it.loadMap("las")
+            it.loadMap("mostek")
         }
         width = loader.width
         height = loader.height
