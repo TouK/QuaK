@@ -27,7 +27,7 @@ fun swingSword(ctx: Ctx, pos: Vector2, direction: Vector2) {
                 }
             }
         })
-        texture(ctx.gameAtlas.findRegion("sword"), ctx.params.swordRange, ctx.params.swordRange)
+        texture(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"), ctx.params.swordRange, ctx.params.swordRange)
         script(SwordScript(ctx.params.swordDamage))
         lifeSpan(ctx.params.swordLifeSpan, ctx.worldEngine.timeMs)
     }

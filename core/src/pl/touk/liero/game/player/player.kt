@@ -15,6 +15,8 @@ import pl.touk.liero.game.cat_red
 import pl.touk.liero.game.weapon.Bazooka
 import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
+import pl.touk.liero.game.weapon.Gun
+import pl.touk.liero.game.weapon.Weapon
 import pl.touk.liero.system.BloodScript
 
 
@@ -53,9 +55,11 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     }
 
     val bazooka = Bazooka(ctx)
+    val gun = Gun(ctx)
+    val weapons = listOf(bazooka, gun)
     val movementAnimation = createMovementAnimation(ctx)
     val idleAnimation = createStandAnimation(ctx)
-    val state = PlayerState(bazooka, mutableListOf(bazooka))
+    val state = PlayerState(bazooka,weapons)
 
     ctx.engine.entity {
         body(playerBody)
@@ -71,7 +75,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
 
     ctx.engine.entity {
         body(weaponBody)
-        texture(bazooka.texture)
+        texture(bazooka.texture.copy())
     }
 }
 

@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.MathUtils.random
 import ktx.math.vec2
-import pl.touk.liero.ecs.Entity
-import pl.touk.liero.ecs.body
-import pl.touk.liero.ecs.joint
-import pl.touk.liero.ecs.texture
+import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_ground
@@ -46,7 +43,7 @@ class PlayerScript(val ctx: Ctx,
                 text("kwa", myBody.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
             }
-            if (playerState.currentWeapon.preAttack(1)) {
+            if (playerState.currentWeapon.canAttack()) {
                 val quack1Or2 = random.nextInt(2)
 
                 playerState.currentWeapon.attack(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
@@ -98,12 +95,15 @@ class PlayerScript(val ctx: Ctx,
             myBody.gravityScale = ctx.params.playerGravityScale
         }
 
-        control.changeWeapon then {
+        control.changeWeaponJustPressed then {
             val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
             val nextWeaponIndex = (currWeaponIndex + 1) % playerState.weapons.size
             playerState.currentWeapon = playerState.weapons[nextWeaponIndex]
             val weaponEntity = weaponBody(me).userData as Entity
-            weaponEntity[texture] = playerState.currentWeapon.texture
+            weaponEntity[texture] = playerState.currentWeapon.texture.copy()
+            if (!isRight) {
+                weaponEntity[texture].flipY()
+            }
         }
 
         renderMovement(me, timeStepSec)

@@ -29,7 +29,7 @@ fun fireKaczkosznikov(ctx: Ctx, pos: Vector2, direction: Vector2) {
                 }
             }
         })
-        texture(ctx.gameAtlas.findRegion("kaczkosznikov"), ctx.params.kaczkosznikovSize, ctx.params.kaczkosznikovSize)
+        texture(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"), ctx.params.kaczkosznikovSize, ctx.params.kaczkosznikovSize)
         script(KaczkosznikovScript(ctx.params.kaczkosznikovDamage))
     }
 }
