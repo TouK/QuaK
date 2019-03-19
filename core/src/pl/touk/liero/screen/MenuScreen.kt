@@ -2,9 +2,11 @@ package pl.touk.liero.screen
 
 import com.badlogic.gdx.Gdx
 import ktx.scene2d.button
+import ktx.scene2d.label
 import ktx.scene2d.table
 import pl.touk.liero.Ctx
 import pl.touk.liero.gdx.onClicked
+import pl.touk.liero.gdx.shorterPercent
 import pl.touk.liero.system.SoundSystem
 
 class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
@@ -12,6 +14,10 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
         setFillParent(true)
         defaults().pad(ctx.params.pad)
 
+        label("") {cell ->
+            cell.minHeight(shorterPercent(0.6f))
+        }
+        row()
         table {
             button("play") { cell ->
                 onClicked {
