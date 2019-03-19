@@ -54,8 +54,6 @@ class PlayerScript(val ctx: Ctx,
                     0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
                     1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
                 }
-            } else {
-                ctx.sound.playSoundSample(SoundSystem.SoundSample.Hurt)
             }
         }
 
