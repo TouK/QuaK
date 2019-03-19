@@ -200,12 +200,12 @@ class PlayerScript(val ctx: Ctx,
     private fun respawn() {
         if(team == "left") {
             ctx.rightFrags++
-            if(ctx.rightFrags < 5) {
+            if(ctx.rightFrags < ctx.params.fragsLimit) {
                 createPlayer(ctx, ctx.level.width * 0.2f, 4f, ctx.leftPlayerControl, "left")
             }
         } else {
             ctx.leftFrags++
-            if(ctx.leftFrags < 5) {
+            if(ctx.leftFrags < ctx.params.fragsLimit) {
                 ctx.actions.schedule(0.5f) {
                     createPlayer(ctx, ctx.level.width * 0.8f, 4f, ctx.rightPlayerControl, "right")
                 }
