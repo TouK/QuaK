@@ -23,14 +23,12 @@ class Bazooka(val ctx: Ctx) : Weapon {
             }
         }
 
-
         if (lastUpdate > 1) {
             ammo = if (ammo < totalAmmo) ammo + 1 else ammo
             lastUpdate = 0f
         } else {
             lastUpdate += timeStepSec
         }
-
     }
 
     override fun preAttack(ammoChange: Int): Boolean {

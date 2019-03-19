@@ -54,6 +54,11 @@ class BazookaProjectileScript(val hitPoints: Float,
         ctx.actions.schedule(0) { explosion(ctx, me[body].position) }
     }
 
+    override fun beforeDestroy(me: Entity) {
+        ctx.worldCamera.shake()
+        super.beforeDestroy(me)
+    }
+
     override fun update(me: Entity, timeStepSec: Float) {
         liveTime += timeStepSec
         val textureRegion = projectailAnimation.getKeyFrame(liveTime)
