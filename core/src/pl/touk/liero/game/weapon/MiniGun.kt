@@ -15,6 +15,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import pl.touk.liero.system.SoundSystem
 import kotlin.random.Random.Default.nextFloat
 
 class MiniGun(val ctx: Ctx): Weapon {
@@ -62,6 +63,7 @@ class MiniGun(val ctx: Ctx): Weapon {
 
     override fun attack(ctx: Ctx, pos: Vector2, direction: Vector2) {
         ammo -= 1
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckShort)
         fireMiniGun(ctx, pos, direction)
     }
 
@@ -105,6 +107,11 @@ class MiniGunScript(val ctx: Ctx) : Script {
         if (other.contains(energy)) {
             other[energy].energy -= ctx.params.miniGunDamage
         }
+        ctx.actions.schedule(0) { playHitSound() }
+    }
+
+    private fun playHitSound() {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.NesPew)
     }
 
     override fun update(me: Entity, timeStepSec: Float) {

@@ -17,6 +17,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import pl.touk.liero.system.SoundSystem
 
 fun fireGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
@@ -52,6 +53,11 @@ class GunProjectileScript(val damage: Float,
         if (other.contains(energy)) {
             other[energy].energy -= damage
         }
+        ctx.actions.schedule(0) { playHitSound() }
+    }
+
+    private fun playHitSound() {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.NesPew)
     }
 
     override fun update(me: Entity, timeStepSec: Float) {

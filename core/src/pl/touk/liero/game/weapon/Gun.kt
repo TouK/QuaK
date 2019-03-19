@@ -7,6 +7,7 @@ import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Texture
 import pl.touk.liero.game.projectile.fireBazooka
 import pl.touk.liero.game.projectile.fireGun
+import pl.touk.liero.system.SoundSystem
 
 class Gun(val ctx: Ctx) : Weapon {
     var cooldown: Float = ctx.params.gunCooldown
@@ -32,6 +33,7 @@ class Gun(val ctx: Ctx) : Weapon {
     }
 
     override fun attack(ctx: Ctx, pos: Vector2, direction: Vector2) {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckExclaim)
         fireGun(ctx, pos, direction)
     }
 

@@ -55,14 +55,7 @@ class PlayerScript(val ctx: Ctx,
                 script(LifeTimeScript(1f))
             }
             if (playerState.currentWeapon.canAttack()) {
-                val quack1Or2 = random.nextInt(2)
-
                 playerState.currentWeapon.attack(ctx, me[body].position, vec2(1f, 0f).rotateRad(weapon.angle))
-
-                when (quack1Or2) {
-                    0 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack1)
-                    1 -> ctx.sound.playSoundSample(SoundSystem.SoundSample.Quack2)
-                }
             }
         }
 
@@ -96,6 +89,7 @@ class PlayerScript(val ctx: Ctx,
         control.jumpJustPressed.then {
             val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
             if (ground != null) {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.Jump)
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
                 myBody.gravityScale = ctx.params.playerGravityScaleInAir
             }
@@ -147,7 +141,10 @@ class PlayerScript(val ctx: Ctx,
     }
 
     private fun checkIfHurt(me: Entity) {
-        hurt = hurt || lastEnergy > me[energy].energy
+        if(lastEnergy > me[energy].energy) {
+            ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckHowl)
+            hurt = true
+        }
         lastEnergy = me[energy].energy
     }
 
@@ -185,6 +182,7 @@ class PlayerScript(val ctx: Ctx,
     }
 
     override fun beforeDestroy(me: Entity) {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckLong)
         weaponBody(me).fixtureList.forEach { it.isSensor = false }
     }
 }
