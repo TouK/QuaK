@@ -39,11 +39,11 @@ public class Params extends LevelParams {
 
     //kaczkozooka
     public final float bazookasSize = 0.25f;
-    public final float bazookaDirectDamage = 2;
-    public final float bazookaExplosionDamage = 8;
+    public final float bazookaDirectDamage = 5;
+    public final float bazookaExplosionDamage = 20;
     public final float bazookaRadius = 1f;
-    public final float bazookasSpeed = 15f;
-    public final float bazookaCooldown = 2f;
+    public final float bazookasSpeed = 12f;
+    public final float bazookaCooldown = 3f;
     public final int bazookaAmmo = 5;
 
     //fragzooka
@@ -68,14 +68,14 @@ public class Params extends LevelParams {
 
     //kaczkospluwa 
     public final float gunSize = 0.5f;
-    public final float gunDamage = 5f;
-    public final float gunSpeed = 7f;
-    public final float gunCooldown = 1f;
+    public final float gunDamage = 12f;
+    public final float gunSpeed = 30f;
+    public final float gunCooldown = 0.75f;
     public final int gunAmmo = 6;
 
     //minigun
     public final float miniGunSize = 0.05f;
-    public final float miniGunDamage = 0.5f;
+    public final float miniGunDamage = 1f;
     public final float miniGunSpeed = 15f;
     public final float miniGunCooldown = 0.05f;
     public final float miniGunOverheat = 5f;

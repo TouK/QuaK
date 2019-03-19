@@ -203,7 +203,7 @@ class ShakyCamera: OrthographicCamera() {
 
     private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) +  start
 
-    fun shake(time: Float = 1f, amp: Float = 0.2f, freq: Int = 15, fade: Boolean = true) {
+    fun shake(time: Float = 1f, amp: Float = 1f, freq: Int = 15, fade: Boolean = true) {
         shake = true
         timer = 0f
         duration = time
@@ -213,7 +213,7 @@ class ShakyCamera: OrthographicCamera() {
         samples = FloatArray(frequency)
         for (i in 0 until frequency) {
 //            samples[i] = Random().nextFloat() * 2f - 1f
-            samples[i] = (-1..1).random().toFloat() // only 3 variants (-1, 0, 1) and same visible effect as function above, lol
+//            samples[i] = (-1..1).random().toFloat() // only 3 variants (-1, 0, 1) and same visible effect as function above, lol
         }
     }
 
