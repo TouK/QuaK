@@ -1,25 +1,24 @@
 package pl.touk.liero.script
 
+import com.badlogic.gdx.Input
 import pl.touk.liero.Ctx
 import pl.touk.liero.RotateScript
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.entity.entity
+import pl.touk.liero.gdx.ifJustPressed
 
-fun createWinnerScript(ctx: Ctx, left: Entity, right: Entity) {
-    ctx.engine.entity {
-        script(WinnerScript(ctx, left, right))
-    }
-}
-
-class WinnerScript(val ctx: Ctx, val left: Entity, val right: Entity) : Script {
+class WinnerScript(val ctx: Ctx, val frags: Frags) : Script {
     override fun update(me: Entity, timeStepSec: Float) {
-        if (ctx.leftFrags >= ctx.params.fragsLimit) {
-            showWinner(left)
-            me.dead = true
+        Input.Keys.F3.ifJustPressed {
+            ctx.rightFrags.frags++
         }
-        if (ctx.rightFrags >= ctx.params.fragsLimit) {
-            showWinner(right)
-            me.dead = true
+        Input.Keys.F4.ifJustPressed {
+            ctx.rightFrags.frags++
+        }
+
+        if (frags.frags >= ctx.params.fragsLimit) {
+            showWinner(me)
+            me.scriptsToRemove += this
         }
     }
 

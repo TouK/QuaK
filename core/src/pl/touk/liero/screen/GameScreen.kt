@@ -36,7 +36,7 @@ class GameScreen(ctx: Ctx) : UiScreen(ctx) {
     }
 
     fun update() {
-        leftFooter.setText("frags: " + ctx.leftFrags)
-        rightFooter.setText("frags: " + ctx.rightFrags)
+        leftFooter.setText("frags: " + ctx.leftFrags.frags)
+        rightFooter.setText("frags: " + ctx.rightFrags.frags)
     }
 }

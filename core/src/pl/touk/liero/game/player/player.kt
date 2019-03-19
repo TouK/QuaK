@@ -14,11 +14,8 @@ import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
 import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
-import pl.touk.liero.game.weapon.Bazooka
-import pl.touk.liero.game.weapon.Fragment
-import pl.touk.liero.game.weapon.Gun
-import pl.touk.liero.game.weapon.MiniGun
 import pl.touk.liero.game.weapon.*
+import pl.touk.liero.script.WinnerScript
 import pl.touk.liero.system.BloodScript
 
 
@@ -73,7 +70,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
         energy(ctx.params.playerTotalHealth)
         script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation, team))
         script(BloodScript(ctx))
-
+        script(WinnerScript(ctx, if (team == "left") ctx.leftFrags else ctx.rightFrags))
         // can be only one render script per Entity
         renderScript(HealthAndAmmoBar(ctx, state, weaponBody))
     }

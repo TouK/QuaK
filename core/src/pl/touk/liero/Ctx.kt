@@ -32,6 +32,7 @@ import pl.touk.liero.level.Level
 import pl.touk.liero.level.LevelLoader
 import pl.touk.liero.screen.UiEvent
 import pl.touk.liero.script.CameraScript
+import pl.touk.liero.script.Frags
 import pl.touk.liero.system.*
 import java.util.*
 
@@ -85,8 +86,8 @@ open class Ctx(val prefs: GamePreferences) {
     var cameraScript = CameraScript(worldCamera, 9f, 16f)
     val leftPlayerControl: PlayerControl
     var rightPlayerControl: PlayerControl
-    var leftFrags = 0
-    var rightFrags = 0
+    var leftFrags = Frags()
+    var rightFrags = Frags()
 
 
     init {
@@ -183,8 +184,8 @@ open class Ctx(val prefs: GamePreferences) {
 
     fun clearWorld() {
         worldEngine.clear()
-        leftFrags = 0
-        rightFrags = 0
+        leftFrags = Frags()
+        rightFrags = Frags()
     }
 
     fun resize(width: Int, height: Int) {
