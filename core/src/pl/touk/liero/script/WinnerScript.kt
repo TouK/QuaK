@@ -13,11 +13,11 @@ fun createWinnerScript(ctx: Ctx, left: Entity, right: Entity) {
 
 class WinnerScript(val ctx: Ctx, val left: Entity, val right: Entity) : Script {
     override fun update(me: Entity, timeStepSec: Float) {
-        if (ctx.leftFrags >= 1) {
+        if (ctx.leftFrags >= 4) {
             showWinner(left)
             me.dead = true
         }
-        if (ctx.rightFrags >= 1) {
+        if (ctx.rightFrags >= 4) {
             showWinner(right)
             me.dead = true
         }
