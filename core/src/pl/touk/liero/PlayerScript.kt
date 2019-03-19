@@ -74,16 +74,16 @@ class PlayerScript(val ctx: Ctx,
         }
         val direction = if (isRight) -1 else 1
 
-        control.up then {
+        if (control.up) {
             if (weapon.angle < ctx.params.weaponUpperAngle || MathUtils.PI - weapon.angle < ctx.params.weaponUpperAngle) {
                 weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
             }
-        }
-
-        control.down then {
+        } else if (control.down) {
             if (weapon.angle > ctx.params.weaponLowerAngle && MathUtils.PI - weapon.angle > ctx.params.weaponLowerAngle) {
                 weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
             }
+        } else {
+            weapon.angularVelocity = 0f
         }
 
         control.jumpJustPressed.then {

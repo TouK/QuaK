@@ -17,6 +17,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import pl.touk.liero.utils.querySquare
 
 fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.engine.entity {
@@ -25,7 +26,7 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
             linearDamping = 0f
             bullet = true
             linearVelocity.set(direction.scl(ctx.params.bazookasSpeed))
-            val vec = Vector2(direction.nor()).scl(1.5f)
+            val vec = Vector2(direction.nor()).scl(0.8f)
             position.set(pos.add(vec))
             circle(ctx.params.bazookasSize) {
                 filter {
@@ -70,29 +71,21 @@ class BazookaProjectileScript(val hitPoints: Float,
 
 fun explosion(ctx: Ctx, pos:Vector2) {
     ctx.engine.entity {
-        body(ctx.world.body(BodyDef.BodyType.StaticBody) {
-            gravityScale = 0f
-            linearDamping = 0f
-            position.set(pos)
-            circle(ctx.params.bazookaRadius) {
-                isSensor = true
-                filter {
-                    categoryBits = cat_bulletRed
-                    maskBits = mask_bulletRed
+        position(pos)
+        lifeSpan(0.5f, ctx.worldEngine.timeMs)
+        texture(ctx.gameAtlas.findRegion("explosion"), ctx.params.bazookaRadius * 2, ctx.params.bazookaRadius * 2)
+    }
+    ctx.world.querySquare(pos, ctx.params.bazookaRadius * 2) {fixture ->
+        with(fixture.body.userData) {
+            if (this != null && this is Entity && this.contains(energy) && this.contains(body)) {
+                val distance = this[body].position.sub(pos).len()
+                if (distance <= ctx.params.bazookaRadius) {
+                    //this[energy].energy -= ctx.params.bazookaExplosionDamage * (1 - distance / ctx.params.bazookaRadius)
+                    this[energy].energy -= ctx.params.bazookaExplosionDamage
                 }
             }
-        })
-        lifeSpan(0.5f, ctx.worldEngine.timeMs)
-        texture(ctx.gameAtlas.findRegion("explosion"), ctx.params.bazookaRadius, ctx.params.bazookaRadius)
-        script(ExplosionScript(ctx.params.bazookaExplosionDamage))
-    }
-}
-
-class ExplosionScript(val damage: Float) : Script {
-    override fun beginContact(me: Entity, other: Entity, contact: Contact) {
-        if (other.contains(energy)) {
-            other[energy].energy -= damage
         }
+        true
     }
 }
 

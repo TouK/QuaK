@@ -53,14 +53,18 @@ class LevelMapLoader(val ctx: Ctx) {
                 Color.rgba8888ToColor(color, map[tx, ty])
 
                 var count = 0
+                var redCount = 0
                 for (x in tx until (tx + gridSizePx)) {
                     for (y in ty until (ty + gridSizePx)) {
                         Color.rgba8888ToColor(color, map[x, y])
-                        if (color.r < valueThreshold || color.g < valueThreshold || color.b < valueThreshold)
+                        if (color.r * color.a > valueThreshold || color.g * color.a > valueThreshold || color.b * color.a > valueThreshold)
                             count++
+                        if (color.r > 0.5f)
+                            redCount++
                     }
                 }
                 val fillRatio = count.toFloat() / (gridSizePx * gridSizePx)
+                val redFillRatio = redCount.toFloat() / (gridSizePx * gridSizePx)
 
                 if (fillRatio > 0.7f) {
                     // static
@@ -76,8 +80,8 @@ class LevelMapLoader(val ctx: Ctx) {
                             }
                         })
                         texture(TextureRegion(texture, tx, ty, gridSizePx, gridSizePx), tileSizeMeters, tileSizeMeters)
-                        if (color.r > 0.5f) {
-                            energy(10f)
+                        if (redFillRatio > 0.5f) {
+                            energy(5f)
                         }
                     }
                 }

@@ -15,7 +15,6 @@ import pl.touk.liero.game.weapon.Bazooka
 import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
 import pl.touk.liero.game.weapon.Gun
-import pl.touk.liero.game.weapon.Weapon
 import pl.touk.liero.game.weapon.MiniGun
 import pl.touk.liero.system.BloodScript
 
@@ -72,7 +71,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
         script(BloodScript(ctx))
 
         // can be only one render script per Entity
-        renderScript(HealthAndAmmoBar(ctx, state))
+        renderScript(HealthAndAmmoBar(ctx, state, weaponBody))
     }
 
     ctx.engine.entity {
