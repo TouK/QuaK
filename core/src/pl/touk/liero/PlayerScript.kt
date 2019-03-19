@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
-import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.box2d.body
@@ -12,10 +11,8 @@ import ktx.box2d.filter
 import ktx.math.vec2
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
-import pl.touk.liero.game.PlayerControl
-import pl.touk.liero.game.cat_blood
-import pl.touk.liero.game.cat_ground
-import pl.touk.liero.game.mask_blood
+import pl.touk.liero.game.*
+import pl.touk.liero.game.player.DeadPlayerScript
 import pl.touk.liero.game.player.PlayerState
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
@@ -160,7 +157,7 @@ class PlayerScript(val ctx: Ctx,
                     linearDamping = 0f
                     linearVelocity.set(dir.scl(_random.nextDouble(0.05, ctx.params.bloodSpeed.toDouble()).toFloat()))
                     circle(ctx.params.bloodSize / 2 * 0.6f) {
-                        friction = 0.9f
+                        isSensor = true
                         filter {
                             categoryBits = cat_blood
                             maskBits = mask_blood
@@ -184,5 +181,30 @@ class PlayerScript(val ctx: Ctx,
     override fun beforeDestroy(me: Entity) {
         ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckLong)
         weaponBody(me).fixtureList.forEach { it.isSensor = false }
+        creatDeadBody(me)
+    }
+
+    private fun creatDeadBody(me: Entity) {
+        val playerBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
+            position.set(me[body].position.x,me[body].position.y)
+            linearDamping = 0f
+            fixedRotation = true
+            gravityScale = ctx.params.playerGravityScale
+            circle(radius = ctx.params.playerSize / 2f) {
+                density = 1f
+                restitution = 0.1f
+                friction = 0.1f
+                filter {
+                    categoryBits = cat_red
+                    maskBits = mask_red
+                }
+            }
+        }
+
+        ctx.engine.entity {
+            body(playerBody)
+            texture(ctx.gameAtlas.findRegion("blobDead0"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
+            script(DeadPlayerScript(ctx))
+        }
     }
 }

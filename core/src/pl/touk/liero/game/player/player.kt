@@ -38,7 +38,6 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     }
 
     val weaponBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
-
         position.set(x, y)
         angularDamping = ctx.params.weaponAngularDamping
         fixedRotation = true

@@ -58,7 +58,7 @@ class BloodScript(val ctx: Ctx) : Script {
                     linearDamping = 0f
                     linearVelocity.set(dir.scl(random.nextDouble(0.05, ctx.params.bloodSpeed.toDouble()).toFloat()))
                     circle(ctx.params.bloodSize / 2 * 0.6f) {
-                        friction = 0.9f
+                        isSensor = true
                         filter {
                             categoryBits = cat_blood
                             maskBits = mask_blood
