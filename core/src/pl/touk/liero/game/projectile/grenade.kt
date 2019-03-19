@@ -22,6 +22,8 @@ import pl.touk.liero.utils.querySquare
 import kotlin.math.exp
 
 fun fireGrenade(ctx: Ctx, pos: Vector2, direction: Vector2) {
+    ctx.sound.playSoundSample(SoundSystem.SoundSample.QuackCounter)
+
     ctx.engine.entity {
         body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
             position.set(pos.add(direction.nor()))
@@ -51,6 +53,15 @@ class GrenadeScript(val projectileAnimation: Animation<TextureRegion>,
 
     var liveTime: Float = 0f
 
+    override fun beginContact(me: Entity, other: Entity, contact: Contact) {
+        ctx.actions.schedule(0) { playBounceSound() }
+        super.beginContact(me, other, contact)
+    }
+
+    private fun playBounceSound() {
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.Bounce)
+    }
+
     override fun beforeDestroy(me: Entity) {
         ctx.worldCamera.shake()
 
@@ -66,7 +77,7 @@ class GrenadeScript(val projectileAnimation: Animation<TextureRegion>,
             true
         }
 
-        explosion(ctx, me[body].position)
+        ctx.actions.schedule(0) { explosion(ctx, me[body].position) }
 
         super.beforeDestroy(me)
     }
