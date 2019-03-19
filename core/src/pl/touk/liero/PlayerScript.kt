@@ -98,15 +98,15 @@ class PlayerScript(val ctx: Ctx,
             myBody.gravityScale = ctx.params.playerGravityScale
         }
 
-        renderMovement(me, timeStepSec)
-    }
+        control.changeWeapon then {
+            val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
+            val nextWeaponIndex = (currWeaponIndex + 1) % playerState.weapons.size
+            playerState.currentWeapon = playerState.weapons[nextWeaponIndex]
+            val weaponEntity = weaponBody(me).userData as Entity
+            weaponEntity[texture] = playerState.currentWeapon.texture
+        }
 
-    private fun switchWeapon(me: Entity) {
-        val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
-        val nextWeaponIndex = (currWeaponIndex + 1) % playerState.weapons.size
-        playerState.currentWeapon = playerState.weapons[nextWeaponIndex]
-        val weaponEntity = weaponBody(me).userData as Entity
-        weaponEntity[texture] = playerState.currentWeapon.texture
+        renderMovement(me, timeStepSec)
     }
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {
