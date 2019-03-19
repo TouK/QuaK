@@ -8,6 +8,7 @@ import pl.touk.liero.ecs.Texture
 import pl.touk.liero.game.projectile.fireBazooka
 
 class Bazooka(val ctx: Ctx) : Weapon {
+
     var cooldown: Float = ctx.params.bazookaCooldown
     val name: String = "BAZOOKA"
 

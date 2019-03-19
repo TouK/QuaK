@@ -19,12 +19,12 @@ public class Params extends LevelParams {
     public float playerMaxForce = 120f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
     public float idleVelocityLimit = 5f;
-    public float hurtAnimationTime = 1f;
+    public float hurtAnimationTime = 1.5f;
 
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
-    public float weaponLowerAngle = -MathUtils.PI * 0.125f;
-    public float weaponUpperAngle = MathUtils.PI * 0.125f;
-    public float weaponRotationSpeed = 4f;
+    public float weaponLowerAngle = -MathUtils.PI * 0.25f;
+    public float weaponUpperAngle = MathUtils.PI * 0.25f;
+    public float weaponRotationSpeed = 3f;
     public float weaponAngularDamping = 10f;
     public float weaponBodyWidth = playerSize * 0.9f;
     public float weaponBodyHeight = playerSize * 0.4f;
@@ -78,7 +78,9 @@ public class Params extends LevelParams {
     public final float miniGunDamage = 0.5f;
     public final float miniGunSpeed = 15f;
     public final float miniGunCooldown = 0.05f;
-    public final int miniGunAmmo = 200;
+    public final float miniGunOverheat = 5f;
+    public final float miniGunDispersion = 10f;
+    public final int miniGunAmmo = 100;
 
     public Color colorHud = new Color(1f, 1f, 1f, 0.4f);
     public Color colorLevelOverlay = new Color(0f, 0f, 0f, 0.9f);

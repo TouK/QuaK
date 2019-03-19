@@ -10,4 +10,7 @@ interface Weapon {
     fun canAttack(): Boolean
     fun attack(ctx: Ctx, pos: Vector2, direction: Vector2)
     fun percentageCooldown(): Float
+    fun isOverheat(): Boolean {
+        return false
+    }
 }

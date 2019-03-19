@@ -72,8 +72,9 @@ class BazookaProjectileScript(val hitPoints: Float,
 fun explosion(ctx: Ctx, pos:Vector2) {
     ctx.engine.entity {
         position(pos)
-        lifeSpan(0.5f, ctx.worldEngine.timeMs)
-        texture(ctx.gameAtlas.findRegion("explosion"), ctx.params.bazookaRadius * 2, ctx.params.bazookaRadius * 2)
+        lifeSpan(1750f, ctx.worldEngine.timeMs)
+        texture(ctx.gameAtlas.findRegion("frame0000"), ctx.params.bazookaRadius * 3, ctx.params.bazookaRadius * 3)
+        script(ExplosionScript(ctx))
     }
     ctx.world.querySquare(pos, ctx.params.bazookaRadius * 2) {fixture ->
         with(fixture.body.userData) {

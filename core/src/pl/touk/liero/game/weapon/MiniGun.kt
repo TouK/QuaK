@@ -15,9 +15,12 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import java.lang.System
+import kotlin.random.Random.Default.nextFloat
 
 class MiniGun(val ctx: Ctx): Weapon {
-
+    var ammo = ctx.params.miniGunAmmo
+    var overheat: Float = 0f
     var cooldown: Float = ctx.params.miniGunCooldown
     var totalCooldown: Float = ctx.params.miniGunCooldown
     val name: String = "MINIGUN"
@@ -29,9 +32,27 @@ class MiniGun(val ctx: Ctx): Weapon {
                 cooldown = 0f
             }
         }
+        if(overheat > 0) {
+            overheat -= timeStepSec
+            if(overheat <= 0) {
+                overheat = 0f
+                ammo=ctx.params.miniGunAmmo
+            }
+        }
+    }
+
+    override fun isOverheat(): Boolean {
+        return overheat > 0
     }
 
     override fun canAttack(): Boolean {
+        if (ammo <= 0 && !isOverheat()) {
+            overheat = ctx.params.miniGunOverheat
+            return false
+        }
+        if(isOverheat()) {
+            return false
+        }
         if (cooldown <= 0) {
             cooldown = ctx.params.miniGunCooldown
             return true
@@ -41,6 +62,7 @@ class MiniGun(val ctx: Ctx): Weapon {
     }
 
     override fun attack(ctx: Ctx, pos: Vector2, direction: Vector2) {
+        ammo -= 1
         fireMiniGun(ctx, pos, direction)
     }
 
@@ -48,7 +70,7 @@ class MiniGun(val ctx: Ctx): Weapon {
         Texture(TextureRegion(ctx.gameAtlas.findRegion("minigun")), 2.6f, 1f, vec2(-0.1f, -0.4f), scaleX = 0.5f, scaleY = 0.5f)
 
     override fun percentageCooldown(): Float {
-        return cooldown / totalCooldown
+        return overheat / ctx.params.miniGunOverheat
     }
 }
 
@@ -58,7 +80,8 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
             gravityScale = 0f
             linearDamping = 0f
             bullet = true
-            linearVelocity.set(direction.scl(ctx.params.miniGunSpeed))
+            var randomShot = Vector2(nextFloat()/ctx.params.miniGunDispersion, (nextFloat()-0.5f)/ctx.params.miniGunDispersion)
+            linearVelocity.set(direction.add(randomShot.x,randomShot.y).scl(ctx.params.miniGunSpeed))
             val vec = Vector2(direction.nor()).scl(0.8f)
             position.set(pos.add(vec))
             circle(ctx.params.miniGunSize) {
