@@ -5,17 +5,24 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.MathUtils.random
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.BodyDef
+import ktx.box2d.body
+import ktx.box2d.filter
 import ktx.math.vec2
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
+import pl.touk.liero.game.cat_blood
 import pl.touk.liero.game.cat_ground
+import pl.touk.liero.game.mask_blood
 import pl.touk.liero.game.player.PlayerState
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.queryRectangle
 import pl.touk.liero.utils.then
+import kotlin.random.Random
 
 class PlayerScript(val ctx: Ctx,
                    val control: PlayerControl,
@@ -31,6 +38,8 @@ class PlayerScript(val ctx: Ctx,
     var isRight = true
     var hurt = false
     var lastEnergy: Float = 0f
+    val _random = Random(ctx.worldEngine.timeMs)
+    var bleeds = false
     fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
@@ -114,6 +123,11 @@ class PlayerScript(val ctx: Ctx,
 
         if (hurt) {
             hurtAnimationTime += timeStepSec
+
+            if (!bleeds) {
+                bloodSplatter(15, ctx, me[body].position)
+                bleeds = true
+            }
             val textureRegion = hurtAnimation.getKeyFrame(hurtAnimationTime)
             me[texture].texture = textureRegion
             checkIfShouldStopHurt()
@@ -137,9 +151,35 @@ class PlayerScript(val ctx: Ctx,
         lastEnergy = me[energy].energy
     }
 
+    fun bloodSplatter(count: Int, ctx: Ctx, pos: Vector2) {
+        for (i in 1..count) {
+
+            val dir = Vector2(_random.nextDouble(-0.5, 0.5).toFloat(), _random.nextDouble(-2.0, 2.0).toFloat()).nor()
+
+            ctx.engine.entity {
+                body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
+                    position.set(pos)
+                    gravityScale = 1f
+                    linearDamping = 0f
+                    linearVelocity.set(dir.scl(_random.nextDouble(0.05, ctx.params.bloodSpeed.toDouble()).toFloat()))
+                    circle(ctx.params.bloodSize / 2 * 0.6f) {
+                        friction = 0.9f
+                        filter {
+                            categoryBits = cat_blood
+                            maskBits = mask_blood
+                        }
+                    }
+                })
+                lifeSpan(ctx.params.bloodLifeSpan, ctx.worldEngine.timeMs)
+                texture(ctx.gameAtlas.findRegion("blood"), ctx.params.bloodSize, ctx.params.bloodSize)
+            }
+        }
+    }
+
     private fun checkIfShouldStopHurt() {
         if (hurtAnimationTime > ctx.params.hurtAnimationTime) {
             hurt = false
+            bleeds = false
             hurtAnimationTime = 0f
         }
     }
