@@ -83,7 +83,7 @@ open class Ctx(val prefs: GamePreferences) {
 
     lateinit var level: Level
     var cameraScript = CameraScript(worldCamera, 9f, 16f)
-    val leftPlayerControl = PlayerButtonControl()
+    val leftPlayerControl: PlayerControl
     var rightPlayerControl: PlayerControl
 
     init {
@@ -113,13 +113,34 @@ open class Ctx(val prefs: GamePreferences) {
         skin = createSkin(smallFont, font, gameAtlas, menuAtlas)
 
         val controllers = Controllers.getControllers()
-        val rightController = if (controllers.isNotEmpty()) {
+        val psController = if (controllers.isNotEmpty()) controllers.find { it.name.contains("PLAYSTATION") } else null
+        val otherController = if (controllers.isNotEmpty()) controllers.find { !it.name.contains("PLAYSTATION") } else null
+
+        val leftController = if (psController != null) {
+            leftPlayerControl = PlayerControlSmooth()
+            JoystickInputSystem(leftPlayerControl,
+                    jump = Xbox.A,
+                    fire = Xbox.Y,
+                    changeWeapon = Xbox.R_BUMPER,
+                    controller = psController)
+        } else {
+            leftPlayerControl = PlayerButtonControl()
+            InputSystem(leftPlayerControl,
+                    left = Input.Keys.A,
+                    right = Input.Keys.D,
+                    up = Input.Keys.W,
+                    down = Input.Keys.S,
+                    jump = Input.Keys.CONTROL_LEFT,
+                    fire = Input.Keys.ALT_LEFT,
+                    changeWeapon = Input.Keys.SHIFT_LEFT)
+        }
+        val rightController = if (otherController != null) {
             rightPlayerControl = PlayerControlSmooth()
             JoystickInputSystem(rightPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.X,
                     changeWeapon = Xbox.R_BUMPER,
-                    controller = Controllers.getControllers().first())
+                    controller = otherController)
         } else {
             rightPlayerControl = PlayerButtonControl()
             InputSystem(rightPlayerControl,
@@ -134,14 +155,7 @@ open class Ctx(val prefs: GamePreferences) {
 
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
-                InputSystem(leftPlayerControl,
-                        left = Input.Keys.A,
-                        right = Input.Keys.D,
-                        up = Input.Keys.W,
-                        down = Input.Keys.S,
-                        jump = Input.Keys.CONTROL_LEFT,
-                        fire = Input.Keys.ALT_LEFT,
-                        changeWeapon = Input.Keys.SHIFT_LEFT),
+                leftController,
                 rightController,
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
