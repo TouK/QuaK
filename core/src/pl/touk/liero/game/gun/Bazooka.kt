@@ -13,7 +13,13 @@ class Bazooka(val ctx: Ctx) : Gun {
     val name: String = "BAZOOKA"
 
     override fun update(timeStepSec: Float) {
-        cooldown -= timeStepSec
+        if( cooldown > 0) {
+            cooldown -= timeStepSec
+            if(cooldown < 0) {
+                cooldown = 0f
+            }
+        }
+
 
         if (lastUpdate > 1) {
             ammo = if (ammo < totalAmmo) ammo + 1 else ammo
@@ -36,5 +42,9 @@ class Bazooka(val ctx: Ctx) : Gun {
         }
         else
             return false
+    }
+
+    override fun percentageCooldown(): Float {
+        return cooldown / ctx.params.bazookaCooldown
     }
 }

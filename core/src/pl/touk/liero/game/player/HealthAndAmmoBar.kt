@@ -7,8 +7,9 @@ import pl.touk.liero.ecs.SpriteRenderScript
 import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
 import pl.touk.liero.game.gun.Bazooka
+import pl.touk.liero.game.gun.Gun
 
-class HealthAndAmmoBar(ctx: Ctx, private val currentGun: Bazooka) : SpriteRenderScript {
+class HealthAndAmmoBar(ctx: Ctx, private val currentGun: Gun) : SpriteRenderScript {
 
     private val healthTexture = ctx.gameAtlas.findRegion("health")
     private val ammoTexture = ctx.gameAtlas.findRegion("ammo")
@@ -16,7 +17,7 @@ class HealthAndAmmoBar(ctx: Ctx, private val currentGun: Bazooka) : SpriteRender
     override fun render(self: Entity, batch: SpriteBatch, timeStepSec: Float) {
         val pos = self[body].position
         val health = self[energy].energy / self[energy].total
-        val ammo = currentGun.ammo / currentGun.totalAmmo
+        val ammo = currentGun.percentageCooldown()
         batch.draw(healthTexture, pos.x - 0.5f, pos.y + 1.0f, health, 0.2f)
         batch.draw(ammoTexture, pos.x - 0.5f, pos.y + 0.8f, ammo, 0.2f)
     }

@@ -1,14 +1,18 @@
 package pl.touk.liero.game.projectile
 
+import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.Contact
+import com.badlogic.gdx.utils.Array
 import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
+import pl.touk.liero.ecs.texture
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
@@ -30,18 +34,32 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
                 }
             }
         })
-        texture(ctx.gameAtlas.findRegion("bazooka"), ctx.params.bazookasSize, ctx.params.bazookasSize)
-        script(BazookaScript(ctx.params.bazookaDirectDamage, ctx))
+        texture(ctx.gameAtlas.findRegion("projectile0"), ctx.params.bazookasSize*6f, ctx.params.bazookasSize*5f)
+        val projectileAnimation = createProjectailAnimation(ctx)
+        script(BazookaProjectileScript(ctx.params.bazookaDirectDamage, projectileAnimation, ctx))
     }
 }
 
-class BazookaScript(val hitPoints: Float, val ctx: Ctx) : Script {
+class BazookaProjectileScript(val hitPoints: Float,
+                              val projectailAnimation: Animation<TextureRegion>,
+                              val ctx: Ctx) : Script {
+
+    var liveTime: Float = 0f
+
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
         me.dead = true
         if (other.contains(energy)) {
             other[energy].energy -= hitPoints
         }
         ctx.actions.schedule(0) { explosion(ctx, me[body].position) }
+    }
+
+    override fun update(me: Entity, timeStepSec: Float) {
+        liveTime += timeStepSec
+        val textureRegion = projectailAnimation.getKeyFrame(liveTime)
+        me[texture].texture = textureRegion
+        me[texture].angleDeg = me[body].linearVelocity.angle()
+        return
     }
 }
 
@@ -71,4 +89,13 @@ class ExplosionScript(val damage: Float) : Script {
             other[energy].energy -= damage
         }
     }
+}
+
+private fun createProjectailAnimation(ctx: Ctx): Animation<TextureRegion> {
+    val walkFrames: Array<TextureRegion> = Array()
+    walkFrames.add(ctx.gameAtlas.findRegion("projectile0"))
+    walkFrames.add(ctx.gameAtlas.findRegion("projectile1"))
+    walkFrames.add(ctx.gameAtlas.findRegion("projectile2"))
+    walkFrames.add(ctx.gameAtlas.findRegion("projectile3"))
+    return Animation(0.025f, walkFrames, Animation.PlayMode.LOOP)
 }
