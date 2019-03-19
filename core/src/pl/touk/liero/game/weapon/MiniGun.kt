@@ -38,7 +38,6 @@ class MiniGun(val ctx: Ctx): Weapon {
                 overheat = 0f
                 ammo=ctx.params.miniGunAmmo
             }
-            System.out.println(overheat)
         }
     }
 
