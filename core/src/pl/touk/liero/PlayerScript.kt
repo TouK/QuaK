@@ -1,6 +1,5 @@
 package pl.touk.liero
 
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -17,7 +16,6 @@ import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_ground
 import pl.touk.liero.game.gun.Gun
 import pl.touk.liero.game.projectile.fireBazooka
-import pl.touk.liero.gdx.ifJustPressed
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
@@ -86,17 +84,25 @@ class PlayerScript(val ctx: Ctx,
             myBody.setLinearVelocity(ctx.params.playerSpeed, myBody.linearVelocity.y)
         }
         control.up then {
-            if(myBody.angle == -MathUtils.PI) {
-                weapon.angularVelocity = -ctx.params.weaponRotationSpeed
+            if (myBody.angle == -MathUtils.PI) {
+                if ((weapon.angle > 0 && MathUtils.PI - weapon.angle < 0.125 * MathUtils.PI) || (weapon.angle < 0 && MathUtils.PI + weapon.angle > -0.125 * MathUtils.PI)) {
+                    weapon.angularVelocity = -ctx.params.weaponRotationSpeed
+                }
             } else {
-                weapon.angularVelocity = ctx.params.weaponRotationSpeed
+                if (weapon.angle < 0.125 * MathUtils.PI) {
+                    weapon.angularVelocity = ctx.params.weaponRotationSpeed
+                }
             }
         }
         control.down then {
             if(myBody.angle == -MathUtils.PI) {
-                weapon.angularVelocity = ctx.params.weaponRotationSpeed
+                if ((weapon.angle > 0 && MathUtils.PI - weapon.angle > -0.125 * MathUtils.PI) || (weapon.angle < 0 && MathUtils.PI + weapon.angle < 0.125 * MathUtils.PI)) {
+                    weapon.angularVelocity = ctx.params.weaponRotationSpeed
+                }
             } else {
-                weapon.angularVelocity = -ctx.params.weaponRotationSpeed
+                if (weapon.angle > -0.125 * MathUtils.PI) {
+                    weapon.angularVelocity = -ctx.params.weaponRotationSpeed
+                }
             }
         }
         control.jumpJustPressed.then {
