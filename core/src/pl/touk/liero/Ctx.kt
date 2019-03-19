@@ -118,7 +118,7 @@ open class Ctx(val prefs: GamePreferences) {
             JoystickInputSystem(rightPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.X,
-                    changeWeapon = Xbox.DPAD_RIGHT,
+                    changeWeapon = Xbox.R_BUMPER,
                     controller = Controllers.getControllers().first())
         } else {
             rightPlayerControl = PlayerButtonControl()

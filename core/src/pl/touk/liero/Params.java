@@ -19,6 +19,7 @@ public class Params extends LevelParams {
     public float playerMaxForce = 120f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
     public float idleVelocityLimit = 5f;
+    public float hurtAnimationTime = 1f;
 
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
     public float weaponLowerAngle = -MathUtils.PI * 0.125f;
