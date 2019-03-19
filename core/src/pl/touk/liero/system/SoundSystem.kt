@@ -7,7 +7,7 @@ class SoundSystem(enabled: Boolean) {
     enum class SoundSample {
         Quack1, Quack2, DuckExclaim, DuckHowl, DuckLong, DuckMed, DuckQuestion, DuckShort,
         Select, Back, Shoot1, Shoot2, Shoot3, Pew, Perish, Jump, Hurt, HurtLow,
-        NesPew, NoAmmo, PewLong, PewLow, Expolode,
+        NesPew, NoAmmo, PewLong, PewLow, Explode,
     }
 
     private var enabled: Boolean = false
@@ -35,7 +35,7 @@ class SoundSystem(enabled: Boolean) {
             Pair(SoundSample.PewLong, "sfx/sfx-pew-long.ogg"),
             Pair(SoundSample.PewLow, "sfx/sfx-pew-low.ogg"),
             Pair(SoundSample.NesPew, "sfx/sfx-nes-pew.ogg"),
-            Pair(SoundSample.Expolode, "sfx/explode.wav")
+            Pair(SoundSample.Explode, "sfx/explode.wav")
     )
 
     init {
