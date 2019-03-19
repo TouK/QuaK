@@ -32,7 +32,7 @@ public class Params extends LevelParams {
     public final float mediumBloodThreshold = 0.65f;
     public final float largeBloodThreshold = 0.25f;
     public final float bloodSpeed = 10f;
-    public final float bloodSize = 0.1f;
+    public final float bloodSize = 0.2f;
     public final float bloodLifeSpan = 5000f;
     public final float bloodCooldown = 0.5f;
 
