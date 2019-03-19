@@ -224,8 +224,8 @@ class PlayerScript(val ctx: Ctx,
                 restitution = 0f
                 friction = 0.8f
                 filter {
-                    categoryBits = cat_red
-                    maskBits = cat_ground
+                    categoryBits = mask_dead
+                    maskBits = mask_dead
                 }
             }
         }

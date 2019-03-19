@@ -12,7 +12,9 @@ import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_blood
+import pl.touk.liero.game.cat_dead
 import pl.touk.liero.game.mask_blood
+import pl.touk.liero.game.mask_dead
 import pl.touk.liero.script.Script
 import kotlin.random.Random
 
