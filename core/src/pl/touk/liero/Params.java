@@ -78,7 +78,8 @@ public class Params extends LevelParams {
     public final float miniGunDamage = 0.5f;
     public final float miniGunSpeed = 15f;
     public final float miniGunCooldown = 0.05f;
-    public final int miniGunAmmo = 200;
+    public final float miniGunOverheat = 5f;
+    public final int miniGunAmmo = 50;
 
     public Color colorHud = new Color(1f, 1f, 1f, 0.4f);
     public Color colorLevelOverlay = new Color(0f, 0f, 0f, 0.9f);
