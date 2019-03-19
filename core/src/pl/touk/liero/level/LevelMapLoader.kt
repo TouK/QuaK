@@ -8,14 +8,17 @@ import ktx.box2d.filter
 import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.entity.entity
+import pl.touk.liero.game.cat_bulletBlue
+import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.cat_ground
 import pl.touk.liero.game.mask_ground
 import pl.touk.liero.utils.get
 import pl.touk.liero.utils.loadPixmapRgba8888
+import kotlin.experimental.xor
 
 class LevelMapLoader(val ctx: Ctx) {
 
-    private val valueThreshold = 0.5f
+    private val valueThreshold = 0.2f
 
     var width = 0f
     var height = 0f
@@ -54,6 +57,7 @@ class LevelMapLoader(val ctx: Ctx) {
 
                 var count = 0
                 var redCount = 0
+                var blueCount = 0
                 for (x in tx until (tx + gridSizePx)) {
                     for (y in ty until (ty + gridSizePx)) {
                         Color.rgba8888ToColor(color, map[x, y])
@@ -61,12 +65,15 @@ class LevelMapLoader(val ctx: Ctx) {
                             count++
                         if (color.r > 0.5f)
                             redCount++
+                        if (color.b > 0.5f)
+                            blueCount++
                     }
                 }
                 val fillRatio = count.toFloat() / (gridSizePx * gridSizePx)
                 val redFillRatio = redCount.toFloat() / (gridSizePx * gridSizePx)
+                val blueFillRatio = blueCount.toFloat() / (gridSizePx * gridSizePx)
 
-                if (fillRatio > 0.7f) {
+                if (fillRatio > 0.2f) {
                     // static
                     ctx.engine.entity {
                         body(ctx.world.body {
@@ -74,15 +81,21 @@ class LevelMapLoader(val ctx: Ctx) {
                             box(width = tileSizeMeters, height = tileSizeMeters) {
                                 density = 1f
                                 filter {
-                                    categoryBits = cat_ground
-                                    maskBits = mask_ground
+                                    if (blueFillRatio > 0.5f) {
+                                        categoryBits = cat_ground
+                                        maskBits = mask_ground.xor(cat_bulletRed).xor(cat_bulletBlue)
+                                    } else {
+                                        categoryBits = cat_ground
+                                        maskBits = mask_ground
+                                        maskBits = mask_ground
+                                    }
                                 }
                             }
                         })
                         texture(TextureRegion(texture, tx, ty, gridSizePx, gridSizePx), tileSizeMeters, tileSizeMeters)
-                        if (redFillRatio > 0.5f) {
+                        //if (redFillRatio > 0.5f) {
                             energy(5f)
-                        }
+                        //}
                     }
                 }
             }

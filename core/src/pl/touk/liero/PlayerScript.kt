@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.box2d.body
 import ktx.box2d.filter
+import com.badlogic.gdx.physics.box2d.Body
 import ktx.math.vec2
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
@@ -37,6 +38,7 @@ class PlayerScript(val ctx: Ctx,
     var lastEnergy: Float = 0f
     val _random = Random(ctx.worldEngine.timeMs)
     var bleeds = false
+    var hasDoubleJump = false
     fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
@@ -83,16 +85,19 @@ class PlayerScript(val ctx: Ctx,
             weapon.angularVelocity = 0f
         }
 
+        val onGround = checkOnGround(myBody)
+
         control.jumpJustPressed.then {
-            val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
-            if (ground != null) {
-                ctx.sound.playSoundSample(SoundSystem.SoundSample.Jump)
+            if (onGround || hasDoubleJump) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
                 myBody.gravityScale = ctx.params.playerGravityScaleInAir
             }
         }
         if (!control.jump || myBody.linearVelocity.y <= 0f) {
             myBody.gravityScale = ctx.params.playerGravityScale
+        }
+        if (onGround) {
+            hasDoubleJump = true
         }
 
         control.changeWeaponJustPressed then {
@@ -108,6 +113,11 @@ class PlayerScript(val ctx: Ctx,
 
         checkIfHurt(me)
         renderMovement(me, timeStepSec)
+    }
+
+    private fun checkOnGround(myBody: Body): Boolean {
+        val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
+        return  ground != null
     }
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {

@@ -15,7 +15,7 @@ class Level2 : Level {
         })
 
         val loader = LevelMapLoader(ctx).also {
-            it.loadMap("forest")
+            it.loadMap("mostek")
         }
         width = loader.width
         height = loader.height
