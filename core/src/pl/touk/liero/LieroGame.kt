@@ -42,25 +42,16 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
         when (screen) {
             menuState.screen -> when (event) {
                 UiEvent.Play -> {
-                    setState(levelSelectionState)
+                    setState(gameState)
                 }
                 UiEvent.Back -> {
                     Gdx.app.exit()
                 }
                 else -> {}
             }
-            levelSelectionState.screen -> when(event) {
-                UiEvent.Back -> {
-                    setState(menuState)
-                }
-                UiEvent.Play -> {
-                    setState(gameState)
-                }
-                else -> {}
-            }
             gameState.screen -> when(event) {
                 UiEvent.Back -> {
-                    setState(levelSelectionState)
+                    setState(menuState)
                 }
                 UiEvent.Pause -> {
                     setScreen(gameState.pauseScreen)
