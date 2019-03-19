@@ -66,7 +66,7 @@ public class Params extends LevelParams {
     public final float swordLifeSpan = 1f;
 
     //kaczkospluwa 
-    public final float gunSize = 0.3f;
+    public final float gunSize = 0.5f;
     public final float gunDamage = 5f;
     public final float gunSpeed = 7f;
     public final float gunCooldown = 1f;

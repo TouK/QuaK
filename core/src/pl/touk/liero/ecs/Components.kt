@@ -29,11 +29,11 @@ class Children {
     }
 }
 
-class Texture(var texture: TextureRegion,
-              val width: Float, val height: Float,
-              val pos: Vector2, var angleDeg: Float = 0f,
-              var scaleX: Float = 1f, var scaleY: Float = 1f,
-              color: Color = Color.WHITE) {
+data class Texture(var texture: TextureRegion,
+                   val width: Float, val height: Float,
+                   val pos: Vector2, var angleDeg: Float = 0f,
+                   var scaleX: Float = 1f, var scaleY: Float = 1f,
+                   val colorVar: Color = Color.WHITE) {
 
     fun flipX() {
         scaleX = -scaleX
@@ -43,7 +43,7 @@ class Texture(var texture: TextureRegion,
         scaleY = -scaleY
     }
 
-    val color = Color(color)
+    val color = Color(colorVar)
 }
 
 class Text(var text: String,

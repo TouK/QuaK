@@ -35,7 +35,7 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
             }
         })
         texture(ctx.gameAtlas.findRegion("projectile0"), ctx.params.bazookasSize*6f, ctx.params.bazookasSize*5f)
-        val projectileAnimation = createProjectailAnimation(ctx)
+        val projectileAnimation = createProjectileAnimation(ctx)
         script(BazookaProjectileScript(ctx.params.bazookaDirectDamage, projectileAnimation, ctx))
     }
 }
@@ -96,7 +96,7 @@ class ExplosionScript(val damage: Float) : Script {
     }
 }
 
-private fun createProjectailAnimation(ctx: Ctx): Animation<TextureRegion> {
+private fun createProjectileAnimation(ctx: Ctx): Animation<TextureRegion> {
     val walkFrames: Array<TextureRegion> = Array()
     walkFrames.add(ctx.gameAtlas.findRegion("projectile0"))
     walkFrames.add(ctx.gameAtlas.findRegion("projectile1"))

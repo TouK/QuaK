@@ -29,7 +29,7 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
                 }
             }
         })
-        texture(ctx.gameAtlas.findRegion("minigun"), ctx.params.miniGunSize, ctx.params.miniGunSize)
+        texture(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"), ctx.params.miniGunSize, ctx.params.miniGunSize)
         script(MiniGunScript(ctx.params.miniGunDamage))
     }
 }
