@@ -40,7 +40,7 @@ class PlayerScript(val ctx: Ctx,
     var lastEnergy: Float = 0f
     val _random = Random(ctx.worldEngine.timeMs)
     var bleeds = false
-    var hasDoubleJump = false
+    var jumpsLeft = 0
     fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
@@ -90,16 +90,17 @@ class PlayerScript(val ctx: Ctx,
         val onGround = checkOnGround(myBody)
 
         control.jumpJustPressed.then {
-            if (onGround || hasDoubleJump) {
+            if (onGround || jumpsLeft > 0) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
                 myBody.gravityScale = ctx.params.playerGravityScaleInAir
+                jumpsLeft--
             }
         }
         if (!control.jump || myBody.linearVelocity.y <= 0f) {
             myBody.gravityScale = ctx.params.playerGravityScale
         }
         if (onGround) {
-            hasDoubleJump = true
+            jumpsLeft = 1
         }
 
         control.changeWeaponJustPressed then {
