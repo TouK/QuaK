@@ -37,6 +37,13 @@ public class Params extends LevelParams {
     public final float bloodLifeSpan = 5000f;
     public final float bloodCooldown = 0.5f;
 
+    //grenade
+    public final float grenadeSize = 1f;
+    public final float grenadeDamage = 35f;
+    public final float grenadeRadius = 4;
+    public final float grenadeSpeed = 16f;
+    public final float grenadeCooldown = 5f;
+
     //kaczkozooka
     public final float bazookasSize = 0.25f;
     public final float bazookaDirectDamage = 5;
