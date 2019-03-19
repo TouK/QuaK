@@ -17,6 +17,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.querySquare
 
 fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
@@ -91,6 +92,7 @@ fun explosion(ctx: Ctx, pos:Vector2) {
         }
         true
     }
+    ctx.sound.playSoundSample(SoundSystem.SoundSample.Expolode)
 }
 
 private fun createProjectileAnimation(ctx: Ctx): Animation<TextureRegion> {
