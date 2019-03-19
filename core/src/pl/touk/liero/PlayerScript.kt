@@ -1,6 +1,5 @@
 package pl.touk.liero
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
@@ -22,12 +21,16 @@ class PlayerScript(val ctx: Ctx,
                    val control: PlayerControl,
                    val playerState: PlayerState,
                    val animation: Animation<TextureRegion>,
-                   val idleAnimation: Animation<TextureRegion>) : Script {
+                   val idleAnimation: Animation<TextureRegion>,
+                   val hurtAnimation: Animation<TextureRegion>) : Script {
 
 
     var movingAnimationTime: Float = 0f
     var idleAnimationTime: Float = 0f
+    var hurtAnimationTime: Float = 0f
     var isRight = true
+    var hurt = false
+    var lastEnergy: Float = 0f
     fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
@@ -40,7 +43,6 @@ class PlayerScript(val ctx: Ctx,
         control.fire.then {
 
             ctx.engine.entity {
-                text("kwa", myBody.position, Color.WHITE, ctx.smallFont)
                 script(LifeTimeScript(1f))
             }
             if (playerState.currentWeapon.canAttack()) {
@@ -106,11 +108,19 @@ class PlayerScript(val ctx: Ctx,
             }
         }
 
+        checkIfHurt(me)
         renderMovement(me, timeStepSec)
     }
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {
 
+        if (hurt) {
+            hurtAnimationTime += timeStepSec
+            val textureRegion = hurtAnimation.getKeyFrame(hurtAnimationTime)
+            me[texture].texture = textureRegion
+            checkIfShouldStopHurt()
+            return
+        }
         if (kotlin.math.abs(me[body].linearVelocity.x) > ctx.params.idleVelocityLimit) {
             movingAnimationTime += timeStepSec
             idleAnimationTime = 0f
@@ -122,6 +132,18 @@ class PlayerScript(val ctx: Ctx,
         idleAnimationTime += timeStepSec
         val textureRegion = idleAnimation.getKeyFrame(idleAnimationTime)
         me[texture].texture = textureRegion
+    }
+
+    private fun checkIfHurt(me: Entity) {
+        hurt = hurt || lastEnergy > me[energy].energy
+        lastEnergy = me[energy].energy
+    }
+
+    private fun checkIfShouldStopHurt() {
+        if (hurtAnimationTime > ctx.params.hurtAnimationTime) {
+            hurt = false
+            hurtAnimationTime = 0f
+        }
     }
 
     override fun beforeDestroy(me: Entity) {

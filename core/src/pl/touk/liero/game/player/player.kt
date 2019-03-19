@@ -60,6 +60,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     val weapons = listOf(bazooka, gun, minigun)
     val movementAnimation = createMovementAnimation(ctx)
     val idleAnimation = createStandAnimation(ctx)
+    val hurtAnimation = createHurtAnimation(ctx)
     val state = PlayerState(bazooka,weapons)
 
     ctx.engine.entity {
@@ -67,7 +68,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.4f)
         energy(ctx.params.playerTotalHealth)
-        script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation))
+        script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation))
         script(BloodScript(ctx))
 
         // can be only one render script per Entity
@@ -99,6 +100,7 @@ private fun createMovementAnimation(ctx: Ctx): Animation<TextureRegion> {
     walkFrames.add(ctx.gameAtlas.findRegion("blobAnimation14"))
     return Animation(0.025f, walkFrames, Animation.PlayMode.LOOP)
 }
+
 private fun createStandAnimation(ctx: Ctx): Animation<TextureRegion> {
     val walkFrames: Array<TextureRegion> = Array()
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle0"))
@@ -108,4 +110,13 @@ private fun createStandAnimation(ctx: Ctx): Animation<TextureRegion> {
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle4"))
     walkFrames.add(ctx.gameAtlas.findRegion("blobIdle5"))
     return Animation(0.05f, walkFrames, Animation.PlayMode.LOOP)
+}
+
+private fun createHurtAnimation(ctx: Ctx): Animation<TextureRegion> {
+    val hurtFrames: Array<TextureRegion> = Array()
+    hurtFrames.add(ctx.gameAtlas.findRegion("blobHurtAnimation0"))
+    hurtFrames.add(ctx.gameAtlas.findRegion("blobHurtAnimation1"))
+    hurtFrames.add(ctx.gameAtlas.findRegion("blobHurtAnimation2"))
+    hurtFrames.add(ctx.gameAtlas.findRegion("blobHurtAnimation3"))
+    return Animation(0.05f, hurtFrames, Animation.PlayMode.LOOP)
 }
