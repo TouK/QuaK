@@ -99,6 +99,6 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
     private fun setState(state: State) {
         setScene(state.scene)
         setScreen(state.screen)
-        ctx.music.playTrack(state.musicTrack)
+        ctx.music.playTrack(state.musicTrack())
     }
 }
