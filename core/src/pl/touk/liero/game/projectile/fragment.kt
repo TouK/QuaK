@@ -50,6 +50,9 @@ class FragmentProjectileScript(val hitPoints: Float,
     var liveTime: Float = 0f
 
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
+        if (me.dead) {
+            return
+        }
         me.dead = true
         if (other.contains(energy)) {
             other[energy].energy -= hitPoints

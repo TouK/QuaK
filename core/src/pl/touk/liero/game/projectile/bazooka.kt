@@ -17,6 +17,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
+import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.querySquare
 
 fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
@@ -48,6 +49,9 @@ class BazookaProjectileScript(val hitPoints: Float,
     var liveTime: Float = 0f
 
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
+        if (me.dead) {
+            return
+        }
         me.dead = true
         if (other.contains(energy)) {
             other[energy].energy -= hitPoints
@@ -88,6 +92,7 @@ fun explosion(ctx: Ctx, pos:Vector2) {
         }
         true
     }
+    ctx.sound.playSoundSample(SoundSystem.SoundSample.Expolode)
 }
 
 private fun createProjectileAnimation(ctx: Ctx): Animation<TextureRegion> {
