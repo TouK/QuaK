@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
-import org.jetbrains.annotations.NotNull;
 import pl.touk.liero.level.LevelParams;
 
-import static pl.touk.liero.gdx.Scene2dKt.screenWidth;
 import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 
 public class Params extends LevelParams {
@@ -23,9 +21,9 @@ public class Params extends LevelParams {
     public float idleVelocityLimit = 5f;
 
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
-    public float weaponLowerAngle = -MathUtils.PI * 0.25f;
-    public float weaponUpperAngle = MathUtils.PI * 0.25f;
-    public float weaponRotationSpeed = 4f;
+    public float weaponLowerAngle = -MathUtils.PI * 0.125f;
+    public float weaponUpperAngle = MathUtils.PI * 0.125f;
+    public float weaponRotationSpeed = 2f;
     public float weaponAngularDamping = 10f;
     public float weaponBodyWidth = playerSize * 1f;
     public float weaponBodyHeight = playerSize * 0.5f;

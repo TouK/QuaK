@@ -74,30 +74,18 @@ class PlayerScript(val ctx: Ctx,
             weapon.setTransform(weapon.position, PI - weapon.angle)
         }
         val direction = if (isRight) -1 else 1
-        weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
 
-//        control.up then {
-//            if (myBody.angle == -MathUtils.PI) {
-//                if ((weapon.angle > 0 && MathUtils.PI - weapon.angle < 0.125 * MathUtils.PI) || (weapon.angle < 0 && MathUtils.PI + weapon.angle > -0.125 * MathUtils.PI)) {
-//                    weapon.angularVelocity = -ctx.params.weaponRotationSpeed
-//                }
-//            } else {
-//                if (weapon.angle < 0.125 * MathUtils.PI) {
-//                    weapon.angularVelocity = ctx.params.weaponRotationSpeed
-//                }
-//            }
-//        }
-//        control.down then {
-//            if(myBody.angle == -MathUtils.PI) {
-//                if ((weapon.angle > 0 && MathUtils.PI - weapon.angle > -0.125 * MathUtils.PI) || (weapon.angle < 0 && MathUtils.PI + weapon.angle < 0.125 * MathUtils.PI)) {
-//                    weapon.angularVelocity = ctx.params.weaponRotationSpeed
-//                }
-//            } else {
-//                if (weapon.angle > -0.125 * MathUtils.PI) {
-//                    weapon.angularVelocity = -ctx.params.weaponRotationSpeed
-//                }
-//            }
-//        }
+        control.up then {
+            if (weapon.angle < ctx.params.weaponUpperAngle || MathUtils.PI - weapon.angle < ctx.params.weaponUpperAngle) {
+                weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
+            }
+        }
+
+        control.down then {
+            if (weapon.angle > ctx.params.weaponLowerAngle && MathUtils.PI - weapon.angle > ctx.params.weaponLowerAngle) {
+                weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
+            }
+        }
 
         control.jumpJustPressed.then {
             val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
