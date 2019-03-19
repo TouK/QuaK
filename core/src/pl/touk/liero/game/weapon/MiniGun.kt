@@ -16,6 +16,7 @@ import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
 import java.lang.System
+import kotlin.random.Random.Default.nextFloat
 
 class MiniGun(val ctx: Ctx): Weapon {
     var ammo = ctx.params.miniGunAmmo
@@ -80,7 +81,8 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
             gravityScale = 0f
             linearDamping = 0f
             bullet = true
-            linearVelocity.set(direction.scl(ctx.params.miniGunSpeed))
+            var randomShot = Vector2(nextFloat()/ctx.params.miniGunDispersion, (nextFloat()-0.5f)/ctx.params.miniGunDispersion)
+            linearVelocity.set(direction.add(randomShot.x,randomShot.y).scl(ctx.params.miniGunSpeed))
             val vec = Vector2(direction.nor()).scl(0.8f)
             position.set(pos.add(vec))
             circle(ctx.params.miniGunSize) {
