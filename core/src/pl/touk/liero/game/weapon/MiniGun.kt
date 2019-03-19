@@ -59,7 +59,7 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
             linearDamping = 0f
             bullet = true
             linearVelocity.set(direction.scl(ctx.params.miniGunSpeed))
-            val vec = Vector2(direction.nor()).scl(1.5f)
+            val vec = Vector2(direction.nor()).scl(0.8f)
             position.set(pos.add(vec))
             circle(ctx.params.miniGunSize) {
                 filter {
