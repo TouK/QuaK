@@ -121,10 +121,10 @@ open class Ctx(val prefs: GamePreferences) {
         } else {
             rightPlayerControl = PlayerButtonControl()
             InputSystem(rightPlayerControl,
-                    left = Input.Keys.LEFT,
-                    right = Input.Keys.RIGHT,
-                    up = Input.Keys.UP,
-                    down = Input.Keys.DOWN,
+                    left = Input.Keys.A,
+                    right = Input.Keys.D,
+                    up = Input.Keys.W,
+                    down = Input.Keys.S,
                     jump = Input.Keys.CONTROL_RIGHT,
                     fire = Input.Keys.ALT_RIGHT)
         }
@@ -132,12 +132,12 @@ open class Ctx(val prefs: GamePreferences) {
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
                 InputSystem(leftPlayerControl,
-                        left = Input.Keys.A,
-                        right = Input.Keys.D,
-                        up = Input.Keys.W,
-                        down = Input.Keys.S,
+                        left = Input.Keys.LEFT,
+                        right = Input.Keys.RIGHT,
+                        up = Input.Keys.UP,
+                        down = Input.Keys.DOWN,
                         jump = Input.Keys.CONTROL_LEFT,
-                        fire = Input.Keys.ALT_LEFT),
+                        fire = Input.Keys.SHIFT_RIGHT),
                 rightController,
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
