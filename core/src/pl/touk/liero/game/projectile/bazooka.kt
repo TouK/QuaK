@@ -42,7 +42,7 @@ fun fireBazooka(ctx: Ctx, pos: Vector2, direction: Vector2) {
 }
 
 class BazookaProjectileScript(val hitPoints: Float,
-                              val projectailAnimation: Animation<TextureRegion>,
+                              val projectileAnimation: Animation<TextureRegion>,
                               val ctx: Ctx) : Script {
 
     var liveTime: Float = 0f
@@ -62,7 +62,7 @@ class BazookaProjectileScript(val hitPoints: Float,
 
     override fun update(me: Entity, timeStepSec: Float) {
         liveTime += timeStepSec
-        val textureRegion = projectailAnimation.getKeyFrame(liveTime)
+        val textureRegion = projectileAnimation.getKeyFrame(liveTime)
         me[texture].texture = textureRegion
         me[texture].angleDeg = me[body].linearVelocity.angle()
         return

@@ -76,7 +76,7 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
 class MiniGunScript(val ctx: Ctx) : Script {
 
     var liveTime: Float = 0f
-    var projectailAnimation: Animation<TextureRegion> = createProjectailAnimation(ctx)
+    var projectileAnimation: Animation<TextureRegion> = createprojectileAnimation(ctx)
 
     override fun beginContact(me: Entity, other: Entity, contact: Contact) {
         me.dead = true
@@ -87,14 +87,14 @@ class MiniGunScript(val ctx: Ctx) : Script {
 
     override fun update(me: Entity, timeStepSec: Float) {
         liveTime += timeStepSec
-        val textureRegion = projectailAnimation.getKeyFrame(liveTime)
+        val textureRegion = projectileAnimation.getKeyFrame(liveTime)
         me[texture].texture = textureRegion
         me[texture].angleDeg = me[body].linearVelocity.angle()
         return
     }
 
     companion object {
-        private fun createProjectailAnimation(ctx: Ctx): Animation<TextureRegion> {
+        private fun createprojectileAnimation(ctx: Ctx): Animation<TextureRegion> {
             val walkFrames: Array<TextureRegion> = Array()
             walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-01"))
             walkFrames.add(ctx.gameAtlas.findRegion("kaczka-toukowa-sprites-02"))
