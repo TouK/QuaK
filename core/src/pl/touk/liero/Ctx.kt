@@ -117,27 +117,30 @@ open class Ctx(val prefs: GamePreferences) {
             JoystickInputSystem(rightPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.X,
+                    changeWeapon = Xbox.DPAD_RIGHT,
                     controller = Controllers.getControllers().first())
         } else {
             rightPlayerControl = PlayerButtonControl()
             InputSystem(rightPlayerControl,
-                    left = Input.Keys.A,
-                    right = Input.Keys.D,
-                    up = Input.Keys.W,
-                    down = Input.Keys.S,
+                    left = Input.Keys.LEFT,
+                    right = Input.Keys.RIGHT,
+                    up = Input.Keys.UP,
+                    down = Input.Keys.DOWN,
                     jump = Input.Keys.CONTROL_RIGHT,
-                    fire = Input.Keys.ALT_RIGHT)
+                    fire = Input.Keys.ALT_RIGHT,
+                    changeWeapon = Input.Keys.SHIFT_RIGHT)
         }
 
         engine.add(
                 WorldSystem(world, worldEngine, GlobalParams.fixed_time_step),
                 InputSystem(leftPlayerControl,
-                        left = Input.Keys.LEFT,
-                        right = Input.Keys.RIGHT,
-                        up = Input.Keys.UP,
-                        down = Input.Keys.DOWN,
-                        jump = Input.Keys.SHIFT_RIGHT,
-                        fire = Input.Keys.CONTROL_LEFT),
+                        left = Input.Keys.A,
+                        right = Input.Keys.D,
+                        up = Input.Keys.W,
+                        down = Input.Keys.S,
+                        jump = Input.Keys.CONTROL_LEFT,
+                        fire = Input.Keys.ALT_LEFT,
+                        changeWeapon = Input.Keys.SHIFT_LEFT),
                 rightController,
                 ScriptUpdateSystem(engine),
                 ActionsSystem(worldEngine, actions),
