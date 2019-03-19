@@ -13,13 +13,15 @@ val cat_bulletRed = next()
 val cat_bulletBlue = next()
 val cat_ground = next()
 val cat_cos = next()
+val cat_blood = next()
 
 val mask_all = 0xffff.toShort()
 
-//                            cos grnd  bb  rb blue red
-val mask_red             = 0b0__1___1___1___1___1___1.toShort()
-val mask_blue            = 0b0__1___1___1___1___1___1.toShort()
-val mask_bulletRed       = 0b0__1___1___0___0___1___1.toShort()
-val mask_bulletBlue      = 0b0__1___1___0___0___1___1.toShort()
-val mask_ground          = 0b0__1___1___1___1___1___1.toShort()
-val mask_cos             = 0b0__1___1___1___1___1___1.toShort()
+//                             bd cos grnd  bb  rb blue red
+val mask_red             = 0b0__0__1___1___1___1___1___1.toShort()
+val mask_blue            = 0b0__0__1___1___1___1___1___1.toShort()
+val mask_bulletRed       = 0b0__0__1___1___0___0___1___1.toShort()
+val mask_bulletBlue      = 0b0__0__1___1___0___0___1___1.toShort()
+val mask_ground          = 0b0__1__1___1___1___1___1___1.toShort()
+val mask_cos             = 0b0__0__1___1___1___1___1___1.toShort()
+val mask_blood           = 0b0__0__1___1___0___0___0___0.toShort()

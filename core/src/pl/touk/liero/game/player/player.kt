@@ -1,21 +1,21 @@
 package pl.touk.liero.game.player
 
 import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.utils.Array
 import ktx.box2d.body
 import ktx.box2d.filter
+import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
-import pl.touk.liero.ecs.Entity
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
-import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.gun.Bazooka
+import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.utils.Array
-import ktx.math.vec2
+import pl.touk.liero.system.BloodScript
 
 
 fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
@@ -60,6 +60,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
         val movementAnimation = createMovementAnimation(ctx)
         val idleAnimation = createStandAnimation(ctx)
         script(PlayerScript(ctx, playerControl, bazooka, weaponBody, movementAnimation, idleAnimation))
+        script(BloodScript(ctx))
 
         // can be only one render script per Entity
         renderScript(HealthAndAmmoBar(ctx, bazooka))

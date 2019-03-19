@@ -4,10 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
-import org.jetbrains.annotations.NotNull;
 import pl.touk.liero.level.LevelParams;
 
-import static pl.touk.liero.gdx.Scene2dKt.screenWidth;
 import static pl.touk.liero.gdx.Scene2dKt.shorterPercent;
 
 public class Params extends LevelParams {
@@ -30,6 +28,13 @@ public class Params extends LevelParams {
     public float weaponBodyWidth = playerSize * 1f;
     public float weaponBodyHeight = playerSize * 0.5f;
 
+    // blood
+    public final float mediumBloodThreshold = 0.65f;
+    public final float largeBloodThreshold = 0.25f;
+    public final float bloodSpeed = 10f;
+    public final float bloodSize = 0.1f;
+    public final float bloodLifeSpan = 5000f;
+    public final float bloodCooldown = 0.5f;
 
     //kaczkozooka
     public final float bazookasSize = 0.25f;
