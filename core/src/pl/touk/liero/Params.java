@@ -86,7 +86,7 @@ public class Params extends LevelParams {
     public Color colorLevelOverlay = new Color(0f, 0f, 0f, 0.9f);
 
     public Value pad = shorterPercent(0.05f);
-    public Value buttonSize = shorterPercent(0.25f);
+    public Value buttonSize = shorterPercent(0.1f);
     public Value smallButtonSize = shorterPercent(0.2f);
     public Value logoWidth = shorterPercent(0.8f);
 }

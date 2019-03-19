@@ -1,9 +1,7 @@
 package pl.touk.liero.screen
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.Scaling
 import ktx.scene2d.button
-import ktx.scene2d.image
 import ktx.scene2d.table
 import pl.touk.liero.Ctx
 import pl.touk.liero.gdx.onClicked
@@ -14,12 +12,6 @@ class MenuScreen(ctx: Ctx) : UiScreen(ctx) {
         setFillParent(true)
         defaults().pad(ctx.params.pad)
 
-        image("logo") { cell ->
-            setScaling(Scaling.fit)
-            cell.width(ctx.params.logoWidth)
-            cell.expand()
-        }
-        row()
         table {
             button("play") { cell ->
                 onClicked {
