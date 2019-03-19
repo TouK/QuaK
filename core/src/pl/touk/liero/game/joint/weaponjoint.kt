@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.JointDef
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef
 import pl.touk.liero.Ctx
 
-fun createWeaponJoint(ctx: Ctx, playerBody: Body, weaponBody: Body): JointDef {
+fun createWeaponJoint(ctx: Ctx, playerBody: Body, weaponBody: Body): RevoluteJointDef {
     val revoluteJointDef = RevoluteJointDef()
     revoluteJointDef.bodyA = playerBody
     revoluteJointDef.bodyB = weaponBody
