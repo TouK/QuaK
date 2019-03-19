@@ -3,6 +3,7 @@ package pl.touk.liero.level
 import com.badlogic.gdx.graphics.Color
 import pl.touk.liero.Ctx
 import pl.touk.liero.game.player.createPlayer
+import pl.touk.liero.script.createWinnerScript
 import pl.touk.liero.utils.overwrite
 
 class Level1 : Level {
@@ -20,8 +21,10 @@ class Level1 : Level {
         height = loader.height
 
         createBounds(ctx, width, height)
-        createPlayer(ctx, width * 0.2f, 2f, ctx.leftPlayerControl)
-        createPlayer(ctx, width * 0.8f, 2f, ctx.rightPlayerControl)
+        val left = createPlayer(ctx, width * 0.2f, 2f, ctx.leftPlayerControl, "left")
+        val right = createPlayer(ctx, width * 0.8f, 2f, ctx.rightPlayerControl, "right")
+
+        createWinnerScript(ctx, left, right)
     }
 
     override fun dispose() {

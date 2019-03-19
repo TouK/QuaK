@@ -12,7 +12,7 @@ public class Params extends LevelParams {
     public float playerSize = 0.95f;
     public float playerSpeed = 10f;
     public float playerJumpSpeed = 22f;
-    public float playerTotalHealth = 100f;
+    public float playerTotalHealth = 30f;
     public float playerGravityScale = 10f;
     public float playerGravityScaleInAir = 3f;
     public float playerPidProportional = 10f;

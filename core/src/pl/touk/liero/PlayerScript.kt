@@ -15,6 +15,7 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.*
 import pl.touk.liero.game.player.DeadPlayerScript
 import pl.touk.liero.game.player.PlayerState
+import pl.touk.liero.game.player.createPlayer
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
@@ -27,7 +28,8 @@ class PlayerScript(val ctx: Ctx,
                    val playerState: PlayerState,
                    val animation: Animation<TextureRegion>,
                    val idleAnimation: Animation<TextureRegion>,
-                   val hurtAnimation: Animation<TextureRegion>) : Script {
+                   val hurtAnimation: Animation<TextureRegion>,
+                   val team: String) : Script {
 
 
     var movingAnimationTime: Float = 0f
@@ -192,6 +194,23 @@ class PlayerScript(val ctx: Ctx,
         ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckLong)
         weaponBody(me).fixtureList.forEach { it.isSensor = false }
         creatDeadBody(me)
+        respawn()
+    }
+
+    private fun respawn() {
+        if(team == "left") {
+            ctx.rightFrags++
+            if(ctx.rightFrags < 5) {
+                createPlayer(ctx, ctx.level.width * 0.2f, 4f, ctx.leftPlayerControl, "left")
+            }
+        } else {
+            ctx.leftFrags++
+            if(ctx.leftFrags < 5) {
+                ctx.actions.schedule(0.5f) {
+                    createPlayer(ctx, ctx.level.width * 0.8f, 4f, ctx.rightPlayerControl, "right")
+                }
+            }
+        }
     }
 
     private fun creatDeadBody(me: Entity) {
@@ -216,5 +235,11 @@ class PlayerScript(val ctx: Ctx,
             texture(ctx.gameAtlas.findRegion("blobDead0"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
             script(DeadPlayerScript(ctx))
         }
+    }
+}
+
+class RotateScript(val omegaDegPerSec: Float) : Script {
+    override fun update(me: Entity, timeStepSec: Float) {
+        me[texture].angleDeg += timeStepSec * omegaDegPerSec
     }
 }
