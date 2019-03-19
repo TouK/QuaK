@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.box2d.body
 import ktx.box2d.filter
-import com.badlogic.gdx.physics.box2d.Body
 import ktx.math.vec2
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
@@ -219,13 +219,13 @@ class PlayerScript(val ctx: Ctx,
             linearDamping = 0f
             fixedRotation = true
             gravityScale = ctx.params.playerGravityScale
-            circle(radius = ctx.params.playerSize / 2f) {
+            box(width = 0.2f, height = 0.2f) {
                 density = 1f
-                restitution = 0.1f
-                friction = 0.1f
+                restitution = 0f
+                friction = 0.8f
                 filter {
                     categoryBits = cat_red
-                    maskBits = mask_red
+                    maskBits = cat_ground
                 }
             }
         }
