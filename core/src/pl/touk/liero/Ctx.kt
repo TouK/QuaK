@@ -181,7 +181,7 @@ class ShakyCamera: OrthographicCamera() {
     private var timer = 0f
     private var duration = 0f
 
-    private var amplitude = 0
+    private var amplitude = 0f
     private var frequency = 0
     private var isFading = true
 
@@ -189,7 +189,7 @@ class ShakyCamera: OrthographicCamera() {
 
     private fun ClosedRange<Int>.random() = Random().nextInt((endInclusive + 1) - start) +  start
 
-    fun shake(time: Float = 1f, amp: Int = 1, freq: Int = 15, fade: Boolean = true) {
+    fun shake(time: Float = 1f, amp: Float = 0.2f, freq: Int = 15, fade: Boolean = true) {
         shake = true
         timer = 0f
         duration = time

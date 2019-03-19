@@ -14,7 +14,7 @@ class Level1 : Level {
             it.playerColor = Color.BLACK
         })
         val loader = LevelMapLoader(ctx).also {
-            it.loadMap("forest")
+            it.loadMap("las")
         }
         width = loader.width
         height = loader.height

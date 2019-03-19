@@ -64,6 +64,14 @@ fun World.querySquare(pos: Vector2, size: Float): Fixture? {
 }
 
 /**
+ * Szukaj obiektu w danym kwadracie
+ */
+fun World.querySquare(pos: Vector2, size: Float, callback: (Fixture) -> Boolean) {
+    myQueryCallback.foundFixture = null
+    this.QueryAABB(callback, pos.x - size / 2, pos.y - size / 2, pos.x + size / 2, pos.y + size / 2)
+}
+
+/**
  * Łatwiejszy dostęp do Fixture.filterData.maskBits, ważny jest setter, który poprawnie zmieni wartość
  */
 var Fixture.categoryBits: Short
