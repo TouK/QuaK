@@ -71,28 +71,29 @@ class BazookaProjectileScript(val hitPoints: Float,
         me[texture].angleDeg = me[body].linearVelocity.angle()
         return
     }
-}
 
-fun explosion(ctx: Ctx, pos:Vector2) {
-    ctx.engine.entity {
-        position(pos)
-        lifeSpan(1750f, ctx.worldEngine.timeMs)
-        texture(ctx.gameAtlas.findRegion("frame0000"), ctx.params.bazookaRadius * 3, ctx.params.bazookaRadius * 3)
-        script(ExplosionScript(ctx))
-    }
-    ctx.world.querySquare(pos, ctx.params.bazookaRadius * 2) {fixture ->
-        with(fixture.body.userData) {
-            if (this != null && this is Entity && this.contains(energy) && this.contains(body)) {
-                val distance = this[body].position.sub(pos).len()
-                if (distance <= ctx.params.bazookaRadius) {
-                    //this[energy].energy -= ctx.params.bazookaExplosionDamage * (1 - distance / ctx.params.bazookaRadius)
-                    this[energy].energy -= ctx.params.bazookaExplosionDamage
+    private fun explosion(ctx: Ctx, pos:Vector2) {
+        ctx.engine.entity {
+            position(pos)
+            lifeSpan(1750f, ctx.worldEngine.timeMs)
+            texture(ctx.gameAtlas.findRegion("frame0000"), ctx.params.bazookaRadius * 3, ctx.params.bazookaRadius * 3)
+            script(ExplosionScript(ctx))
+        }
+        ctx.world.querySquare(pos, ctx.params.bazookaRadius * 2) {fixture ->
+            with(fixture.body.userData) {
+                if (this != null && this is Entity && this.contains(energy) && this.contains(body)) {
+                    val distance = this[body].position.sub(pos).len()
+                    if (distance <= ctx.params.bazookaRadius) {
+                        //this[energy].energy -= ctx.params.bazookaExplosionDamage * (1 - distance / ctx.params.bazookaRadius)
+                        this[energy].energy -= ctx.params.bazookaExplosionDamage
+                    }
                 }
             }
+            true
         }
-        true
+
+        ctx.sound.playSoundSample(SoundSystem.SoundSample.Explode)
     }
-    ctx.sound.playSoundSample(SoundSystem.SoundSample.Expolode)
 }
 
 private fun createProjectileAnimation(ctx: Ctx): Animation<TextureRegion> {
