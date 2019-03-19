@@ -37,7 +37,7 @@ class PlayerScript(val ctx: Ctx,
 
         playerState.currentWeapon.update(timeStepSec)
 
-        control.fireJustPressed.then {
+        control.fire.then {
 
             ctx.engine.entity {
                 text("kwa", myBody.position, Color.WHITE, ctx.smallFont)

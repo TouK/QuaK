@@ -35,7 +35,7 @@ class Bazooka(val ctx: Ctx) : Weapon {
     }
 
     override val texture: Texture =
-            Texture(TextureRegion(ctx.gameAtlas.findRegion("kaczkozooka")), 2.6f, 1f, vec2(0f, -0.3f))
+        Texture(TextureRegion(ctx.gameAtlas.findRegion("kaczkozooka")), 2.6f, 1f, vec2(0f, -0.3f))
 
     override fun percentageCooldown(): Float {
         return cooldown / ctx.params.bazookaCooldown

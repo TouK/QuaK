@@ -25,8 +25,8 @@ public class Params extends LevelParams {
     public float weaponUpperAngle = MathUtils.PI * 0.125f;
     public float weaponRotationSpeed = 4f;
     public float weaponAngularDamping = 10f;
-    public float weaponBodyWidth = playerSize * 1f;
-    public float weaponBodyHeight = playerSize * 0.5f;
+    public float weaponBodyWidth = playerSize * 0.9f;
+    public float weaponBodyHeight = playerSize * 0.4f;
 
     // blood
     public final float mediumBloodThreshold = 0.65f;

@@ -3,7 +3,6 @@ package pl.touk.liero.level
 import com.badlogic.gdx.graphics.Color
 import pl.touk.liero.Ctx
 import pl.touk.liero.game.player.createPlayer
-import pl.touk.liero.game.weapon.createWeapon
 import pl.touk.liero.utils.overwrite
 
 class Level2 : Level {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.utils.Array
 import ktx.box2d.body
 import ktx.box2d.filter
-import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
 import pl.touk.liero.entity.entity
@@ -17,6 +16,7 @@ import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
 import pl.touk.liero.game.weapon.Gun
 import pl.touk.liero.game.weapon.Weapon
+import pl.touk.liero.game.weapon.MiniGun
 import pl.touk.liero.system.BloodScript
 
 
@@ -56,7 +56,8 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
 
     val bazooka = Bazooka(ctx)
     val gun = Gun(ctx)
-    val weapons = listOf(bazooka, gun)
+    val minigun = MiniGun(ctx)
+    val weapons = listOf(bazooka, gun, minigun)
     val movementAnimation = createMovementAnimation(ctx)
     val idleAnimation = createStandAnimation(ctx)
     val state = PlayerState(bazooka,weapons)
