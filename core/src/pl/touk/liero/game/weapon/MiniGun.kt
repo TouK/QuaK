@@ -15,7 +15,6 @@ import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_bulletRed
 import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
-import java.lang.System
 import kotlin.random.Random.Default.nextFloat
 
 class MiniGun(val ctx: Ctx): Weapon {

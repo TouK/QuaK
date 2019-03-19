@@ -65,7 +65,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     ctx.engine.entity {
         body(playerBody)
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
-        texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.4f)
+        texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
         energy(ctx.params.playerTotalHealth)
         script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation))
         script(BloodScript(ctx))

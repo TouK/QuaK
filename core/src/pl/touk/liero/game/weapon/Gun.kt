@@ -36,7 +36,7 @@ class Gun(val ctx: Ctx) : Weapon {
     }
 
     override val texture: Texture =
-            Texture(TextureRegion(ctx.gameAtlas.findRegion("kaczkospluwa")), 1.27f, 1f, vec2(0f, -0.3f))
+            Texture(TextureRegion(ctx.gameAtlas.findRegion("kaczkospluwa")), 1.27f, 1f, vec2(-0.1f, -0.4f), scaleX = 0.5f, scaleY = 0.5f)
 
     override fun percentageCooldown(): Float {
         return cooldown / ctx.params.gunCooldown
