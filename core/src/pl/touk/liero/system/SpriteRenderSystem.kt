@@ -38,9 +38,6 @@ class SpriteRenderSystem(engine: Engine<Entity>,
     fun draw(pos: Vector2, texture: Texture) {
         batch.setColor(texture.color)
         val region = TextureRegion(texture.texture)
-        if(texture.flipY) {
-            region.flip(false, true)
-        }
         batch.draw(region,
                 pos.x - texture.width / 2, pos.y - texture.height / 2,
                 texture.width / 2, texture.height / 2,
@@ -54,9 +51,6 @@ class SpriteRenderSystem(engine: Engine<Entity>,
         val pos = body.position.add(texture.pos)
         val angle = body.angle.rad_deg()
         val region = TextureRegion(texture.texture)
-        if(texture.flipY) {
-            region.flip(false, true)
-        }
         batch.draw(region,
                 pos.x - texture.width / 2, pos.y - texture.height / 2,
                 texture.width / 2, texture.height / 2,

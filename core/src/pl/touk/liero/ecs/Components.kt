@@ -33,8 +33,16 @@ class Texture(var texture: TextureRegion,
               val width: Float, val height: Float,
               val pos: Vector2, var angleDeg: Float = 0f,
               var scaleX: Float = 1f, var scaleY: Float = 1f,
-              color: Color = Color.WHITE,
-              var flipY: Boolean = false) {
+              color: Color = Color.WHITE) {
+
+    fun flipX() {
+        scaleX = -scaleX
+    }
+
+    fun flipY() {
+        scaleY = -scaleY
+    }
+
     val color = Color(color)
 }
 

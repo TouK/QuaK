@@ -14,8 +14,6 @@ class Level2 : Level {
         ctx.params.overwrite(LevelParams().also {
             it.playerColor = Color.BLACK
         })
-        val weapon1 = createWeapon(ctx, 0f, 0f)
-        val weapon2 = createWeapon(ctx, 0f, 0f)
 
         val loader = LevelMapLoader(ctx).also {
             it.loadMap("forest")
@@ -24,8 +22,8 @@ class Level2 : Level {
         height = loader.height
 
         createBounds(ctx, width, height)
-        createPlayer(ctx, width * 0.2f, 2f, ctx.leftPlayerControl, weapon1)
-        createPlayer(ctx, width * 0.8f, 2f, ctx.rightPlayerControl, weapon2)
+        createPlayer(ctx, width * 0.2f, 2f, ctx.leftPlayerControl)
+        createPlayer(ctx, width * 0.8f, 2f, ctx.rightPlayerControl)
     }
 
     override fun dispose() {
