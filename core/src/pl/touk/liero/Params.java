@@ -12,7 +12,7 @@ public class Params extends LevelParams {
     public float playerSize = 0.95f;
     public float playerSpeed = 10f;
     public float playerJumpSpeed = 22f;
-    public float playerTotalHealth = 100f;
+    public float playerTotalHealth = 30f;
     public float playerGravityScale = 10f;
     public float playerGravityScaleInAir = 3f;
     public float playerPidProportional = 10f;
@@ -50,7 +50,7 @@ public class Params extends LevelParams {
     public final float bazookaExplosionDamage = 20;
     public final float bazookaRadius = 1f;
     public final float bazookasSpeed = 12f;
-    public final float bazookaCooldown = 3f;
+    public final float bazookaCooldown = 2f;
     public final int bazookaAmmo = 5;
 
     //fragzooka
@@ -93,7 +93,9 @@ public class Params extends LevelParams {
     public Color colorLevelOverlay = new Color(0f, 0f, 0f, 0.9f);
 
     public Value pad = shorterPercent(0.05f);
-    public Value buttonSize = shorterPercent(0.25f);
+    public Value buttonSize = shorterPercent(0.1f);
     public Value smallButtonSize = shorterPercent(0.2f);
     public Value logoWidth = shorterPercent(0.8f);
+
+    public int fragsLimit = 5;
 }

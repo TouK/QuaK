@@ -10,5 +10,5 @@ import pl.touk.liero.system.MusicSystem
 class MenuState(ctx: Ctx) : State {
     override val scene: WorldScene = MenuScene(ctx)
     override val screen: UiScreen = MenuScreen(ctx)
-    override val musicTrack: MusicSystem.MusicTrack = MusicSystem.MusicTrack.Preparations
+    override fun musicTrack(): MusicSystem.MusicTrack = MusicSystem.MusicTrack.Preparations
 }

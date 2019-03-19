@@ -1,16 +1,19 @@
 package pl.touk.liero.screen
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Align
-import pl.touk.liero.gdx.onClicked
-import pl.touk.liero.Ctx
 import ktx.scene2d.button
 import ktx.scene2d.label
 import ktx.scene2d.table
+import pl.touk.liero.Ctx
+import pl.touk.liero.gdx.onClicked
 import pl.touk.liero.system.SoundSystem
 
 class GameScreen(ctx: Ctx) : UiScreen(ctx) {
     private lateinit var pause: Button
+    private lateinit var leftFooter: Label
+    private lateinit var rightFooter: Label
 
     override val root = table {
         setFillParent(true)
@@ -31,13 +34,14 @@ class GameScreen(ctx: Ctx) : UiScreen(ctx) {
         add().expand()
         row()
         table {
-            label("left footer", "small").cell(align = Align.topLeft)
+            leftFooter = label("frags: 0", "small").cell(align = Align.topLeft)
             add().expandX()
-            label("right footer", "small").cell(align = Align.topLeft)
+            rightFooter = label("frags: 0", "small").cell(align = Align.topLeft)
         }.cell(expandX = true, fillX = true)
     }
 
     override fun render(delta: Float) {
+        update()
         ctx.stage.act(delta)
         ctx.stage.draw()
     }
@@ -45,5 +49,10 @@ class GameScreen(ctx: Ctx) : UiScreen(ctx) {
     override fun show() {
         pause.color.set(ctx.params.colorHud)
         super.show()
+    }
+
+    fun update() {
+        leftFooter.setText("frags: " + ctx.leftFrags)
+        rightFooter.setText("frags: " + ctx.rightFrags)
     }
 }

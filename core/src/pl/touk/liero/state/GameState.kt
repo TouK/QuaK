@@ -8,9 +8,15 @@ import pl.touk.liero.screen.PauseScreen
 import pl.touk.liero.screen.UiScreen
 import pl.touk.liero.system.MusicSystem
 
-class GameState(ctx: Ctx) : State {
+class GameState(val ctx: Ctx) : State {
     override val scene: WorldScene = GameScene(ctx)
     override val screen: UiScreen = GameScreen(ctx)
-    override val musicTrack: MusicSystem.MusicTrack = MusicSystem.MusicTrack.Battle
+    override fun musicTrack(): MusicSystem.MusicTrack {
+        return when(ctx.currentLevel) {
+            1 -> MusicSystem.MusicTrack.Battle
+            2 -> MusicSystem.MusicTrack.Deathmatch
+            else -> MusicSystem.MusicTrack.Battle
+        }
+    }
     val pauseScreen: UiScreen = PauseScreen(ctx)
 }

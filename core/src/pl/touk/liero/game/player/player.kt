@@ -8,16 +8,21 @@ import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
+import pl.touk.liero.ecs.Entity
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
 import pl.touk.liero.game.joint.createWeaponJoint
 import pl.touk.liero.game.mask_red
+import pl.touk.liero.game.weapon.Bazooka
+import pl.touk.liero.game.weapon.Fragment
+import pl.touk.liero.game.weapon.Gun
+import pl.touk.liero.game.weapon.MiniGun
 import pl.touk.liero.game.weapon.*
 import pl.touk.liero.system.BloodScript
 
 
-fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
+fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, team: String): Entity {
     val playerBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
         position.set(x, y)
         linearDamping = 0f
@@ -35,7 +40,6 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     }
 
     val weaponBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
-
         position.set(x, y)
         angularDamping = ctx.params.weaponAngularDamping
         fixedRotation = true
@@ -62,12 +66,12 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
     val hurtAnimation = createHurtAnimation(ctx)
     val state = PlayerState(bazooka,weapons)
 
-    ctx.engine.entity {
+    val player = ctx.engine.entity {
         body(playerBody)
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
         energy(ctx.params.playerTotalHealth)
-        script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation))
+        script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation, team))
         script(BloodScript(ctx))
 
         // can be only one render script per Entity
@@ -78,6 +82,8 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl) {
         body(weaponBody)
         texture(bazooka.texture.copy())
     }
+
+    return player
 }
 
 private fun createMovementAnimation(ctx: Ctx): Animation<TextureRegion> {

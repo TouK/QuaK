@@ -10,5 +10,5 @@ import pl.touk.liero.system.MusicSystem
 class LevelSelectionState(ctx: Ctx) : State {
     override val scene: WorldScene = MenuScene(ctx)
     override val screen: UiScreen = LevelScreen(ctx)
-    override val musicTrack: MusicSystem.MusicTrack = MusicSystem.MusicTrack.Preparations
+    override fun musicTrack(): MusicSystem.MusicTrack = MusicSystem.MusicTrack.Preparations
 }

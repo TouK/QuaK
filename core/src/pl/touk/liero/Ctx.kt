@@ -85,6 +85,9 @@ open class Ctx(val prefs: GamePreferences) {
     var cameraScript = CameraScript(worldCamera, 9f, 16f)
     val leftPlayerControl: PlayerControl
     var rightPlayerControl: PlayerControl
+    var leftFrags = 0
+    var rightFrags = 0
+
 
     init {
         val resolver = InternalFileHandleResolver()
@@ -180,6 +183,8 @@ open class Ctx(val prefs: GamePreferences) {
 
     fun clearWorld() {
         worldEngine.clear()
+        leftFrags = 0
+        rightFrags = 0
     }
 
     fun resize(width: Int, height: Int) {

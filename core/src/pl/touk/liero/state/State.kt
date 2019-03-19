@@ -7,5 +7,5 @@ import pl.touk.liero.system.MusicSystem
 interface State {
     val screen: UiScreen
     val scene: WorldScene
-    val musicTrack: MusicSystem.MusicTrack
+    fun musicTrack(): MusicSystem.MusicTrack
 }

@@ -12,7 +12,9 @@ import pl.touk.liero.ecs.body
 import pl.touk.liero.ecs.energy
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_blood
+import pl.touk.liero.game.cat_dead
 import pl.touk.liero.game.mask_blood
+import pl.touk.liero.game.mask_dead
 import pl.touk.liero.script.Script
 import kotlin.random.Random
 
@@ -58,7 +60,7 @@ class BloodScript(val ctx: Ctx) : Script {
                     linearDamping = 0f
                     linearVelocity.set(dir.scl(random.nextDouble(0.05, ctx.params.bloodSpeed.toDouble()).toFloat()))
                     circle(ctx.params.bloodSize / 2 * 0.6f) {
-                        friction = 0.9f
+                        isSensor = true
                         filter {
                             categoryBits = cat_blood
                             maskBits = mask_blood

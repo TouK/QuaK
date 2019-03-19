@@ -4,19 +4,18 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.MathUtils.PI
-import com.badlogic.gdx.math.MathUtils.random
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.box2d.body
 import ktx.box2d.filter
 import ktx.math.vec2
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
-import pl.touk.liero.game.PlayerControl
-import pl.touk.liero.game.cat_blood
-import pl.touk.liero.game.cat_ground
-import pl.touk.liero.game.mask_blood
+import pl.touk.liero.game.*
+import pl.touk.liero.game.player.DeadPlayerScript
 import pl.touk.liero.game.player.PlayerState
+import pl.touk.liero.game.player.createPlayer
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
@@ -29,7 +28,8 @@ class PlayerScript(val ctx: Ctx,
                    val playerState: PlayerState,
                    val animation: Animation<TextureRegion>,
                    val idleAnimation: Animation<TextureRegion>,
-                   val hurtAnimation: Animation<TextureRegion>) : Script {
+                   val hurtAnimation: Animation<TextureRegion>,
+                   val team: String) : Script {
 
 
     var movingAnimationTime: Float = 0f
@@ -40,6 +40,7 @@ class PlayerScript(val ctx: Ctx,
     var lastEnergy: Float = 0f
     val _random = Random(ctx.worldEngine.timeMs)
     var bleeds = false
+    var hasDoubleJump = false
     fun weaponBody(me: Entity) = me[joint].bodyB
 
     override fun update(me: Entity, timeStepSec: Float) {
@@ -86,16 +87,19 @@ class PlayerScript(val ctx: Ctx,
             weapon.angularVelocity = 0f
         }
 
+        val onGround = checkOnGround(myBody)
+
         control.jumpJustPressed.then {
-            val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
-            if (ground != null) {
-                ctx.sound.playSoundSample(SoundSystem.SoundSample.Jump)
+            if (onGround || hasDoubleJump) {
                 myBody.setLinearVelocity(myBody.linearVelocity.x, ctx.params.playerJumpSpeed)
                 myBody.gravityScale = ctx.params.playerGravityScaleInAir
             }
         }
         if (!control.jump || myBody.linearVelocity.y <= 0f) {
             myBody.gravityScale = ctx.params.playerGravityScale
+        }
+        if (onGround) {
+            hasDoubleJump = true
         }
 
         control.changeWeaponJustPressed then {
@@ -111,6 +115,11 @@ class PlayerScript(val ctx: Ctx,
 
         checkIfHurt(me)
         renderMovement(me, timeStepSec)
+    }
+
+    private fun checkOnGround(myBody: Body): Boolean {
+        val ground = ctx.world.queryRectangle(myBody.position.sub(0f, ctx.params.playerSize / 2), ctx.params.playerSize, 0.2f, cat_ground)
+        return  ground != null
     }
 
     private fun renderMovement(me: Entity, timeStepSec: Float) {
@@ -160,7 +169,7 @@ class PlayerScript(val ctx: Ctx,
                     linearDamping = 0f
                     linearVelocity.set(dir.scl(_random.nextDouble(0.05, ctx.params.bloodSpeed.toDouble()).toFloat()))
                     circle(ctx.params.bloodSize / 2 * 0.6f) {
-                        friction = 0.9f
+                        isSensor = true
                         filter {
                             categoryBits = cat_blood
                             maskBits = mask_blood
@@ -184,5 +193,53 @@ class PlayerScript(val ctx: Ctx,
     override fun beforeDestroy(me: Entity) {
         ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckLong)
         weaponBody(me).fixtureList.forEach { it.isSensor = false }
+        creatDeadBody(me)
+        respawn()
+    }
+
+    private fun respawn() {
+        if(team == "left") {
+            ctx.rightFrags++
+            if(ctx.rightFrags < ctx.params.fragsLimit) {
+                createPlayer(ctx, ctx.level.width * 0.2f, 4f, ctx.leftPlayerControl, "left")
+            }
+        } else {
+            ctx.leftFrags++
+            if(ctx.leftFrags < ctx.params.fragsLimit) {
+                ctx.actions.schedule(0.5f) {
+                    createPlayer(ctx, ctx.level.width * 0.8f, 4f, ctx.rightPlayerControl, "right")
+                }
+            }
+        }
+    }
+
+    private fun creatDeadBody(me: Entity) {
+        val playerBody = ctx.world.body(BodyDef.BodyType.DynamicBody) {
+            position.set(me[body].position.x,me[body].position.y)
+            linearDamping = 0f
+            fixedRotation = true
+            gravityScale = ctx.params.playerGravityScale
+            box(width = 0.2f, height = 0.2f) {
+                density = 1f
+                restitution = 0f
+                friction = 0.8f
+                filter {
+                    categoryBits = mask_dead
+                    maskBits = mask_dead
+                }
+            }
+        }
+
+        ctx.engine.entity {
+            body(playerBody)
+            texture(ctx.gameAtlas.findRegion("blobDead0"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
+            script(DeadPlayerScript(ctx))
+        }
+    }
+}
+
+class RotateScript(val omegaDegPerSec: Float) : Script {
+    override fun update(me: Entity, timeStepSec: Float) {
+        me[texture].angleDeg += timeStepSec * omegaDegPerSec
     }
 }
