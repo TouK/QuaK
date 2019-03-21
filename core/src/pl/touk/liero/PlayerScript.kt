@@ -19,6 +19,7 @@ import pl.touk.liero.game.player.createPlayer
 import pl.touk.liero.script.LifeTimeScript
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
+import pl.touk.liero.utils.maskBits
 import pl.touk.liero.utils.queryRectangle
 import pl.touk.liero.utils.then
 import kotlin.random.Random
@@ -151,11 +152,13 @@ class PlayerScript(val ctx: Ctx,
     }
 
     private fun checkIfHurt(me: Entity) {
-        if(lastEnergy > me[energy].energy) {
-            ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckHowl)
-            hurt = true
+        if(me.contains(energy)) {
+            if (lastEnergy > me[energy].energy) {
+                ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckHowl)
+                hurt = true
+            }
+            lastEnergy = me[energy].energy
         }
-        lastEnergy = me[energy].energy
     }
 
     fun bloodSplatter(count: Int, ctx: Ctx, pos: Vector2) {
@@ -193,7 +196,10 @@ class PlayerScript(val ctx: Ctx,
 
     override fun beforeDestroy(me: Entity) {
         ctx.sound.playSoundSample(SoundSystem.SoundSample.DuckLong)
-        weaponBody(me).fixtureList.forEach { it.isSensor = false }
+        weaponBody(me).fixtureList.forEach {
+            it.isSensor = false
+            it.maskBits = mask_dead
+        }
         creatDeadBody(me)
         respawn()
     }

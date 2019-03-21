@@ -17,6 +17,7 @@ public class Params extends LevelParams {
     public float playerGravityScaleInAir = 3f;
     public float playerPidProportional = 10f;
     public float playerMaxForce = 120f;
+    public float playerImmortalityTime = 2f;
     public Vector2 playerAnchor = new Vector2(0f, 0f);
     public float idleVelocityLimit = 5f;
     public float hurtAnimationTime = 1.5f;

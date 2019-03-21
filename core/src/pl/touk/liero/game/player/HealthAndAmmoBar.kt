@@ -18,7 +18,9 @@ class HealthAndAmmoBar(ctx: Ctx, private val playerState: PlayerState, val weapo
 
     override fun render(self: Entity, batch: SpriteBatch, timeStepSec: Float) {
         val pos = self[body].position
-        val health = self[energy].energy / self[energy].total
+        val health = if (self.contains(energy)) {
+            self[energy].energy / self[energy].total
+        } else 1f
         val ammo = playerState.currentWeapon.percentageCooldown()
         batch.draw(healthTexture, pos.x - 0.5f, pos.y + 1.0f, health, 0.2f)
         batch.draw(ammoTexture, pos.x - 0.5f, pos.y + 0.8f, ammo, 0.2f)
@@ -26,7 +28,7 @@ class HealthAndAmmoBar(ctx: Ctx, private val playerState: PlayerState, val weapo
         val angle = weaponBody.angle
         val r = 2.5f
 
-        batch.draw(crosshair, pos.x + (r * cos(angle)) - 0.25f, pos.y + (r * sin(angle))- 0.25f, 0.5f, 0.5f)
+        batch.draw(crosshair, pos.x + (r * cos(angle)) - 0.25f, pos.y + (r * sin(angle)) - 0.25f, 0.5f, 0.5f)
     }
 
 }

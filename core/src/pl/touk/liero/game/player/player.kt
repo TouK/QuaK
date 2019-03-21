@@ -8,7 +8,9 @@ import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
+import pl.touk.liero.ecs.Energy
 import pl.touk.liero.ecs.Entity
+import pl.touk.liero.ecs.energy
 import pl.touk.liero.entity.entity
 import pl.touk.liero.game.PlayerControl
 import pl.touk.liero.game.cat_red
@@ -67,7 +69,6 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
         body(playerBody)
         joint(ctx.world.createJoint(createWeaponJoint(ctx, playerBody, weaponBody)))
         texture(ctx.gameAtlas.findRegion("circle"), ctx.params.playerSize, ctx.params.playerSize, scale = 1.6f)
-        energy(ctx.params.playerTotalHealth)
         script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation, team))
         script(BloodScript(ctx))
         script(WinnerScript(ctx, if (team == "left") ctx.leftFrags else ctx.rightFrags))
@@ -78,6 +79,10 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
     ctx.engine.entity {
         body(weaponBody)
         texture(bazooka.texture.copy())
+    }
+
+    ctx.actions.schedule(ctx.params.playerImmortalityTime) {
+        player[energy] = Energy(ctx.params.playerTotalHealth)
     }
 
     return player
