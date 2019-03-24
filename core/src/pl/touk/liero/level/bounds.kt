@@ -1,10 +1,10 @@
 package pl.touk.liero.level
 
 import com.badlogic.gdx.physics.box2d.BodyDef
-import pl.touk.liero.entity.entity
-import pl.touk.liero.Ctx
 import ktx.box2d.body
 import ktx.box2d.filter
+import pl.touk.liero.Ctx
+import pl.touk.liero.entity.entity
 import pl.touk.liero.game.cat_ground
 import pl.touk.liero.game.mask_ground
 

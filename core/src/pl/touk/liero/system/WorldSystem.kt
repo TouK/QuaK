@@ -2,9 +2,9 @@ package pl.touk.liero.system
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.*
-import pl.touk.liero.game.Clock
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.System
+import pl.touk.liero.game.Clock
 
 class WorldSystem(val world: World, val clock: Clock, val fixedTimeStep: Float? = null) : System, ContactListener {
     init {

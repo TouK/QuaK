@@ -6,9 +6,9 @@ import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import pl.touk.liero.gdx.invalidateAll
-import pl.touk.liero.Ctx
 import ktx.scene2d.KTableWidget
+import pl.touk.liero.Ctx
+import pl.touk.liero.gdx.invalidateAll
 import pl.touk.liero.system.SoundSystem
 
 abstract class UiScreen(internal val ctx: Ctx) : ScreenAdapter(), EventListener {

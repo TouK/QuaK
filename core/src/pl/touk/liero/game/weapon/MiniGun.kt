@@ -22,8 +22,6 @@ class MiniGun(val ctx: Ctx): Weapon {
     var ammo = ctx.params.miniGunAmmo
     var overheat: Float = 0f
     var cooldown: Float = ctx.params.miniGunCooldown
-    var totalCooldown: Float = ctx.params.miniGunCooldown
-    val name: String = "MINIGUN"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {

@@ -1,13 +1,12 @@
 package pl.touk.liero.screen
 
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.utils.Align
-import pl.touk.liero.gdx.ifJustPressed
-import pl.touk.liero.gdx.onClicked
-import pl.touk.liero.Ctx
 import ktx.scene2d.label
 import ktx.scene2d.table
 import ktx.scene2d.textButton
+import pl.touk.liero.Ctx
+import pl.touk.liero.gdx.ifJustPressed
+import pl.touk.liero.gdx.onClicked
 import pl.touk.liero.system.SoundSystem
 
 class LevelScreen(ctx: Ctx) : UiScreen(ctx) {

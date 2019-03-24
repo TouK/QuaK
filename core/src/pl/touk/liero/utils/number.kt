@@ -1,7 +1,5 @@
 package pl.touk.liero.utils
 
-import com.badlogic.gdx.math.MathUtils
-
 /**
  * Rozszerzenia typów numerycznych
  */

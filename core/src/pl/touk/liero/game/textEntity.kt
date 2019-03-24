@@ -2,13 +2,13 @@ package pl.touk.liero.game
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation
+import ktx.math.vec2
+import pl.touk.liero.Ctx
+import pl.touk.liero.ecs.Entity
+import pl.touk.liero.ecs.text
 import pl.touk.liero.entity.entity
 import pl.touk.liero.script.Script
-import pl.touk.liero.ecs.Entity
-import pl.touk.liero.Ctx
 import pl.touk.liero.utils.rnd
-import ktx.math.vec2
-import pl.touk.liero.ecs.text
 
 fun createText(ctx: Ctx, txt: String) {
     ctx.engine.entity {

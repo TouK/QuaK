@@ -9,7 +9,6 @@ import pl.touk.liero.game.projectile.fireGrenade
 
 class Grenade(val ctx: Ctx) : Weapon {
     var cooldown: Float = ctx.params.grenadeCooldown
-    val name: String = "GRENADE"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {

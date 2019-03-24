@@ -1,11 +1,8 @@
 package pl.touk.liero.game.projectile
 
-import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.Contact
-import com.badlogic.gdx.utils.Array
 import ktx.box2d.body
 import ktx.box2d.filter
 import pl.touk.liero.Ctx
@@ -19,7 +16,6 @@ import pl.touk.liero.game.mask_bulletRed
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
 import pl.touk.liero.utils.querySquare
-import kotlin.math.exp
 
 fun fireGrenade(ctx: Ctx, pos: Vector2, direction: Vector2) {
     ctx.sound.playSoundSample(SoundSystem.SoundSample.QuackCounter)

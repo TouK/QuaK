@@ -1,9 +1,9 @@
 package pl.touk.liero.screen
 
-import pl.touk.liero.gdx.onClicked
-import pl.touk.liero.Ctx
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.button
+import pl.touk.liero.Ctx
+import pl.touk.liero.gdx.onClicked
 import pl.touk.liero.system.SoundSystem
 
 class PauseScreen(ctx: Ctx) : GameOverlayScreen(ctx) {

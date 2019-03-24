@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
-import pl.touk.liero.ecs.text
 import pl.touk.liero.ecs.Engine
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.System
+import pl.touk.liero.ecs.text
 import pl.touk.liero.gdx.project
 import pl.touk.liero.gdx.unproject
 

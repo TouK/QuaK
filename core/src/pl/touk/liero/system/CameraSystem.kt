@@ -2,9 +2,9 @@ package pl.touk.liero.system
 
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.math.Vector2
+import ktx.math.vec2
 import pl.touk.liero.ecs.System
 import pl.touk.liero.gdx.set
-import ktx.math.vec2
 
 class CameraSystem(val camera: Camera, val worldWidth: Float, val worldHeight: Float) : System {
     // Gdzie celuje oś kamery w układzie świata

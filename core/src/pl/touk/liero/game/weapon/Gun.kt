@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2
 import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Texture
-import pl.touk.liero.game.projectile.fireBazooka
 import pl.touk.liero.game.projectile.fireGun
 import pl.touk.liero.system.SoundSystem
 
@@ -20,7 +19,6 @@ class Gun(val ctx: Ctx) : Weapon {
                 cooldown = 0f
             }
         }
-
     }
 
     override fun canAttack(): Boolean {

@@ -3,14 +3,13 @@ package pl.touk.liero.game
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
+import ktx.box2d.body
+import ktx.collections.GdxArray
+import ktx.math.vec2
 import pl.touk.liero.ecs.Actions
 import pl.touk.liero.ecs.Engine
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.utils.FirstOrderFilter
-import ktx.box2d.body
-import ktx.collections.GdxArray
-import ktx.math.vec2
-import pl.touk.liero.game.Clock
 
 class WorldEngine : Clock {
     val actions = Actions()

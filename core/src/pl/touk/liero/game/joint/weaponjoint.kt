@@ -1,7 +1,6 @@
 package pl.touk.liero.game.joint
 
 import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.JointDef
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef
 import pl.touk.liero.Ctx
 

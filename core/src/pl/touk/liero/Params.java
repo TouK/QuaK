@@ -23,9 +23,9 @@ public class Params extends LevelParams {
     public float hurtAnimationTime = 1.5f;
 
     public Vector2 weaponAnchor = new Vector2(0f, 0f);
-    public float weaponLowerAngle = -MathUtils.PI * 0.25f;
-    public float weaponUpperAngle = MathUtils.PI * 0.25f;
-    public float weaponRotationSpeed = 3f;
+    public float weaponLowerAngle = -MathUtils.PI * 0.45f;
+    public float weaponUpperAngle = MathUtils.PI * 0.45f;
+    public float weaponRotationSpeed = 2.5f;
     public float weaponAngularDamping = 10f;
     public float weaponBodyWidth = playerSize * 0.9f;
     public float weaponBodyHeight = playerSize * 0.4f;
@@ -62,11 +62,12 @@ public class Params extends LevelParams {
     public final float fragzookaCooldown = 2f;
 
     //kaczkosznikov
-    public final int kaczkosznikovAmmo = 40;
-    public final float kaczkosznikovDamage = 2f;
-    public final float kaczkosznikovSpeed = 7f;
-    public final float kaczkosznikovSize = 0.2f;
-    public final float kaczkosznikovCooldown = 0.25f;
+    public final int kaczkosznikovAmmo = 1;
+    public final float kaczkosznikovDamage = 4f;
+    public final float kaczkosznikovSpeed = 25f;
+    public final float kaczkosznikovSize = 0.5f;
+    public final float kaczkosznikovCooldown = 3f;
+    public final int kaczkosznikovBulletsCount = 6;
 
     //kaczkomiecz
     public final float swordRange = 2f;
@@ -76,8 +77,8 @@ public class Params extends LevelParams {
 
     //kaczkospluwa 
     public final float gunSize = 0.5f;
-    public final float gunDamage = 12f;
-    public final float gunSpeed = 30f;
+    public final float gunDamage = 15f;
+    public final float gunSpeed = 35f;
     public final float gunCooldown = 0.75f;
     public final int gunAmmo = 6;
 

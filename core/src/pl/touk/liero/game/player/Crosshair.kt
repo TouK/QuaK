@@ -5,7 +5,6 @@ import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.Entity
 import pl.touk.liero.ecs.SpriteRenderScript
 import pl.touk.liero.ecs.body
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import kotlin.math.cos
 import kotlin.math.sin
 

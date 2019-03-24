@@ -1,10 +1,10 @@
 package pl.touk.liero.screen
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import pl.touk.liero.Ctx
 import ktx.scene2d.KTableWidget
 import ktx.scene2d.label
 import ktx.scene2d.table
+import pl.touk.liero.Ctx
 
 abstract class GameOverlayScreen(ctx: Ctx) : UiScreen(ctx) {
     private lateinit var backgroundTable: Table

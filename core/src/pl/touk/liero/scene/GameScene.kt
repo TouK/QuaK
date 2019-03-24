@@ -1,9 +1,9 @@
 package pl.touk.liero.scene
 
 import com.badlogic.gdx.Gdx
+import pl.touk.liero.Ctx
 import pl.touk.liero.entity.entity
 import pl.touk.liero.script.CameraScript
-import pl.touk.liero.Ctx
 
 class GameScene(val ctx: Ctx) : WorldScene {
 

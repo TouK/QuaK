@@ -12,7 +12,6 @@ import pl.touk.liero.system.SoundSystem
 class Bazooka(val ctx: Ctx) : Weapon {
 
     var cooldown: Float = ctx.params.bazookaCooldown
-    val name: String = "BAZOOKA"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {

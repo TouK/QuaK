@@ -1,6 +1,9 @@
 package pl.touk.liero.system
 
-import pl.touk.liero.ecs.*
+import pl.touk.liero.ecs.Engine
+import pl.touk.liero.ecs.Entity
+import pl.touk.liero.ecs.System
+import pl.touk.liero.ecs.lifespan
 import pl.touk.liero.game.WorldEngine
 
 class LifeSpanSystem(val engine: Engine<Entity>,
