@@ -9,6 +9,7 @@ class JoystickInputSystem(private val playerControl: PlayerControl,
                           private val jump: Int,
                           private val fire: Int,
                           private val changeWeapon: Int,
+                          private val changeWeaponBackwards: Int,
                           private val controller: Controller) : System {
 
     override fun update(timeStepSec: Float) {
@@ -18,6 +19,8 @@ class JoystickInputSystem(private val playerControl: PlayerControl,
         playerControl.jump = controller.getButton(jump)
         playerControl.changeWeaponJustPressed = !playerControl.changeWeapon && controller.getButton(changeWeapon)
         playerControl.changeWeapon = controller.getButton(changeWeapon)
+        playerControl.changeWeaponJustPressedBackwards = !playerControl.changeWeaponBackwards && controller.getButton(changeWeaponBackwards)
+        playerControl.changeWeaponBackwards = controller.getButton(changeWeaponBackwards)
         playerControl.xAxis = controller.getAxis(Xbox.L_STICK_HORIZONTAL_AXIS)
         playerControl.yAxis = controller.getAxis(Xbox.L_STICK_VERTICAL_AXIS)
     }

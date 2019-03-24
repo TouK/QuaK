@@ -105,18 +105,26 @@ class PlayerScript(val ctx: Ctx,
         }
 
         control.changeWeaponJustPressed then {
-            val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
-            val nextWeaponIndex = (currWeaponIndex + 1) % playerState.weapons.size
-            playerState.currentWeapon = playerState.weapons[nextWeaponIndex]
-            val weaponEntity = weaponBody(me).userData as Entity
-            weaponEntity[texture] = playerState.currentWeapon.texture.copy()
-            if (!isRight) {
-                weaponEntity[texture].flipY()
-            }
+            changeWeapon(me, 1)
+        }
+
+        control.changeWeaponJustPressedBackwards then {
+            changeWeapon(me, -1)
         }
 
         checkIfHurt(me)
         renderMovement(me, timeStepSec)
+    }
+
+    private fun changeWeapon(me: Entity, direction: Int) {
+        val currWeaponIndex = playerState.weapons.indexOf(playerState.currentWeapon)
+        val nextWeaponIndex = (currWeaponIndex + direction) % playerState.weapons.size
+        playerState.currentWeapon = if (nextWeaponIndex < 0) playerState.weapons[playerState.weapons.size - 1] else playerState.weapons[nextWeaponIndex]
+        val weaponEntity = weaponBody(me).userData as Entity
+        weaponEntity[texture] = playerState.currentWeapon.texture.copy()
+        if (!isRight) {
+            weaponEntity[texture].flipY()
+        }
     }
 
     private fun checkOnGround(myBody: Body): Boolean {

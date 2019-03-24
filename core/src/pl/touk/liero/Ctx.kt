@@ -126,6 +126,7 @@ open class Ctx(val prefs: GamePreferences) {
                     jump = Xbox.A,
                     fire = Xbox.Y,
                     changeWeapon = Xbox.R_BUMPER,
+                    changeWeaponBackwards = Xbox.L_BUMPER,
                     controller = psController)
         } else {
             leftPlayerControl = PlayerButtonControl()
@@ -136,7 +137,8 @@ open class Ctx(val prefs: GamePreferences) {
                     down = Input.Keys.S,
                     jump = Input.Keys.CONTROL_LEFT,
                     fire = Input.Keys.ALT_LEFT,
-                    changeWeapon = Input.Keys.SHIFT_LEFT)
+                    changeWeaponBackwards = Input.Keys.Z,
+                    changeWeapon = Input.Keys.X)
         }
         val rightController = if (otherController != null) {
             rightPlayerControl = PlayerControlSmooth()
@@ -144,6 +146,7 @@ open class Ctx(val prefs: GamePreferences) {
                     jump = Xbox.A,
                     fire = Xbox.X,
                     changeWeapon = Xbox.R_BUMPER,
+                    changeWeaponBackwards = Xbox.L_BUMPER,
                     controller = otherController)
         } else {
             rightPlayerControl = PlayerButtonControl()
@@ -154,7 +157,8 @@ open class Ctx(val prefs: GamePreferences) {
                     down = Input.Keys.DOWN,
                     jump = Input.Keys.CONTROL_RIGHT,
                     fire = Input.Keys.ALT_RIGHT,
-                    changeWeapon = Input.Keys.SHIFT_RIGHT)
+                    changeWeapon = Input.Keys.COMMA,
+                    changeWeaponBackwards = Input.Keys.COLON)
         }
 
         engine.add(

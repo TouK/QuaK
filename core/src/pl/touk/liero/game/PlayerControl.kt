@@ -15,6 +15,8 @@ interface PlayerControl {
     var jumpJustPressed: Boolean
     var changeWeapon: Boolean
     var changeWeaponJustPressed: Boolean
+    var changeWeaponBackwards: Boolean
+    var changeWeaponJustPressedBackwards: Boolean
 
     fun clear()
 }
@@ -26,6 +28,8 @@ open class PlayerControlSmooth: PlayerControl {
     override var fireJustPressed: Boolean = false
     override var changeWeapon: Boolean = false
     override var changeWeaponJustPressed: Boolean = false
+    override var changeWeaponBackwards: Boolean = false
+    override var changeWeaponJustPressedBackwards: Boolean = false
     override var jump: Boolean = false
     override var jumpJustPressed: Boolean = false
 
@@ -54,6 +58,8 @@ open class PlayerControlSmooth: PlayerControl {
         jumpJustPressed = false
         changeWeapon = false
         changeWeaponJustPressed = false
+        changeWeaponBackwards = false
+        changeWeaponJustPressedBackwards = false
     }
 }
 
@@ -68,6 +74,8 @@ class PlayerButtonControl : PlayerControl {
     override var jumpJustPressed = false
     override var changeWeapon = false
     override var changeWeaponJustPressed = false
+    override var changeWeaponBackwards = false
+    override var changeWeaponJustPressedBackwards = false
 
     override var xAxis: Float
       get() = if (left) -1f else 0f + if (right) 1f else 0f
@@ -88,5 +96,7 @@ class PlayerButtonControl : PlayerControl {
         jumpJustPressed = false
         changeWeapon = false
         changeWeaponJustPressed = false
+        changeWeaponBackwards = false
+        changeWeaponJustPressedBackwards = false
     }
 }
