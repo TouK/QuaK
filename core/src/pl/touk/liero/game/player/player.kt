@@ -60,7 +60,8 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
     val fragzooka = Fragment(ctx)
     val grenade = Grenade(ctx)
     val kaczkosznikov = Kaczkosznikov(ctx)
-    val weapons = listOf(bazooka, gun, minigun, fragzooka, grenade, kaczkosznikov)
+    val sword = Sword(ctx)
+    val weapons = listOf(bazooka, gun, minigun, fragzooka, grenade, kaczkosznikov, sword)
     val movementAnimation = createMovementAnimation(ctx)
     val idleAnimation = createStandAnimation(ctx)
     val hurtAnimation = createHurtAnimation(ctx)
@@ -77,10 +78,11 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
         renderScript(HealthAndAmmoBar(ctx, state, weaponBody))
     }
 
-    ctx.engine.entity {
+    val weapon = ctx.engine.entity {
         body(weaponBody)
         texture(bazooka.texture.copy())
     }
+    sword.weapon = weapon
 
     ctx.actions.schedule(ctx.params.playerImmortalityTime) {
         player[energy] = Energy(ctx.params.playerTotalHealth)

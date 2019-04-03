@@ -15,6 +15,7 @@ val cat_ground = next()
 val cat_cos = next()
 val cat_blood = next()
 val cat_dead = next()
+val cat_playerOnly = next()
 
 val mask_all = 0xffff.toShort()
 
@@ -27,3 +28,5 @@ val mask_ground          = 0b0__1__1___1___1___1___1___1.toShort()
 val mask_cos             = 0b0__0__1___1___1___1___1___1.toShort()
 val mask_blood           = 0b0__0__1___1___0___0___0___0.toShort()
 val mask_dead            = 0b0__0__0___1___0___0___0___0.toShort()
+val mask_playerOnly      = 0b0__1__0___0___1___1___1___1.toShort()
+

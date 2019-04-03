@@ -31,7 +31,7 @@ class Children {
 
 data class Texture(var texture: TextureRegion,
                    val width: Float, val height: Float,
-                   val pos: Vector2, var angleDeg: Float = 0f,
+                   var pos: Vector2, var angleDeg: Float = 0f,
                    var scaleX: Float = 1f, var scaleY: Float = 1f,
                    val colorVar: Color = Color.WHITE) {
 
