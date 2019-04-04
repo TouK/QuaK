@@ -63,20 +63,20 @@ class Sword(val ctx: Ctx) : Weapon {
         weapon[pl.touk.liero.ecs.texture].texture = TextureRegion(ctx.gameAtlas.findRegion("frame0000"))
         val vec: Vector2
         if (direction.x > 0) {
-            vec = Vector2(1f,0f).scl(1.5f)
+            vec = Vector2(1f,0f).scl(1.1f)
         }
         else {
-            vec = Vector2(-1f,0f).scl(1.5f)
+            vec = Vector2(-1f,0f).scl(1.1f)
         }
         ctx.engine.entity {
             body(ctx.world.body(BodyDef.BodyType.DynamicBody) {
                 gravityScale = 0f
                 linearDamping = 0f
-                bullet = false
+                bullet = true
                 position.set(pos.add(vec))
-                box(1.5f,1.5f) {
+                box(0.75f,1.5f) {
                     filter {
-                        categoryBits = cat_playerOnly
+                        categoryBits = cat_red
                         maskBits = mask_playerOnly
                     }
                 }
@@ -99,7 +99,7 @@ class Sword(val ctx: Ctx) : Weapon {
             if (me.dead) {
                 return
             }
-            me.dead = true
+//            me.dead = true
             if (other.contains(energy)) {
                 other[energy].energy -= hitPoints
             }
