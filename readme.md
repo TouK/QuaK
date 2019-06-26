@@ -1,6 +1,8 @@
 # Uruchamianie
 Jako projekt w idei trzeba ustawić na obecną chwilę working directory w Run Configuration na core/assets - wtedy można z niej uruchomić.
 
+![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
+
 # Sterowanie klawiatura
 Lewy gracz:  
 A, D - lewo/prawo  
