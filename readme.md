@@ -1,5 +1,5 @@
 # Uruchamianie
-Jako projekt w idei trzeba ustawić na obecną chwilę working directory w Run Configuration na core/assets - wtedy można z niej uruchomić.
+Jako projekt w idei (lub analogicznie w innym IDE) trzeba ustawić na obecną chwilę working directory w Run Configuration na core/assets - wtedy można z niej uruchomić.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
 
@@ -19,7 +19,7 @@ Prawy Control - skok
 Prawy alt - strzał  
 
 # Running
-Starting the project from IDEA or any other IDE requires that working directory is set to core/assets (other than that you can find a playable demo on Release page)  
+Starting the project from IDEA or any other IDE requires that working directory is set to core/assets (other than that you can find a playable demo on Release page) - see the above screenshot.
   
 # Controls  
 Left player:  
