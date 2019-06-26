@@ -9,20 +9,30 @@ Starting the project from IDEA or any other IDE requires that working directory 
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
 
-# Keyboard controls
-Left player:
-A, D - left/right movement
-W, S - up/down aim
-Left shift - weapon change
-Left control - jump (possible to do a double jump)
-Left alt - shoot
+# Keyboard controls. 
+Left player:  
+A, D - left/right movement. 
+W, S - up/down aim. 
 
-Right player:
-Left/Right arrow - left/right movement
-Up/Down arrow - up/down aim
-Right Shift - change weapon
-Right Control - jump
-Right Alt - shoot
+Left shift - weapon change. 
+
+Left control - jump (possible to do a double jump). 
+
+Left alt - shoot. 
+
+
+Right player:  
+
+Left/Right arrow - left/right movement. 
+
+Up/Down arrow - up/down aim 
+
+Right Shift - change weapon. 
+
+Right Control - jump. 
+
+Right Alt - shoot. 
+
 
 
 # Uruchamianie
@@ -36,18 +46,27 @@ Jako projekt w idei (lub analogicznie w innym IDE) trzeba ustawić na obecną ch
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
 
-# Sterowanie klawiatura
-Lewy gracz:
-A, D - lewo/prawo
-W, S - góra/dół (celowanie)
-Lewy Shift - zmiana broni
-Lewy Control - skok (możliwy podwójny)
-Lewy Alt - strzał
+# Sterowanie klawiatura. 
+Lewy gracz:   
 
-Prawy gracz:
-Left/Right arrow - lewo/prawo
-Up/down arrow - celowanie góra/dół
-Prawy Shift - zmiana broni
-Prawy Control - skok
-Prawy alt - strzał
+A, D - lewo/prawo. 
 
+W, S - góra/dół (celowanie). 
+
+Lewy Shift - zmiana broni. 
+
+Lewy Control - skok (możliwy podwójny).
+
+Lewy Alt - strzał. 
+
+Prawy gracz:  
+
+Left/Right arrow - lewo/prawo. 
+
+Up/down arrow - celowanie góra/dół. 
+
+Prawy Shift - zmiana broni. 
+
+Prawy Control - skok. 
+
+Prawy alt - strzał. 
