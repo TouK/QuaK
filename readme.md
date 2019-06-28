@@ -8,8 +8,12 @@
 Starting the project from IDEA or any other IDE requires that working directory is set to core/assets (other than that you can find a playable demo on Release page) - see the below screenshot.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
-
-# Keyboard controls. 
+## To create payable JAR
+```
+./gradlew desktop:dist
+// JAR can be found under desktop/build/libs folder
+```
+# Keyboard controls 
 Left player:  
 A, D - left/right movement. 
 W, S - up/down aim. 
@@ -41,11 +45,14 @@ Right Alt - shoot.
 ./gradlew desktop:run
 ```
 ## Z IDE
-
 Jako projekt w idei (lub analogicznie w innym IDE) trzeba ustawić na obecną chwilę working directory w Run Configuration na core/assets - wtedy można z niej uruchomić.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
-
+## Aby utworzyć JAR'a z grą
+```
+./gradlew desktop:dist
+// JAR znajduje się w folderze desktop/build/libs
+```
 # Sterowanie klawiatura. 
 Lewy gracz:   
 

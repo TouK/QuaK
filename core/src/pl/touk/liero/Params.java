@@ -43,7 +43,7 @@ public class Params extends LevelParams {
     public final float grenadeDamage = 35f;
     public final float grenadeRadius = 4;
     public final float grenadeSpeed = 16f;
-    public final float grenadeCooldown = 5f;
+    public final float grenadeCooldown = 3f;
 
     //kaczkozooka
     public final float bazookasSize = 0.25f;
@@ -66,7 +66,7 @@ public class Params extends LevelParams {
     public final float kaczkosznikovDamage = 4f;
     public final float kaczkosznikovSpeed = 25f;
     public final float kaczkosznikovSize = 0.5f;
-    public final float kaczkosznikovCooldown = 3f;
+    public final float kaczkosznikovCooldown = 1f;
     public final int kaczkosznikovBulletsCount = 6;
 
     //kaczkomiecz
