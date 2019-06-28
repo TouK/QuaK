@@ -8,8 +8,7 @@
 Starting the project from IDEA or any other IDE requires that working directory is set to core/assets (other than that you can find a playable demo on Release page) - see the below screenshot.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
-
-# Keyboard controls. 
+# Keyboard controls 
 Left player:  
 A, D - left/right movement. 
 W, S - up/down aim. 
@@ -41,12 +40,10 @@ Right Alt - shoot.
 ./gradlew desktop:run
 ```
 ## Z IDE
-
 Jako projekt w idei (lub analogicznie w innym IDE) trzeba ustawić na obecną chwilę working directory w Run Configuration na core/assets - wtedy można z niej uruchomić.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
-
-# Sterowanie klawiatura. 
+# Sterowanie klawiatura 
 Lewy gracz:   
 
 A, D - lewo/prawo. 
