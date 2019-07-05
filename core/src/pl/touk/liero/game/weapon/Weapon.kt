@@ -6,6 +6,7 @@ import pl.touk.liero.ecs.Texture
 
 interface Weapon {
     val texture: Texture
+    val name: String
     fun update(timeStepSec: Float)
     fun canAttack(): Boolean
     fun attack(ctx: Ctx, pos: Vector2, direction: Vector2)

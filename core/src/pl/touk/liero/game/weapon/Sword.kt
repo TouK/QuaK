@@ -13,14 +13,15 @@ import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.ecs.*
 import pl.touk.liero.entity.entity
-import pl.touk.liero.game.*
+import pl.touk.liero.game.cat_red
+import pl.touk.liero.game.mask_playerOnly
 import pl.touk.liero.script.Script
 import pl.touk.liero.system.SoundSystem
 
 class Sword(val ctx: Ctx) : Weapon {
 
     var cooldown: Float = 0.5f
-    val name: String = "SWORD"
+    override val name: String = "SWORD"
     var weapon: Entity? = null
 
     override val texture: Texture =

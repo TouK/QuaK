@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Align
-import pl.touk.liero.ecs.Engine
-import pl.touk.liero.ecs.Entity
-import pl.touk.liero.ecs.System
-import pl.touk.liero.ecs.text
+import ktx.math.vec2
+import pl.touk.liero.ecs.*
 import pl.touk.liero.gdx.project
 import pl.touk.liero.gdx.unproject
 
@@ -16,7 +14,8 @@ class TextSystem(engine: Engine<Entity>,
                  private val worldCamera: Camera,
                  private val hudCamera: Camera) : System {
 
-    val family = engine.family(text)
+    private val family = engine.family(text)
+    private val worldPos = vec2()
 
     override fun update(timeStepSec: Float) {
         batch.projectionMatrix.set(hudCamera.combined)
@@ -25,7 +24,12 @@ class TextSystem(engine: Engine<Entity>,
 
         family.foreach { ent, text ->
             if (!ent.dead) {
-                val screenPos = worldCamera.project(text.pos)
+                worldPos.set(0f, 0f)
+                if (ent.contains(body)) {
+                    worldPos.add(ent[body].position)
+                }
+                worldPos.add(text.pos)
+                val screenPos = worldCamera.project(worldPos)
                 val pos = hudCamera.unproject(screenPos)
                 text.bitmapFont.color = text.color
                 text.bitmapFont.draw(batch, text.text, pos.x - Gdx.graphics.width.toFloat() / 2f, pos.y, Gdx.graphics.width.toFloat(), Align.center, false)

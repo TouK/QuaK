@@ -11,6 +11,7 @@ import pl.touk.liero.system.SoundSystem
 class Kaczkosznikov(val ctx: Ctx) : Weapon {
     var ammo = ctx.params.kaczkosznikovAmmo
     var cooldown: Float = ctx.params.kaczkosznikovCooldown
+    override val name = "KACZKOSZNIKOW"
 
     override fun update(timeStepSec: Float) {
         if (cooldown > 0) {

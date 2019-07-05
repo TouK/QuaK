@@ -22,6 +22,7 @@ class MiniGun(val ctx: Ctx): Weapon {
     var ammo = ctx.params.miniGunAmmo
     var overheat: Float = 0f
     var cooldown: Float = ctx.params.miniGunCooldown
+    override val name: String = "MINIGUN"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {
@@ -79,7 +80,7 @@ fun fireMiniGun(ctx: Ctx, pos: Vector2, direction: Vector2) {
             gravityScale = 0f
             linearDamping = 0f
             bullet = true
-            var randomShot = Vector2(nextFloat()/ctx.params.miniGunDispersion, (nextFloat()-0.5f)/ctx.params.miniGunDispersion)
+            val randomShot = Vector2(nextFloat()/ctx.params.miniGunDispersion, (nextFloat()-0.5f)/ctx.params.miniGunDispersion)
             linearVelocity.set(direction.add(randomShot.x,randomShot.y).scl(ctx.params.miniGunSpeed))
             val vec = Vector2(direction.nor()).scl(0.8f)
             position.set(pos.add(0f, -0.25f).add(vec))
