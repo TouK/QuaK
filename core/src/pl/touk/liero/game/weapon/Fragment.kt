@@ -11,7 +11,7 @@ import pl.touk.liero.system.SoundSystem
 
 class Fragment(val ctx: Ctx) : Weapon {
     var cooldown: Float = ctx.params.fragzookaCooldown
-    override val name: String = "FRAGMENT"
+    override val name: String = "FRAGZOOKA"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {
