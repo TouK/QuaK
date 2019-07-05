@@ -127,9 +127,9 @@ Thumbs.db
 
 ## texture atlas
 core/assets/game.atlas
-core/assets/game.png
+core/assets/game*.png
 core/assets/menu.atlas
-core/assets/menu.png
+core/assets/menu*.png
 
 ## Intellij, except run configurations
 .idea

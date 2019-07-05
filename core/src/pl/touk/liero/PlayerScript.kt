@@ -1,5 +1,6 @@
 package pl.touk.liero
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
@@ -77,11 +78,11 @@ class PlayerScript(val ctx: Ctx,
         val direction = if (isRight) -1 else 1
 
         if (control.up) {
-            if (weapon.angle < ctx.params.weaponUpperAngle || MathUtils.PI - weapon.angle < ctx.params.weaponUpperAngle) {
+            if (weapon.angle < ctx.params.weaponUpperAngle || PI - weapon.angle < ctx.params.weaponUpperAngle) {
                 weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
             }
         } else if (control.down) {
-            if (weapon.angle > ctx.params.weaponLowerAngle && MathUtils.PI - weapon.angle > ctx.params.weaponLowerAngle) {
+            if (weapon.angle > ctx.params.weaponLowerAngle && PI - weapon.angle > ctx.params.weaponLowerAngle) {
                 weapon.angularVelocity = ctx.params.weaponRotationSpeed * control.yAxis * direction
             }
         } else {
@@ -114,6 +115,11 @@ class PlayerScript(val ctx: Ctx,
 
         checkIfHurt(me)
         renderMovement(me, timeStepSec)
+        fadeOutWeaponName(me)
+    }
+
+    private fun fadeOutWeaponName(me: Entity) {
+        me[text].color.a *= 0.95f
     }
 
     private fun changeWeapon(me: Entity, direction: Int) {
@@ -125,6 +131,8 @@ class PlayerScript(val ctx: Ctx,
         if (!isRight) {
             weaponEntity[texture].flipY()
         }
+        me[text].text = playerState.currentWeapon.name
+        me[text].color.set(Color.WHITE)
     }
 
     private fun checkOnGround(myBody: Body): Boolean {

@@ -61,6 +61,7 @@ open class Ctx(val prefs: GamePreferences) {
     val assetManager = AssetManager()
     val font: BitmapFont
     val smallFont: BitmapFont
+    val tinyFont: BitmapFont
     val gameAtlas: TextureAtlas
     val menuAtlas: TextureAtlas
     val skin: Skin
@@ -105,6 +106,11 @@ open class Ctx(val prefs: GamePreferences) {
                     it.fontFileName = "fonts/century-gothic.ttf"
                     it.fontParameters.size = Gdx.graphics.shorter() / 16
                 })
+        assetManager.load("tiny-font.ttf", BitmapFont::class.java,
+                FreetypeFontLoader.FreeTypeFontLoaderParameter().also {
+                    it.fontFileName = "fonts/century-gothic.ttf"
+                    it.fontParameters.size = Gdx.graphics.shorter() / 20
+                })
         assetManager.load("game.atlas", TextureAtlas::class.java)
         assetManager.load("menu.atlas", TextureAtlas::class.java)
 
@@ -112,6 +118,7 @@ open class Ctx(val prefs: GamePreferences) {
 
         font = assetManager.get("font.ttf")
         smallFont = assetManager.get("small-font.ttf")
+        tinyFont = assetManager.get("tiny-font.ttf")
         gameAtlas = TextureAtlasWrapper("game.atlas")
         menuAtlas = assetManager.get("menu.atlas")
         skin = createSkin(smallFont, font, gameAtlas, menuAtlas)
@@ -122,7 +129,7 @@ open class Ctx(val prefs: GamePreferences) {
 
         val leftController = if (psController != null) {
             leftPlayerControl = PlayerControlSmooth()
-            JoystickInputSystem(leftPlayerControl,
+            JoystickInputSystem(this, leftPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.Y,
                     changeWeapon = Xbox.R_BUMPER,
@@ -142,7 +149,7 @@ open class Ctx(val prefs: GamePreferences) {
         }
         val rightController = if (otherController != null) {
             rightPlayerControl = PlayerControlSmooth()
-            JoystickInputSystem(rightPlayerControl,
+            JoystickInputSystem(this, rightPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.X,
                     changeWeapon = Xbox.R_BUMPER,

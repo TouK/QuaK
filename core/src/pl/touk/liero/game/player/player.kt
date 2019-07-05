@@ -1,11 +1,13 @@
 package pl.touk.liero.game.player
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.utils.Array
 import ktx.box2d.body
 import ktx.box2d.filter
+import ktx.math.vec2
 import pl.touk.liero.Ctx
 import pl.touk.liero.PlayerScript
 import pl.touk.liero.ecs.Energy
@@ -74,6 +76,7 @@ fun createPlayer(ctx: Ctx, x: Float, y: Float, playerControl: PlayerControl, tea
         script(PlayerScript(ctx, playerControl, state, movementAnimation, idleAnimation, hurtAnimation, team))
         script(BloodScript(ctx))
         script(WinnerScript(ctx, if (team == "left") ctx.leftFrags else ctx.rightFrags))
+        text("", vec2(0f, -ctx.params.playerSize / 1.5f), Color.WHITE, ctx.tinyFont)
         // can be only one render script per Entity
         renderScript(HealthAndAmmoBar(ctx, state, weaponBody))
     }

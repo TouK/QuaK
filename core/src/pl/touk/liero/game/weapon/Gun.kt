@@ -10,7 +10,7 @@ import pl.touk.liero.system.SoundSystem
 
 class Gun(val ctx: Ctx) : Weapon {
     var cooldown: Float = ctx.params.gunCooldown
-    val name: String = "GUN"
+    override val name: String = "GUN"
 
     override fun update(timeStepSec: Float) {
         if( cooldown > 0) {

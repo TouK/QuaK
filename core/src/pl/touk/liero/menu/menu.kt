@@ -20,14 +20,10 @@ fun createMenu(ctx: Ctx, w: Float, h: Float) {
 
 class MenuScript(val ctx: Ctx) : Script {
 
-    var animation = createMenuAnimation(ctx)
-    var liveTime = 0f
+    val animation = createMenuAnimation(ctx)
 
     override fun update(me: Entity, timeStepSec: Float) {
-        liveTime += timeStepSec
-        val textureRegion = animation.getKeyFrame(liveTime)
-        me[texture].texture = textureRegion
-        return
+        me[texture].texture = animation.getKeyFrame(ctx.worldEngine.timeSec)
     }
 
     private fun createMenuAnimation(ctx: Ctx): Animation<TextureRegion> {
