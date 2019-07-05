@@ -8,6 +8,15 @@
 Starting the project from IDEA or any other IDE requires that working directory is set to core/assets (other than that you can find a playable demo on Release page) - see the below screenshot.
 
 ![Run Configuration for Idea](https://github.com/TouK/QuaK/blob/master/Screenshot/Configuration.png)
+
+# How to build and run jar
+```
+./gradlew desktop:run
+./gradlew desktop:dist
+java -jar ./desktop/build/libs/desktop-1.0.jar
+```
+The first step (`gradlew desktop:run`) is required in order to build texture atlases 
+
 # Keyboard controls 
 Left player:  
 A, D - left/right movement. 
