@@ -57,6 +57,9 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
                     setScreen(gameState.pauseScreen)
                     ctx.music.fadeOut()
                 }
+                UiEvent.Restart -> {
+                    setState(gameState)
+                }
                 else -> {}
             }
             gameState.pauseScreen -> when(event) {
