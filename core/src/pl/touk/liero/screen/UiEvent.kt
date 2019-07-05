@@ -4,5 +4,6 @@ enum class UiEvent {
     Back,
     Play,
     Pause,
-    Restart
+    Restart,
+    StartPressed
 }

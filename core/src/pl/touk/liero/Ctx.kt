@@ -129,7 +129,7 @@ open class Ctx(val prefs: GamePreferences) {
 
         val leftController = if (psController != null) {
             leftPlayerControl = PlayerControlSmooth()
-            JoystickInputSystem(leftPlayerControl,
+            JoystickInputSystem(this, leftPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.Y,
                     changeWeapon = Xbox.R_BUMPER,
@@ -149,7 +149,7 @@ open class Ctx(val prefs: GamePreferences) {
         }
         val rightController = if (otherController != null) {
             rightPlayerControl = PlayerControlSmooth()
-            JoystickInputSystem(rightPlayerControl,
+            JoystickInputSystem(this, rightPlayerControl,
                     jump = Xbox.A,
                     fire = Xbox.X,
                     changeWeapon = Xbox.R_BUMPER,

@@ -47,6 +47,9 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
                 UiEvent.Back -> {
                     Gdx.app.exit()
                 }
+                UiEvent.StartPressed -> {
+                    setState(gameState)
+                }
                 else -> {}
             }
             gameState.screen -> when(event) {
@@ -59,6 +62,9 @@ open class LieroGame constructor(val ctx: Ctx): Game() {
                 }
                 UiEvent.Restart -> {
                     setState(gameState)
+                }
+                UiEvent.StartPressed -> {
+                    setState(menuState)
                 }
                 else -> {}
             }
